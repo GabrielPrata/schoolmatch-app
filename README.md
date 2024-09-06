@@ -1,4 +1,4 @@
-# rc_mineracao
+# SchoolMatch App
 
 Projeto para a Neopav com o front-end desemvolvido em Flutter.
 
