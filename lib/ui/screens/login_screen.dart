@@ -4,13 +4,14 @@ import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
+import 'package:school_match/ui/screens/notification_screen.dart';
 import 'package:school_match/ui/style/app_themes.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 TextEditingController userController = TextEditingController();
@@ -19,7 +20,7 @@ TextEditingController passController = TextEditingController();
 String? errorText;
 bool passIsEnabled = false;
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     userController.clear();
@@ -34,6 +35,12 @@ class _LoginPageState extends State<LoginPage> {
       // if (authController.errorText.value){
       //   Alerts.showErrorSnackBar("Os dados de login não podem estar vazios!", context);
       // }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => NotificationScreen(),
+        ),
+      );
     }
 
     showPass() {
@@ -81,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
               labelText: "E-mail",
               labelStyle: Theme.of(context).textTheme.labelSmall,
               filled: true,
+              // fillColor: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
           const SizedBox(
@@ -112,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               labelText: "Senha",
               labelStyle: Theme.of(context).textTheme.labelSmall,
               filled: true,
+              // fillColor: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
           const SizedBox(
