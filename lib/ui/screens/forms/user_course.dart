@@ -20,6 +20,9 @@ NewUserController userController = Get.put(NewUserController());
 TextEditingController inputController = TextEditingController();
 
 class _UserCourseState extends State<UserCourse> {
+  int? selectedCourseId;
+  String? selectedCourseName;
+
   @override
   void initState() {
     userController.step += 1;
@@ -27,14 +30,24 @@ class _UserCourseState extends State<UserCourse> {
   }
 
   @override
-  enviarPrimeiroNome() {
-    userController.setUserName(inputController.text);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserConfirmEmail(),
-      ),
-    );
+  salvarDados() {
+    if (selectedCourseId != null && selectedCourseName != null) {
+      print(
+          'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserConfirmEmail(),
+        ),
+      );
+    }
+  }
+
+  void handleCourseSelection(int id, String name) {
+    setState(() {
+      selectedCourseId = id;
+      selectedCourseName = name;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -64,9 +77,10 @@ class _UserCourseState extends State<UserCourse> {
           {"id": 21, "nome": "Sistemas de Informação"}
         ]
       }''';
-      
-      Map<String, dynamic> data = jsonDecode(jsonData);
-      List<Map<String, dynamic>> courses = List<Map<String, dynamic>>.from(data['cursos']);
+
+    Map<String, dynamic> data = jsonDecode(jsonData);
+    List<Map<String, dynamic>> courses =
+        List<Map<String, dynamic>>.from(data['cursos']);
 
     return PopScope(
       onPopInvoked: (result) {
@@ -100,14 +114,16 @@ class _UserCourseState extends State<UserCourse> {
               height: 30,
             ),
             SizedBox(
-              child: DropdownMenuData(data: courses)
-            ),
+                child: DropdownMenuData(
+              data: courses,
+              onCourseSelected: handleCourseSelection,
+            )),
             SizedBox(
               height: 420,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
-              onPressed: () => enviarPrimeiroNome(),
+              onPressed: () => salvarDados(),
               child: Text(
                 "PRÓXIMO",
                 style: Theme.of(context).textTheme.labelMedium,

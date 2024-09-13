@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 // import 'package:rc_mineracao/ui/screens/login_page.dart';
 // import 'package:rc_mineracao/ui/screens/select_subsidiary_page.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 // import '../../util/constants.dart';
 import 'package:http/http.dart' as http;
 

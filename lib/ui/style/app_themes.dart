@@ -53,6 +53,11 @@ class AppThemes {
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
+        labelLarge: GoogleFonts.montserrat(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
         labelSmall: GoogleFonts.montserrat(
           fontSize: 17,
           fontWeight: FontWeight.w600,
@@ -124,6 +129,11 @@ class AppThemes {
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
+        labelLarge: GoogleFonts.montserrat(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
         labelSmall: GoogleFonts.montserrat(
           fontSize: 17,
           fontWeight: FontWeight.w600,
@@ -192,6 +202,11 @@ class AppThemes {
         ),
         labelMedium: GoogleFonts.montserrat(
           fontSize: 17,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        ),
+        labelLarge: GoogleFonts.montserrat(
+          fontSize: 24,
           fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
