@@ -31,4 +31,12 @@ class NewUserController extends GetxController {
   setUserLastName(String userLastName){
     userModel.sobrenome = userLastName;
   }
+
+  setUserCourseId(int courseId){
+    userModel.idCurso = courseId;
+  }
+
+  setUserCourse(String userCourse){
+    userModel.curso = userCourse;
+  }
 }

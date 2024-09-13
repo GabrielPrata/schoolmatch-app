@@ -17,7 +17,6 @@ class UserCourse extends StatefulWidget {
 }
 
 NewUserController userController = Get.put(NewUserController());
-TextEditingController inputController = TextEditingController();
 
 class _UserCourseState extends State<UserCourse> {
   int? selectedCourseId;
@@ -32,6 +31,9 @@ class _UserCourseState extends State<UserCourse> {
   @override
   salvarDados() {
     if (selectedCourseId != null && selectedCourseName != null) {
+      userController.setUserCourseId(selectedCourseId!);
+      userController.setUserCourse(selectedCourseName!);
+      
       print(
           'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
       Navigator.push(
