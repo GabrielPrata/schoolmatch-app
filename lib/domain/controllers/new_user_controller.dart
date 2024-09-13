@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/models/user_model.dart';
-import 'package:http/http.dart' as http;
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class NewUserController extends GetxController {
@@ -38,5 +35,13 @@ class NewUserController extends GetxController {
 
   setUserCourse(String userCourse){
     userModel.curso = userCourse;
+  }
+
+  setUserSemester(String userSemester){
+    userModel.semestre = userSemester;
+  }
+
+  setUserIdSemester(int userIdSemester){
+    userModel.idSemestre = userIdSemester;
   }
 }

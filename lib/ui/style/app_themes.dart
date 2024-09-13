@@ -66,7 +66,7 @@ class AppThemes {
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll<Color>(Colors.red),
+          backgroundColor: WidgetStatePropertyAll<Color>(Color(0xFFFF0000)),
           minimumSize: WidgetStatePropertyAll<Size>(Size(double.infinity, 50)),
         ),
       ),
@@ -142,7 +142,7 @@ class AppThemes {
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll<Color>(Colors.red),
+          backgroundColor: WidgetStatePropertyAll<Color>(Color(0xFFFF0000)),
           minimumSize: WidgetStatePropertyAll<Size>(Size(double.infinity, 50)),
         ),
       ),
@@ -218,7 +218,7 @@ class AppThemes {
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll<Color>(Colors.red),
+          backgroundColor: WidgetStatePropertyAll<Color>(Color(0xFFFF0000)),
           minimumSize: WidgetStatePropertyAll<Size>(Size(double.infinity, 50)),
         ),
       ),

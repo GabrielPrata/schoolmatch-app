@@ -26,6 +26,7 @@ class UserModel {
   String? cidade;
   String? signo;
   String? semestre;
+  int? idSemestre;
   String? linguagemAmor;
   List<String?> interesses;
   String? pets;
@@ -56,6 +57,7 @@ class UserModel {
     this.cidade,
     this.signo,
     this.semestre,
+    this.idSemestre,
     this.linguagemAmor,
     this.interesses = const [],
     this.pets,

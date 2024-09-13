@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
-import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:school_match/ui/screens/forms/user_email_screen.dart';
-import 'package:school_match/ui/style/app_themes.dart';
-import 'package:vibration/vibration.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -21,7 +16,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     super.initState();
   }
 
-  @override
   ativaNotificacoes() {
     Navigator.push(
       context,

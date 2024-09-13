@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class DropdownMenuData extends StatefulWidget {
   final List<Map<String, dynamic>> data; // Adiciona isso
   final void Function(int, String) onCourseSelected; 
+  final String defaultText;
 
   const DropdownMenuData({
     super.key,
     required this.data, // Passa os dados como um parâmetro
     required this.onCourseSelected,
+    required this.defaultText,
   });
 
   @override
@@ -21,7 +23,7 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.data.first['id'];
+    selectedValue = null;
   }
 
   @override
@@ -36,7 +38,7 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
             ),
             Expanded(
               child: Text(
-                'Selecione seu curso...',
+                widget.defaultText,
                 style: Theme.of(context).textTheme.labelMedium,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -85,7 +87,7 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 400,
-          width: 400,
+          width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             color: Theme.of(context).colorScheme.onSurface,

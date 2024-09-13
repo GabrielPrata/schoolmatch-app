@@ -4,10 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
-import 'package:school_match/ui/screens/notification_screen.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
-import 'package:school_match/ui/style/app_themes.dart';
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

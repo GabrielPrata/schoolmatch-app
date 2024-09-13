@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:school_match/util/constants.dart';
 
+// ignore: must_be_immutable
 class ProgressBar extends StatefulWidget {
   ProgressBar(this.currentPage);
 
   int currentPage;
-  final PageController _ProgressController = PageController(initialPage: 0);
 
   @override
   State<ProgressBar> createState() => _ProgressBarState();

@@ -20,7 +20,6 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
     super.initState();
   }
 
-  @override
   verificaEmail() {
     Navigator.push(
       context,

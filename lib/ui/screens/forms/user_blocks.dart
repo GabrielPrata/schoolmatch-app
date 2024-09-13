@@ -3,24 +3,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_year.dart';
+import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/widgets/dropdown_menu.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/progress_bar.dart';
 
-class UserCourse extends StatefulWidget {
-  const UserCourse({super.key});
+class UserBlocks extends StatefulWidget {
+  const UserBlocks({super.key});
 
   @override
-  State<UserCourse> createState() => _UserCourseState();
+  State<UserBlocks> createState() => _UserBlocksState();
 }
 
 NewUserController userController = Get.put(NewUserController());
 
-class _UserCourseState extends State<UserCourse> {
-  int? selecterSemesterId;
-  String? selectedSemester;
+class _UserBlocksState extends State<UserBlocks> {
+  int? selectedCourseId;
+  String? selectedCourseName;
 
   @override
   void initState() {
@@ -29,57 +29,47 @@ class _UserCourseState extends State<UserCourse> {
   }
 
   salvarDados() {
-    if (selecterSemesterId != null && selectedSemester != null) {
-      userController.setUserIdSemester(selecterSemesterId!);
-      userController.setUserSemester(selectedSemester!);
-      
+    if (selectedCourseId != null && selectedCourseName != null) {
+      userController.setUserCourseId(selectedCourseId!);
+      userController.setUserCourse(selectedCourseName!);
+
       print(
-          'Semestre selecionado: ID $selecterSemesterId, Nome $selectedSemester');
+          'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => UserYear(),
+          builder: (_) => UserConfirmEmail(),
         ),
       );
-    } 
+    }
   }
 
   void handleCourseSelection(int id, String name) {
     setState(() {
-      selecterSemesterId = id;
-      selectedSemester = name;
+      selectedCourseId = id;
+      selectedCourseName = name;
     });
   }
 
   Widget build(BuildContext context) {
-    String jsonData = '''
+    String blocosPrincipais = '''
       {
         "cursos": [
-          {"id": 1, "nome": "Administração"},
-          {"id": 2, "nome": "Biologia"},
-          {"id": 3, "nome": "Biomedicina"},
-          {"id": 4, "nome": "Contabilidade"},
-          {"id": 5, "nome": "Economia"},
-          {"id": 6, "nome": "Educação Física"},
-          {"id": 7, "nome": "Enfermagem"},
-          {"id": 8, "nome": "Engenharia Civil"},
-          {"id": 9, "nome": "Engenharia de Computação"},
-          {"id": 10, "nome": "Engenharia de Produção"},
-          {"id": 11, "nome": "Engenharia Elétrica"},
-          {"id": 12, "nome": "Engenharia Mecânica"},
-          {"id": 13, "nome": "Engenharia Química"},
-          {"id": 14, "nome": "Estética"},
-          {"id": 15, "nome": "Farmácia"},
-          {"id": 16, "nome": "Fisioterapia"},
-          {"id": 17, "nome": "Odontologia"},
-          {"id": 18, "nome": "Pedagogia"},
-          {"id": 19, "nome": "Psicologia"},
-          {"id": 20, "nome": "Química"},
-          {"id": 21, "nome": "Sistemas de Informação"}
+          {"id": 1, "nome": "Bloco A (Central)"},
+          {"id": 2, "nome": "Bloco B"},
+          {"id": 3, "nome": "Bloco C"},
+          {"id": 4, "nome": "Bloco D"},
+          {"id": 5, "nome": "Bloco E"},
+          {"id": 6, "nome": "Bloco F"},
+          {"id": 7, "nome": "Bloco G"},
+          {"id": 8, "nome": "Bloco H"},
+          {"id": 9, "nome": "Bloco I"},
+          {"id": 10, "nome": "Bloco J"},
+          {"id": 11, "nome": "Bloco K"}
         ]
       }''';
 
-    Map<String, dynamic> data = jsonDecode(jsonData);
+    Map<String, dynamic> data = jsonDecode(blocosPrincipais);
     List<Map<String, dynamic>> courses =
         List<Map<String, dynamic>>.from(data['cursos']);
 
@@ -107,21 +97,42 @@ class _UserCourseState extends State<UserCourse> {
             ),
             SizedBox(
                 child: Text(
-              "Você faz?",
+              "Quais blocos e locais você mais frequenta?",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 30,
+              height: 20,
+            ),
+            SizedBox(
+              child: Text(
+                "Selecione um bloco principal e até 5 blocos/lugares que você frequenta bastante",
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            SizedBox(
+              child: Text(
+                "Bloco Principal",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            SizedBox(
+              child: Text("Aqui, você deve escolher o bloco onde você mais tem aulas", style: Theme.of(context).textTheme.bodySmall,),
+            ),
+            SizedBox(
+              height: 20,
             ),
             SizedBox(
                 child: DropdownMenuData(
-              data: courses,
-              onCourseSelected: handleCourseSelection,
-              defaultText: "Selecione seu curso...",
-            )),
+                    data: courses,
+                    onCourseSelected: handleCourseSelection,
+                    defaultText: "Selecione um bloco")),
             SizedBox(
-              height: 470,
+              height: 420,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

@@ -3,24 +3,25 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_year.dart';
+import 'package:school_match/ui/screens/forms/user_blocks.dart';
+import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/widgets/dropdown_menu.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/progress_bar.dart';
 
-class UserCourse extends StatefulWidget {
-  const UserCourse({super.key});
+class UserYear extends StatefulWidget {
+  const UserYear({super.key});
 
   @override
-  State<UserCourse> createState() => _UserCourseState();
+  State<UserYear> createState() => _UserYearState();
 }
 
 NewUserController userController = Get.put(NewUserController());
 
-class _UserCourseState extends State<UserCourse> {
-  int? selecterSemesterId;
-  String? selectedSemester;
+class _UserYearState extends State<UserYear> {
+  int? selectedCourseId;
+  String? selectedCourseName;
 
   @override
   void initState() {
@@ -29,25 +30,25 @@ class _UserCourseState extends State<UserCourse> {
   }
 
   salvarDados() {
-    if (selecterSemesterId != null && selectedSemester != null) {
-      userController.setUserIdSemester(selecterSemesterId!);
-      userController.setUserSemester(selectedSemester!);
+    if (selectedCourseId != null && selectedCourseName != null) {
+      userController.setUserCourseId(selectedCourseId!);
+      userController.setUserCourse(selectedCourseName!);
       
       print(
-          'Semestre selecionado: ID $selecterSemesterId, Nome $selectedSemester');
+          'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => UserYear(),
+          builder: (_) => UserBlocks(),
         ),
       );
-    } 
+    }
   }
 
   void handleCourseSelection(int id, String name) {
     setState(() {
-      selecterSemesterId = id;
-      selectedSemester = name;
+      selectedCourseId = id;
+      selectedCourseName = name;
     });
   }
 
@@ -55,27 +56,19 @@ class _UserCourseState extends State<UserCourse> {
     String jsonData = '''
       {
         "cursos": [
-          {"id": 1, "nome": "Administração"},
-          {"id": 2, "nome": "Biologia"},
-          {"id": 3, "nome": "Biomedicina"},
-          {"id": 4, "nome": "Contabilidade"},
-          {"id": 5, "nome": "Economia"},
-          {"id": 6, "nome": "Educação Física"},
-          {"id": 7, "nome": "Enfermagem"},
-          {"id": 8, "nome": "Engenharia Civil"},
-          {"id": 9, "nome": "Engenharia de Computação"},
-          {"id": 10, "nome": "Engenharia de Produção"},
-          {"id": 11, "nome": "Engenharia Elétrica"},
-          {"id": 12, "nome": "Engenharia Mecânica"},
-          {"id": 13, "nome": "Engenharia Química"},
-          {"id": 14, "nome": "Estética"},
-          {"id": 15, "nome": "Farmácia"},
-          {"id": 16, "nome": "Fisioterapia"},
-          {"id": 17, "nome": "Odontologia"},
-          {"id": 18, "nome": "Pedagogia"},
-          {"id": 19, "nome": "Psicologia"},
-          {"id": 20, "nome": "Química"},
-          {"id": 21, "nome": "Sistemas de Informação"}
+          {"id": 1, "nome": "1º semestre"},
+          {"id": 2, "nome": "2º semestre"},
+          {"id": 3, "nome": "3º semestre"},
+          {"id": 4, "nome": "4º semestre"},
+          {"id": 5, "nome": "5º semestre"},
+          {"id": 6, "nome": "6º semestre"},
+          {"id": 7, "nome": "7º semestre"},
+          {"id": 8, "nome": "8º semestre"},
+          {"id": 9, "nome": "9º semestre"},
+          {"id": 10, "nome": "10º semestre"},
+          {"id": 11, "nome": "11º semestre"},
+          {"id": 12, "nome": "12º semestre"},
+          {"id": 13, "nome": "DP é f***"}
         ]
       }''';
 
@@ -107,7 +100,7 @@ class _UserCourseState extends State<UserCourse> {
             ),
             SizedBox(
                 child: Text(
-              "Você faz?",
+              "Em qual semestre do curso você esta?",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
@@ -118,10 +111,10 @@ class _UserCourseState extends State<UserCourse> {
                 child: DropdownMenuData(
               data: courses,
               onCourseSelected: handleCourseSelection,
-              defaultText: "Selecione seu curso...",
+              defaultText: "Selecione o semestre..."
             )),
             SizedBox(
-              height: 470,
+              height: 420,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

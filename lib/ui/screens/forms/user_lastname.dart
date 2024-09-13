@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/screens/forms/user_course.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
@@ -24,7 +23,6 @@ class _UserLastNameState extends State<UserLastName> {
     super.initState();
   }
 
-  @override
   enviarPrimeiroNome() {
     userController.setUserName(inputController.text);
     Navigator.push(

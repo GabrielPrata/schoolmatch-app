@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/models/enums/themes.dart';
-import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/screens/notification_screen.dart';
-import 'package:school_match/ui/widgets/dropdown_menu.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
-import 'package:school_match/ui/widgets/progress_bar.dart';
 import 'package:school_match/util/theme_provider.dart';
 
 class SelectThemeScreen extends StatefulWidget {
@@ -38,7 +33,6 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
     }
   }
 
-  @override
   SalvarTema() {
     userController.setUserName(inputController.text);
     Navigator.push(
