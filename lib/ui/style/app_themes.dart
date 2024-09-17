@@ -19,7 +19,7 @@ class AppThemes {
         error: errorColor,
         onPrimary: Color(0xFFFFFFFF),
         onSecondary: Colors.black,
-        onSurface: Color.fromARGB(40, 255, 255, 255),
+        onSurface: Color.fromARGB(255, 50, 49, 71),
         onError: Colors.white,
       ),
       textTheme: TextTheme(
@@ -95,7 +95,7 @@ class AppThemes {
         error: errorColor,
         onPrimary: Color(0xFFFFFFFF),
         onSecondary: Colors.white,
-        onSurface: Color.fromARGB(40, 255, 255, 255),
+        onSurface: Color(0xFF444444),
         onError: Colors.white,
       ),
       textTheme: TextTheme(
@@ -171,7 +171,7 @@ class AppThemes {
         error: errorColor,
         onPrimary: Color(0xFF000000),
         onSecondary: Colors.black,
-        onSurface: Color.fromARGB(40, 0, 0, 0),
+        onSurface: Color(0xFFC0C0C0),
         onError: Colors.white,
       ),
       textTheme: TextTheme(

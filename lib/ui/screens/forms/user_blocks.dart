@@ -20,8 +20,11 @@ class UserBlocks extends StatefulWidget {
 NewUserController userController = Get.put(NewUserController());
 
 class _UserBlocksState extends State<UserBlocks> {
-  int? selectedCourseId;
-  String? selectedCourseName;
+  int? mainBlockId;
+  String? mainBlockName;
+
+  List<int> secondaryBlocksIds = [];
+  List<String> secondaryBlocks = [];
 
   @override
   void initState() {
@@ -30,12 +33,13 @@ class _UserBlocksState extends State<UserBlocks> {
   }
 
   salvarDados() {
-    if (selectedCourseId != null && selectedCourseName != null) {
-      userController.setUserCourseId(selectedCourseId!);
-      userController.setUserCourse(selectedCourseName!);
+    if (mainBlockId != null && mainBlockName != null) {
+      userController.setUserMainBlockId(mainBlockId!);
+      userController.setUserMainBlock(mainBlockName!);
 
-      print(
-          'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
+      userController.setUserSecondaryBlocksIds(secondaryBlocksIds!);
+      userController.setUserSecondaryBlocks(secondaryBlocks!);
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -47,8 +51,8 @@ class _UserBlocksState extends State<UserBlocks> {
 
   void handleCourseSelection(int id, String name) {
     setState(() {
-      selectedCourseId = id;
-      selectedCourseName = name;
+      mainBlockId = id;
+      mainBlockName = name;
     });
   }
 
@@ -137,13 +141,31 @@ class _UserBlocksState extends State<UserBlocks> {
                   defaultText: "Selecione um bloco"),
             ),
             SizedBox(
-              height: 150,
+              height: 70,
+            ),
+             SizedBox(
+              child: Text(
+                "Blocos Secundários",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
             SizedBox(
-              child: CustomFilterChip(),
+              child: Text(
+                "Escolha agora os 5 lugares que você costuma ir com frequência",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
             SizedBox(
-              height: 420,
+              height: 20,
+            ),
+            SizedBox(
+              child: CustomFilterChip(
+                secondaryBlocksIds: secondaryBlocksIds,
+                secondaryBlocks: secondaryBlocks,
+              ),
+            ),
+            SizedBox(
+              height: 50,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
@@ -152,6 +174,9 @@ class _UserBlocksState extends State<UserBlocks> {
                 "PRÓXIMO",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
+            ),
+            SizedBox(
+              height: 70,
             ),
           ]),
         ),

@@ -10,38 +10,57 @@ class NewUserController extends GetxController {
   //vou salvando os valores direto no objeto, acessando a controller no decorrer das páginas
   UserModel userModel = new UserModel();
 
-
   // Métodos de coleta dos dados dos formulários.
   //As validações devem ser feitas aqui.
-  setUserEmail(String userEmail){
+  setUserEmail(String userEmail) {
     userModel.email = userEmail;
   }
 
-  setUserPassword(String userPassword){
+  setUserPassword(String userPassword) {
     userModel.senha = userPassword;
   }
 
-  setUserName(String userName){
+  setUserName(String userName) {
     userModel.nome = userName;
   }
 
-  setUserLastName(String userLastName){
+  setUserLastName(String userLastName) {
     userModel.sobrenome = userLastName;
   }
 
-  setUserCourseId(int courseId){
+  setUserCourseId(int courseId) {
     userModel.idCurso = courseId;
   }
 
-  setUserCourse(String userCourse){
+  setUserCourse(String userCourse) {
     userModel.curso = userCourse;
   }
 
-  setUserSemester(String userSemester){
+  setUserSemester(String userSemester) {
     userModel.semestre = userSemester;
   }
 
-  setUserIdSemester(int userIdSemester){
+  setUserIdSemester(int userIdSemester) {
     userModel.idSemestre = userIdSemester;
+  }
+
+  setUserMainBlockId(int mainBlockId) {
+    userModel.idBlocoPrincipal = mainBlockId;
+  }
+
+  setUserMainBlock(String mainBlock) {
+    userModel.blocoPrincipal = mainBlock;
+  }
+
+  setUserSecondaryBlocksIds(List<int> idsBlocks) {
+    for (int id in idsBlocks) {
+      userModel.idsBlocosSecundarios.add(id);
+    }
+  }
+
+  setUserSecondaryBlocks(List<String> secondaryBlocks) {
+    for (String name in secondaryBlocks) {
+      userModel.blocosSecundarios.add(name);
+    }
   }
 }
