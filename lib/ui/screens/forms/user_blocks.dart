@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
-import 'package:school_match/ui/widgets/dropdown_menu.dart';
+import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
+import 'package:school_match/ui/widgets/forms/filter_chip.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
-import 'package:school_match/ui/widgets/progress_bar.dart';
+import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
 class UserBlocks extends StatefulWidget {
   const UserBlocks({super.key});
@@ -121,16 +122,26 @@ class _UserBlocksState extends State<UserBlocks> {
               ),
             ),
             SizedBox(
-              child: Text("Aqui, você deve escolher o bloco onde você mais tem aulas", style: Theme.of(context).textTheme.bodySmall,),
+              child: Text(
+                "Aqui, você deve escolher o bloco onde você mais tem aulas",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
             SizedBox(
               height: 20,
             ),
             SizedBox(
-                child: DropdownMenuData(
-                    data: courses,
-                    onCourseSelected: handleCourseSelection,
-                    defaultText: "Selecione um bloco")),
+              child: DropdownMenuData(
+                  data: courses,
+                  onCourseSelected: handleCourseSelection,
+                  defaultText: "Selecione um bloco"),
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            SizedBox(
+              child: CustomFilterChip(),
+            ),
             SizedBox(
               height: 420,
             ),

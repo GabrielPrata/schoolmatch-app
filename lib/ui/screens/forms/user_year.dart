@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
-import 'package:school_match/ui/widgets/dropdown_menu.dart';
+import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
-import 'package:school_match/ui/widgets/progress_bar.dart';
+import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
 class UserYear extends StatefulWidget {
   const UserYear({super.key});
