@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
+import 'package:school_match/ui/screens/forms/user_images.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 import 'package:school_match/ui/widgets/forms/filter_chip.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
@@ -34,16 +35,17 @@ class _UserBlocksState extends State<UserBlocks> {
 
   salvarDados() {
     if (mainBlockId != null && mainBlockName != null) {
-      userController.setUserMainBlockId(mainBlockId!);
-      userController.setUserMainBlock(mainBlockName!);
+      //Ver depois porque nao esta setando os valores
+      // userController.setUserMainBlockId(mainBlockId!);
+      // userController.setUserMainBlock(mainBlockName!);
 
-      userController.setUserSecondaryBlocksIds(secondaryBlocksIds!);
-      userController.setUserSecondaryBlocks(secondaryBlocks!);
+      // userController.setUserSecondaryBlocksIds(secondaryBlocksIds);
+      // userController.setUserSecondaryBlocks(secondaryBlocks);
 
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => UserConfirmEmail(),
+          builder: (_) => UserImages(),
         ),
       );
     }
