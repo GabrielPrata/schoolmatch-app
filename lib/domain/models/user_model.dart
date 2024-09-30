@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 class UserModel {
   String? nome;
   String? sobrenome;
@@ -36,6 +38,8 @@ class UserModel {
   String? tipoRole;
   String? musica;
 
+  List<XFile?> imagens;
+
   UserModel({
     this.nome,
     this.sobrenome,
@@ -66,11 +70,13 @@ class UserModel {
     this.atividadeFisica,
     this.tipoRole,
     this.musica,
+    this.imagens = const [],
   }) {
     // Inicializa as listas se não forem nulas, senão usa listas vazias
     idsBlocosSecundarios = idsBlocosSecundarios ?? [];
     blocosSecundarios = blocosSecundarios ?? [];
     interesses = interesses ?? [];
+    imagens = imagens ?? [];
   }
   
   // @override

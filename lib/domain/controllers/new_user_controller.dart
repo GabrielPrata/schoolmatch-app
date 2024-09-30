@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/models/user_model.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,6 +62,15 @@ class NewUserController extends GetxController {
   setUserSecondaryBlocks(List<String> secondaryBlocks) {
     for (String name in secondaryBlocks) {
       userModel.blocosSecundarios.add(name);
+    }
+  }
+
+  setUserImages(List<XFile> images){
+    //Limpo a lista para caso o usuário já tenha selecionado as imagens e volte a tela.
+    
+    userModel.imagens.clear();
+    for (var image in images) {
+      userModel.imagens.add(image);
     }
   }
 }

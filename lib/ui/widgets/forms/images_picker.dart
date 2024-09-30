@@ -5,7 +5,8 @@ import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 
 class ImagesPicker extends StatefulWidget {
   final List<XFile> imageFiles;
-  final bool allowReorderingUserImagesOnly;  // Controle para reordenar apenas imagens de usuário
+  final bool
+      allowReorderingUserImagesOnly; // Controle para reordenar apenas imagens de usuário
   final VoidCallback newImageFunction;
 
   const ImagesPicker({
@@ -31,7 +32,7 @@ class _ImagesPickerState extends State<ImagesPicker> {
   void _removeUserImage(int index) {
     setState(() {
       widget.imageFiles[index] = XFile("assets/emptyPhoto.png");
-      _reorderImages();  // Reordena após remover uma imagem do usuário
+      _reorderImages(); // Reordena após remover uma imagem do usuário
     });
   }
 
@@ -41,11 +42,11 @@ class _ImagesPickerState extends State<ImagesPicker> {
       widget.imageFiles.sort((a, b) {
         // Coloca as imagens padrão ("emptyPhoto.png") no final da lista
         if (a.name == 'emptyPhoto.png' && b.name != 'emptyPhoto.png') {
-          return 1;  // a vai para o final
+          return 1; // a vai para o final
         } else if (a.name != 'emptyPhoto.png' && b.name == 'emptyPhoto.png') {
           return -1; // b vai para o final
         } else {
-          return 0;  // mantêm a ordem
+          return 0; // mantêm a ordem
         }
       });
     });
@@ -61,8 +62,8 @@ class _ImagesPickerState extends State<ImagesPicker> {
     return ReorderableGridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
       ),
       itemCount: widget.imageFiles.length,
       shrinkWrap: true,
@@ -70,9 +71,7 @@ class _ImagesPickerState extends State<ImagesPicker> {
         // Verifica se a imagem arrastada ou a de destino é uma imagem padrão e evita reordenar
         if (widget.imageFiles[oldIndex].name == 'emptyPhoto.png' ||
             widget.imageFiles[newIndex].name == 'emptyPhoto.png') {
-
-          //Adicionar uma mensagem informando que o usuário não pode reordernar
-          return;  // Impede a reordenação se uma das imagens for uma imagem padrão
+          return; // Impede a reordenação se uma das imagens for uma imagem padrão
         }
 
         // Continua com a reordenação se for uma imagem do usuário
@@ -84,26 +83,49 @@ class _ImagesPickerState extends State<ImagesPicker> {
         return Stack(
           key: ValueKey(index),
           children: [
-            // Se for uma imagem padrão, exibe a imagem padrão e adiciona o GestureDetector
-            widget.imageFiles[index].name == 'emptyPhoto.png'
-                ? GestureDetector(
-                    onTap: () {
-                      widget.newImageFunction();  // Chama a função para adicionar nova imagem
-                    },
-                    child: Image.asset("assets/emptyPhoto.png", fit: BoxFit.cover),
-                  )
-                : Image.file(File(widget.imageFiles[index].path),
-                    fit: BoxFit.cover),
+            // Envolvendo as imagens com ClipRRect para bordas arredondadas e SizedBox para definir o tamanho
+            SizedBox(
+              width: 150, // Definindo um tamanho fixo para as imagens
+              height: 150,
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.circular(12), // Arredondando as bordas
+                child: widget.imageFiles[index].name == 'emptyPhoto.png'
+                    ? GestureDetector(
+                        onTap: () {
+                          widget
+                              .newImageFunction(); // Chama a função para adicionar nova imagem
+                        },
+                        child: Image.asset(
+                          "assets/emptyPhoto.png",
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Image.file(
+                        File(widget.imageFiles[index].path),
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
             // Exibe o botão de "X" apenas nas imagens enviadas pelo usuário
             if (widget.imageFiles[index].name != 'emptyPhoto.png')
               Positioned(
-                right: 0,
-                bottom: 0,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.red),
-                  onPressed: () {
-                    _removeUserImage(index); // Remove a imagem e insere uma padrão
-                  },
+                right: -12,
+                bottom: -12,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Fundo branco
+                    shape: BoxShape.circle, // Formato circular
+                  ),
+                  padding:
+                      const EdgeInsets.all(1), // Espaçamento ao redor do ícone
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.red),
+                    onPressed: () {
+                      _removeUserImage(
+                          index); // Remove a imagem e insere uma padrão
+                    },
+                  ),
                 ),
               ),
           ],
