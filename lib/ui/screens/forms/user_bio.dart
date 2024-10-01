@@ -5,6 +5,7 @@ import 'package:school_match/ui/screens/forms/user_lastname.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/ui/widgets/forms/text_area_with_counter.dart';
 
 class UserBio extends StatefulWidget {
   const UserBio({super.key});
@@ -23,8 +24,8 @@ class _UserBioState extends State<UserBio> {
     super.initState();
   }
 
-  enviarPrimeiroNome() {
-    userController.setUserName(inputController.text);
+  enviarBio() {
+    userController.setUserBio(inputController.text);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -41,7 +42,7 @@ class _UserBioState extends State<UserBio> {
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+          padding: EdgeInsets.only(top: 60, left: 15, right: 15),
           child: ListView(children: <Widget>[
             ProgressBar(userController.step),
             SizedBox(
@@ -66,44 +67,20 @@ class _UserBioState extends State<UserBio> {
               height: 30,
             ),
             SizedBox(
-              child: TextField(
-                controller: inputController,
-                style: Theme.of(context).textTheme.labelMedium,
-                cursorColor: Theme.of(context).colorScheme.surface,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-                  enabledBorder: UnderlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
-                      width: 2,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(
-                      width: 2,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                  labelText: "Nome",
-                  labelStyle: Theme.of(context).textTheme.bodySmall,
-                  filled: true,
-                  fillColor: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
+              child: TextAreaWithCounter(controller: inputController, maxChars: 500,),
             ),
             SizedBox(
-              height: 420,
+              height: 75,
             ),
-            ElevatedButton(
-              style: Theme.of(context).filledButtonTheme.style,
-              onPressed: () => enviarPrimeiroNome(),
-              child: Text(
-                "PRÓXIMO",
-                style: Theme.of(context).textTheme.labelMedium,
+            Container(
+              padding: EdgeInsets.only(top: 0, left: 10, right: 10),
+              child: ElevatedButton(
+                style: Theme.of(context).filledButtonTheme.style,
+                onPressed: () => enviarBio(),
+                child: Text(
+                  "PRÓXIMO",
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ),
             ),
           ]),

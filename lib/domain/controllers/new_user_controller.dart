@@ -73,4 +73,8 @@ class NewUserController extends GetxController {
       userModel.imagens.add(image);
     }
   }
+
+  setUserBio(String userBio){
+    userModel.bio = userBio;
+  }
 }
