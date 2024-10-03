@@ -48,11 +48,12 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
     return Scaffold(
       body: Container(
         color: Theme.of(context).colorScheme.primary,
-        padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.08,
+          left: MediaQuery.of(context).size.width * 0.07,
+          right: MediaQuery.of(context).size.width * 0.07,
+        ),
         child: ListView(children: <Widget>[
-          SizedBox(
-            height: 30,
-          ),
           SizedBox(
             width: 300,
             height: 150,
@@ -61,7 +62,7 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
                 : Image.asset("assets/LogoSchoolMatch.png"),
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           SizedBox(
             child: Text(
@@ -71,7 +72,7 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
             ),
           ),
           SizedBox(
-            height: 50,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
           ListTile(
             title: Text('Tema Clássico',
@@ -168,7 +169,7 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
             ),
           ),
           SizedBox(
-            height: 260,
+            height: MediaQuery.of(context).size.height * 0.26,
           ),
           ElevatedButton(
             style: Theme.of(context).filledButtonTheme.style,
@@ -178,6 +179,9 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
+          )
         ]),
       ),
     );

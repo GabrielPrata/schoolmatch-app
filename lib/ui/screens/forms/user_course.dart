@@ -32,7 +32,7 @@ class _UserCourseState extends State<UserCourse> {
     if (selecterSemesterId != null && selectedSemester != null) {
       userController.setUserIdSemester(selecterSemesterId!);
       userController.setUserSemester(selectedSemester!);
-      
+
       print(
           'Semestre selecionado: ID $selecterSemesterId, Nome $selectedSemester');
       Navigator.push(
@@ -41,7 +41,7 @@ class _UserCourseState extends State<UserCourse> {
           builder: (_) => UserYear(),
         ),
       );
-    } 
+    }
   }
 
   void handleCourseSelection(int id, String name) {
@@ -90,11 +90,15 @@ class _UserCourseState extends State<UserCourse> {
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+          ),
           child: ListView(children: <Widget>[
             ProgressBar(userController.step),
             SizedBox(
-              height: 40,
+              height: MediaQuery.of(context).size.height * 0.04,
             ),
             SizedBox(
               child: Theme.of(context).brightness == Brightness.dark
@@ -103,7 +107,7 @@ class _UserCourseState extends State<UserCourse> {
               height: 60,
             ),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: Text(
@@ -112,7 +116,7 @@ class _UserCourseState extends State<UserCourse> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: DropdownMenuData(
@@ -121,7 +125,7 @@ class _UserCourseState extends State<UserCourse> {
               defaultText: "Selecione seu curso...",
             )),
             SizedBox(
-              height: 470,
+              height: MediaQuery.of(context).size.height * 0.48,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
@@ -131,6 +135,9 @@ class _UserCourseState extends State<UserCourse> {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            )
           ]),
         ),
       ),

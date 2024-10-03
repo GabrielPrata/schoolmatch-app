@@ -84,11 +84,15 @@ class _UserImagesState extends State<UserImages> {
     return Scaffold(
       body: Container(
         color: Theme.of(context).colorScheme.primary,
-        padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.06,
+          left: MediaQuery.of(context).size.width * 0.07,
+          right: MediaQuery.of(context).size.width * 0.07,
+        ),
         child: ListView(
           children: <Widget>[
             ProgressBar(userController.step),
-            const SizedBox(height: 40),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
             SizedBox(
               height: 60,
               child: Theme.of(context).brightness == Brightness.dark
@@ -103,7 +107,7 @@ class _UserImagesState extends State<UserImages> {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.005),
             SizedBox(
               child: Text(
                 "Escolha pelo menos 2 fotos.\nUma dica, deixe as melhores fotos na frente ;)",
@@ -111,14 +115,14 @@ class _UserImagesState extends State<UserImages> {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             ImagesPicker(
               newImageFunction: selectImages, // Aqui está passando a função
               imageFiles: _imageFiles,
               allowReorderingUserImagesOnly: true, // Modificação importante
             ),
             SizedBox(
-              height: 180,
+              height: MediaQuery.of(context).size.height * 0.2,
             ),
             ElevatedButton(
               onPressed: enviarImagens,
@@ -126,6 +130,9 @@ class _UserImagesState extends State<UserImages> {
                 "PRÓXIMO",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
           ],
         ),

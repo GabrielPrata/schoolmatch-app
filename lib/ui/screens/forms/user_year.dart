@@ -33,7 +33,7 @@ class _UserYearState extends State<UserYear> {
     if (selectedCourseId != null && selectedCourseName != null) {
       userController.setUserCourseId(selectedCourseId!);
       userController.setUserCourse(selectedCourseName!);
-      
+
       print(
           'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
       Navigator.push(
@@ -83,11 +83,15 @@ class _UserYearState extends State<UserYear> {
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+          ),
           child: ListView(children: <Widget>[
             ProgressBar(userController.step),
             SizedBox(
-              height: 40,
+              height: MediaQuery.of(context).size.height * 0.04,
             ),
             SizedBox(
               child: Theme.of(context).brightness == Brightness.dark
@@ -96,7 +100,7 @@ class _UserYearState extends State<UserYear> {
               height: 60,
             ),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: Text(
@@ -105,16 +109,15 @@ class _UserYearState extends State<UserYear> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: DropdownMenuData(
-              data: courses,
-              onCourseSelected: handleCourseSelection,
-              defaultText: "Selecione o semestre..."
-            )),
+                    data: courses,
+                    onCourseSelected: handleCourseSelection,
+                    defaultText: "Selecione o semestre...")),
             SizedBox(
-              height: 420,
+              height: MediaQuery.of(context).size.height * 0.44,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
@@ -124,6 +127,9 @@ class _UserYearState extends State<UserYear> {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            )
           ]),
         ),
       ),

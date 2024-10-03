@@ -87,11 +87,15 @@ class _UserBlocksState extends State<UserBlocks> {
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+          ),
           child: ListView(children: <Widget>[
             ProgressBar(userController.step),
             SizedBox(
-              height: 40,
+              height: MediaQuery.of(context).size.height * 0.04,
             ),
             SizedBox(
               child: Theme.of(context).brightness == Brightness.dark
@@ -100,7 +104,7 @@ class _UserBlocksState extends State<UserBlocks> {
               height: 60,
             ),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: Text(
@@ -109,7 +113,7 @@ class _UserBlocksState extends State<UserBlocks> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 20,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             SizedBox(
               child: Text(
@@ -119,7 +123,7 @@ class _UserBlocksState extends State<UserBlocks> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: MediaQuery.of(context).size.height * 0.05,
             ),
             SizedBox(
               child: Text(
@@ -134,7 +138,7 @@ class _UserBlocksState extends State<UserBlocks> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             SizedBox(
               child: DropdownMenuData(
@@ -143,9 +147,9 @@ class _UserBlocksState extends State<UserBlocks> {
                   defaultText: "Selecione um bloco"),
             ),
             SizedBox(
-              height: 70,
+              height: MediaQuery.of(context).size.height * 0.07,
             ),
-             SizedBox(
+            SizedBox(
               child: Text(
                 "Blocos Secundários",
                 style: Theme.of(context).textTheme.titleSmall,
@@ -158,7 +162,7 @@ class _UserBlocksState extends State<UserBlocks> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             SizedBox(
               child: CustomFilterChip(
@@ -167,7 +171,7 @@ class _UserBlocksState extends State<UserBlocks> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: MediaQuery.of(context).size.height * 0.05,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
@@ -178,7 +182,7 @@ class _UserBlocksState extends State<UserBlocks> {
               ),
             ),
             SizedBox(
-              height: 70,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
           ]),
         ),

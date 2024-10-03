@@ -29,11 +29,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       body: Container(
         color: Theme.of(context).colorScheme.primary,
-        padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.08,
+          left: MediaQuery.of(context).size.width * 0.07,
+          right: MediaQuery.of(context).size.width * 0.07,
+        ),
         child: ListView(children: <Widget>[
-          SizedBox(
-            height: 50,
-          ),
           SizedBox(
             child: Text(
               "Ativar notificações?",
@@ -49,16 +50,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height * 0.02,
           ),
           SizedBox(
             child: Theme.of(context).brightness == Brightness.dark
                 ? Image.asset("assets/Notification.gif")
                 : Image.asset("assets/Notification_azul.gif"),
-            height: 400,
+            height: MediaQuery.of(context).size.height * 0.4,
           ),
           SizedBox(
-            height: 50,
+            height: MediaQuery.of(context).size.height * 0.12,
           ),
           SizedBox(
             child: Column(
@@ -72,7 +73,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 OutlinedButton(
                   onPressed: () => print(""),
@@ -83,7 +84,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 )
               ],
             ),
-          )
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
+          ),
         ]),
       ),
     );

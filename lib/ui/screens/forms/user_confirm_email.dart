@@ -37,7 +37,11 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+          ),
           child: ListView(children: <Widget>[
             ProgressBar(userController.step),
             SizedBox(
@@ -50,7 +54,7 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
               height: 60,
             ),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: Text(
@@ -59,7 +63,7 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 430,
+              height: MediaQuery.of(context).size.height * 0.41,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
@@ -69,6 +73,9 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            )
           ]),
         ),
       ),

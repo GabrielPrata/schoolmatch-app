@@ -55,11 +55,15 @@ class _UserPasswordState extends State<UserPassword> {
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.primary,
-          padding: EdgeInsets.only(top: 60, left: 30, right: 30),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+          ),
           child: ListView(children: <Widget>[
             ProgressBar(userController.step),
             SizedBox(
-              height: 40,
+              height: MediaQuery.of(context).size.height * 0.04,
             ),
             SizedBox(
               child: Theme.of(context).brightness == Brightness.dark
@@ -68,7 +72,7 @@ class _UserPasswordState extends State<UserPassword> {
               height: 60,
             ),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: Text(
@@ -77,7 +81,7 @@ class _UserPasswordState extends State<UserPassword> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             TextField(
               style: Theme.of(context).textTheme.labelMedium,
@@ -92,7 +96,7 @@ class _UserPasswordState extends State<UserPassword> {
                   },
                   icon: Icon(
                     passIsEnabled ? Icons.visibility_off : Icons.visibility,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
                 contentPadding: EdgeInsets.all(20),
@@ -117,7 +121,7 @@ class _UserPasswordState extends State<UserPassword> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             TextField(
               style: Theme.of(context).textTheme.labelMedium,
@@ -131,8 +135,10 @@ class _UserPasswordState extends State<UserPassword> {
                     showConfirmPass();
                   },
                   icon: Icon(
-                    confirmPassIsEnabled ? Icons.visibility_off : Icons.visibility,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    confirmPassIsEnabled
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
                 contentPadding: EdgeInsets.all(20),
@@ -157,7 +163,7 @@ class _UserPasswordState extends State<UserPassword> {
               ),
             ),
             SizedBox(
-              height: 320,
+              height: MediaQuery.of(context).size.height * 0.3,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
@@ -167,6 +173,9 @@ class _UserPasswordState extends State<UserPassword> {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            )
           ]),
         ),
       ),
