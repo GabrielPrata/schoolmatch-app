@@ -72,10 +72,10 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
     ];
 
     final List<Map<String, dynamic>> ativFisicaData = [
+      {"id": 4, "name": "Às vezes", "selected": false},
       {"id": 1, "name": "Tô no shape", "selected": false},
       {"id": 2, "name": "Todo dia", "selected": false},
       {"id": 3, "name": "Frequentemente", "selected": false},
-      {"id": 4, "name": "Às vezes", "selected": false},
       {"id": 5, "name": "Só para levantar da cama", "selected": false},
     ];
 
@@ -184,14 +184,14 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
             UserMoreInfosTopics(
               title: "Você Fuma?",
               icon: Icons.smoking_rooms,
-              data: ativFisicaData,
-              controller: ativFisicaController,
-            ),
-             UserMoreInfosTopics(
-              title: "Ativiades Físicas?",
-              icon: Icons.fitness_center,
               data: fumanteData,
               controller: fumanteController,
+            ),
+            UserMoreInfosTopics(
+              title: "Atividades Físicas?",
+              icon: Icons.fitness_center,
+              data: ativFisicaData,
+              controller: ativFisicaController,
             ),
             UserMoreInfosTopics(
               title: "Seu signo?",
