@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_course.dart';
-import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
-class UserGender extends StatefulWidget {
-  const UserGender({super.key});
+class UserSexuality extends StatefulWidget {
+  const UserSexuality({super.key});
 
   @override
-  State<UserGender> createState() => _UserGenderState();
+  State<UserSexuality> createState() => _UserSexualityState();
 }
 
 NewUserController userController = Get.put(NewUserController());
 TextEditingController inputController = TextEditingController();
 
-class _UserGenderState extends State<UserGender> {
+class _UserSexualityState extends State<UserSexuality> {
   @override
   void initState() {
     userController.step += 1;
@@ -23,11 +22,11 @@ class _UserGenderState extends State<UserGender> {
   }
 
   salvarDados() {
-    userController.setUserGender(selectedGenderId, selectedGenderName);
+    userController.setUserName(inputController.text);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => UserSexuality(),
+        builder: (_) => UserCourse(),
       ),
     );
   }

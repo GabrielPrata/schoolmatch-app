@@ -67,8 +67,8 @@ class NewUserController extends GetxController {
 
   setUserImages(List<XFile> images){
     //Limpo a lista para caso o usuário já tenha selecionado as imagens e volte a tela.
-    
     userModel.imagens.clear();
+    
     for (var image in images) {
       userModel.imagens.add(image);
     }
@@ -80,5 +80,10 @@ class NewUserController extends GetxController {
   
   setUserBirthdate(DateTime birthdate) {
     userModel.dataNascimento = birthdate;
+  }
+
+  setUserGender(int genderId, String genderName) {
+    userModel.idGenero = genderId;
+    userModel.genero = genderName;
   }
 }
