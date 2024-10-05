@@ -46,22 +46,25 @@ class _UserLikeFindState extends State<UserLikeFind> {
     );
   }
 
-  void checkSpecialSelection() {
-    if (genders.where((gender) => gender['selected']).length == 3) {
-      setState(() {
-        genders.sublist(0, 3).forEach((gender) =>
-            gender['selected'] = false); // Desmarca os três primeiros
-        genders.last['selected'] = true; // Marca a opção especial
-      });
-    } else {
-      setState(() {
-        if (genders.last['selected']) {
-          // Se a opção especial está selecionada
-          genders.last['selected'] = false; // Desmarca a opção especial
-        }
-      });
+ void checkSpecialSelection() {
+  // Conta quantas das primeiras três opções estão selecionadas
+  int count = genders.take(3).where((gender) => gender['selected']).length;
+
+  // Se as três primeiras opções estão selecionadas
+  if (count == 3) {
+    // Desmarca as três primeiras
+    for (var i = 0; i < 3; i++) {
+      genders[i]['selected'] = false;
+    }
+    // Marca a quarta opção
+    genders.last['selected'] = true;
+  } else {
+    // Se alguma opção é selecionada enquanto a quarta está ativa
+    if (genders.last['selected'] && count > 0) {
+      genders.last['selected'] = false;  // Desmarca a quarta opção
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {

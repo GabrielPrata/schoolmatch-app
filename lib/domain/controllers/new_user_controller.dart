@@ -17,7 +17,7 @@ class NewUserController extends GetxController {
     userModel.email = userEmail;
   }
 
-  setUserPassword(String userPassword) {
+  setUserPassword(String userPassword, String confirmPassword) {
     userModel.password = userPassword;
   }
 
