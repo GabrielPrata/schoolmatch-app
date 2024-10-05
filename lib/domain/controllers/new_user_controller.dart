@@ -96,4 +96,37 @@ class NewUserController extends GetxController {
     userModel.idsPreferencia = preferencesIds;
     userModel.nomesPreferencia = preferencesNames;
   }
+
+  setUserCity(String userCity) {
+    userModel.cidade = userCity;
+  }
+
+  setUserDrink(String userDrink) {
+    userModel.bebida = userDrink;
+  }
+
+  setUserSmoke(String userSmoke) {
+    userModel.fumante = userSmoke;
+  }
+
+  //Signo do usuário
+  setUserSign(String userSign) {
+    userModel.signo = userSign;
+  }
+
+  setUserParty(String userParty) {
+    userModel.tipoRole = userParty;
+  }
+
+  setUserPets(String userPets) {
+    userModel.pets = userPets;
+  }
+
+  setUserLoveLanguage(String userLoveLanguage) {
+    userModel.linguagemAmor = userLoveLanguage;
+  }
+
+  setUserPhysical(String userPhysical) {
+    userModel.atividadeFisica = userPhysical;
+  }
 }

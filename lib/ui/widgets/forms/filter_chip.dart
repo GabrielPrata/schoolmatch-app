@@ -54,12 +54,6 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
                   block['name'],
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
-                // label: Text(
-                //   block['name'],
-                //   style: block['selected'] ?
-                //         Theme.of(context).textTheme.labelSmall :
-                //         Theme.of(context).textTheme.labelMedium,
-                // ),
                 selected: block['selected'],
                 onSelected: (bool selected) {
                   setState(() {

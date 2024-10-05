@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_lastname.dart';
+import 'package:school_match/ui/screens/forms/user_more_infos.dart';
 import 'package:school_match/ui/widgets/forms/autocomplete.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
@@ -25,14 +25,14 @@ class _UserCityState extends State<UserCity> {
   }
 
   salvarDados() {
-    print(inputController.text);
-    // userController.setUserName(inputController.text);
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) => UserLastName(),
-    //   ),
-    // );
+    // print(inputController.text);
+    userController.setUserCity(inputController.text);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => UserMoreInfos(),
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
