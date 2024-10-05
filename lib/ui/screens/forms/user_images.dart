@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_bio.dart';
-import 'package:school_match/ui/screens/forms/user_lastname.dart';
-import 'package:school_match/ui/widgets/forms/bottom_sheet_image_upload_by.dart';
 import 'package:school_match/ui/widgets/forms/images_picker.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 

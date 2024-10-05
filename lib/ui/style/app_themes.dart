@@ -63,6 +63,10 @@ class AppThemes {
           fontWeight: FontWeight.w600,
           color: Color(0xFF110231),
         ),
+        headlineSmall: GoogleFonts.montserrat(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -139,6 +143,10 @@ class AppThemes {
           fontWeight: FontWeight.w600,
           color: Color(0xFF1B1B1B),
         ),
+        headlineSmall: GoogleFonts.montserrat(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -214,6 +222,10 @@ class AppThemes {
           fontSize: 17,
           fontWeight: FontWeight.w600,
           color: Colors.black,
+        ),
+        headlineSmall: GoogleFonts.montserrat(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
         ),
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(

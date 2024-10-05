@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:school_match/ui/screens/forms/user_birthdate.dart';
+import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           // builder: (_) => SelectThemeScreen(),
-          builder: (_) => UserBirthdate(),
+          builder: (_) => UserSexuality(),
         ),
       );
     }

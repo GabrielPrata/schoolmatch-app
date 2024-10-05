@@ -23,7 +23,6 @@ class _UserMailFormState extends State<UserMailForm> {
     super.initState();
   }
 
-  @override
   enviarEmail() {
     userController.setUserEmail(inputController.text);
     Navigator.push(

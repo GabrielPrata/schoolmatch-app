@@ -86,4 +86,9 @@ class NewUserController extends GetxController {
     userModel.idGenero = genderId;
     userModel.genero = genderName;
   }
+
+  setUserSexuality(String sexualityName, bool showSexualityInProfile) {
+    userModel.sexualidade = sexualityName;
+    userModel.exibirSexualidade = showSexualityInProfile;
+  }
 }

@@ -40,6 +40,8 @@ class UserModel {
 
   List<XFile?> imagens;
 
+  bool? exibirSexualidade;
+
   UserModel({
     this.nome,
     this.sobrenome,
@@ -71,6 +73,7 @@ class UserModel {
     this.tipoRole,
     this.musica,
     this.imagens = const [],
+    this.exibirSexualidade,
   }) {
     // Inicializa as listas se não forem nulas, senão usa listas vazias
     idsBlocosSecundarios = idsBlocosSecundarios ?? [];
