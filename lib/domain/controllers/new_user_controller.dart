@@ -77,4 +77,8 @@ class NewUserController extends GetxController {
   setUserBio(String userBio){
     userModel.bio = userBio;
   }
+  
+  setUserBirthdate(DateTime birthdate) {
+    userModel.dataNascimento = birthdate;
+  }
 }

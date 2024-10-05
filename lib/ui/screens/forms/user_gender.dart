@@ -1,44 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_gender.dart';
+import 'package:school_match/ui/screens/forms/user_course.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
-import 'package:school_match/ui/widgets/forms/user_birthdate_datepicker.dart';
 
-class UserBirthdate extends StatefulWidget {
-  const UserBirthdate({super.key});
+class UserGender extends StatefulWidget {
+  const UserGender({super.key});
 
   @override
-  State<UserBirthdate> createState() => _UserBirthdateState();
+  State<UserGender> createState() => _UserGenderState();
 }
 
 NewUserController userController = Get.put(NewUserController());
 TextEditingController inputController = TextEditingController();
 
-class _UserBirthdateState extends State<UserBirthdate> {
+class _UserGenderState extends State<UserGender> {
   @override
   void initState() {
     userController.step += 1;
-
     super.initState();
   }
 
-  DateTime? selectedDate;
-  void onDateChanged(DateTime newDate) {
-    setState(() {
-      selectedDate = newDate;
-    });
-  }
-
   enviarPrimeiroNome() {
-    userController.setUserBirthdate(selectedDate!);
-    print(selectedDate);
+    userController.setUserName(inputController.text);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => UserGender(),
+        builder: (_) => UserCourse(),
       ),
     );
   }
@@ -65,14 +55,14 @@ class _UserBirthdateState extends State<UserBirthdate> {
               child: Theme.of(context).brightness == Brightness.dark
                   ? Image.asset("assets/LogoSchoolMatchBranca.png")
                   : Image.asset("assets/LogoSchoolMatch.png"),
-              height: MediaQuery.of(context).size.height * 0.06,
+              height: 60,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
                 child: Text(
-              "Você nasceu em...?",
+              "Você se idêntifica como?",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
@@ -80,15 +70,37 @@ class _UserBirthdateState extends State<UserBirthdate> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
-              child: UserBirthdateDatePicker(
-                onDateSelected: onDateChanged,
-                initialDate: null,
-                firstDate: DateTime.now().subtract(Duration(days: 80 * 365)),
-                lastDate: DateTime.now(),
+              child: TextField(
+                controller: inputController,
+                style: Theme.of(context).textTheme.labelMedium,
+                cursorColor: Theme.of(context).colorScheme.surface,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                  enabledBorder: UnderlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  labelText: "Sobrenome",
+                  labelStyle: Theme.of(context).textTheme.bodySmall,
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.48,
+              height: MediaQuery.of(context).size.height * 0.475,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
