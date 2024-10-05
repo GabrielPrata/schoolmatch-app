@@ -23,7 +23,7 @@ class _UserMailFormState extends State<UserMailForm> {
     super.initState();
   }
 
-  enviarEmail() {
+  salvarDados() {
     userController.setUserEmail(inputController.text);
     Navigator.push(
       context,
@@ -104,7 +104,7 @@ class _UserMailFormState extends State<UserMailForm> {
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
-              onPressed: () => enviarEmail(),
+              onPressed: () => salvarDados(),
               child: Text(
                 "CONFIRMAR E-MAIL",
                 style: Theme.of(context).textTheme.labelMedium,

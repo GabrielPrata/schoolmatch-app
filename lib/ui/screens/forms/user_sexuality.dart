@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_course.dart';
+import 'package:school_match/ui/screens/forms/user_like_find.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
 class UserSexuality extends StatefulWidget {
@@ -12,7 +12,6 @@ class UserSexuality extends StatefulWidget {
 }
 
 NewUserController userController = Get.put(NewUserController());
-TextEditingController inputController = TextEditingController();
 
 class _UserSexualityState extends State<UserSexuality> {
   @override
@@ -22,11 +21,12 @@ class _UserSexualityState extends State<UserSexuality> {
   }
 
   salvarDados() {
-    userController.setUserSexuality(selectedSexualityName, showSexualityInProfile);
+    userController.setUserSexuality(
+        selectedSexualityName, showSexualityInProfile);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => UserCourse(),
+        builder: (_) => UserLikeFind(),
       ),
     );
   }
@@ -239,7 +239,7 @@ class _UserSexualityState extends State<UserSexuality> {
                                                   .colorScheme
                                                   .onPrimary,
                                         ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -265,7 +265,9 @@ class _UserSexualityState extends State<UserSexuality> {
                             fillColor:
                                 WidgetStateProperty.resolveWith((states) {
                               if (states.contains(WidgetState.selected)) {
-                                return Theme.of(context).colorScheme.secondary; // cor quando selecionado
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .secondary; // cor quando selecionado
                               }
                               return null; // cor padrão
                             }),

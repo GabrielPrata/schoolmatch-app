@@ -65,7 +65,7 @@ class _UserImagesState extends State<UserImages> {
     super.dispose();
   }
 
-  void enviarImagens() {
+  void salvarDados() {
     //Descomentar e depois debugar porque não está salvando
     // userController.setUserImages(_imageFiles);
     Navigator.push(
@@ -122,7 +122,7 @@ class _UserImagesState extends State<UserImages> {
               height: MediaQuery.of(context).size.height * 0.2,
             ),
             ElevatedButton(
-              onPressed: enviarImagens,
+              onPressed: salvarDados,
               child: Text(
                 "PRÓXIMO",
                 style: Theme.of(context).textTheme.labelMedium,

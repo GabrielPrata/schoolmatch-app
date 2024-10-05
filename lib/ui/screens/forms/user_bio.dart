@@ -31,7 +31,7 @@ class _UserBioState extends State<UserBio> {
     super.dispose();
   }
 
-  enviarBio() {
+  salvarDados() {
     userController.setUserBio(inputController.text);
     Navigator.push(
       context,
@@ -93,7 +93,7 @@ class _UserBioState extends State<UserBio> {
                   right: MediaQuery.of(context).size.height * 0.01),
               child: ElevatedButton(
                 style: Theme.of(context).filledButtonTheme.style,
-                onPressed: () => enviarBio(),
+                onPressed: () => salvarDados(),
                 child: Text(
                   "PRÓXIMO",
                   style: Theme.of(context).textTheme.labelMedium,

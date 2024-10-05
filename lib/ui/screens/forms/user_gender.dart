@@ -12,7 +12,6 @@ class UserGender extends StatefulWidget {
 }
 
 NewUserController userController = Get.put(NewUserController());
-TextEditingController inputController = TextEditingController();
 
 class _UserGenderState extends State<UserGender> {
   @override

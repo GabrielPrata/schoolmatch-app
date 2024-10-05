@@ -65,19 +65,19 @@ class NewUserController extends GetxController {
     }
   }
 
-  setUserImages(List<XFile> images){
+  setUserImages(List<XFile> images) {
     //Limpo a lista para caso o usuário já tenha selecionado as imagens e volte a tela.
     userModel.imagens.clear();
-    
+
     for (var image in images) {
       userModel.imagens.add(image);
     }
   }
 
-  setUserBio(String userBio){
+  setUserBio(String userBio) {
     userModel.bio = userBio;
   }
-  
+
   setUserBirthdate(DateTime birthdate) {
     userModel.dataNascimento = birthdate;
   }
@@ -90,5 +90,10 @@ class NewUserController extends GetxController {
   setUserSexuality(String sexualityName, bool showSexualityInProfile) {
     userModel.sexualidade = sexualityName;
     userModel.exibirSexualidade = showSexualityInProfile;
+  }
+
+  setUserPreferences(List<int> preferencesIds, List<String> preferencesNames) {
+    userModel.idsPreferencia = preferencesIds;
+    userModel.nomesPreferencia = preferencesNames;
   }
 }

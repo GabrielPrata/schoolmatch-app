@@ -23,7 +23,7 @@ class _UserFirstNameState extends State<UserFirstName> {
     super.initState();
   }
 
-  enviarPrimeiroNome() {
+  salvarDados() {
     userController.setUserName(inputController.text);
     Navigator.push(
       context,
@@ -104,7 +104,7 @@ class _UserFirstNameState extends State<UserFirstName> {
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
-              onPressed: () => enviarPrimeiroNome(),
+              onPressed: () => salvarDados(),
               child: Text(
                 "PRÓXIMO",
                 style: Theme.of(context).textTheme.labelMedium,

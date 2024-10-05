@@ -21,9 +21,11 @@ class UserModel {
   int? idGenero;
   String? genero;
 
-  int? idPreferencia;
+  List<int?> idsPreferencia;
+  List<String?> nomesPreferencia;
 
   String? sexualidade;
+
   String? bio;
   String? cidade;
   String? signo;
@@ -57,7 +59,8 @@ class UserModel {
     this.dataIngresso,
     this.idGenero,
     this.genero,
-    this.idPreferencia,
+    this.idsPreferencia  = const [],
+    this.nomesPreferencia = const [],
     this.sexualidade,
     this.bio,
     this.cidade,
