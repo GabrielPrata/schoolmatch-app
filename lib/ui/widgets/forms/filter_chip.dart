@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomFilterChip extends StatefulWidget {
-  final List<int> secondaryBlocksIds;
-  final List<String> secondaryBlocks;
+  final List<int>? listIds;
+  final List<String> listNames;
+  final List<Map<String, dynamic>> data;
 
   const CustomFilterChip({
     super.key,
-    required this.secondaryBlocksIds, // Passa os dados como um parâmetro
-    required this.secondaryBlocks,
+    this.listIds, // Passa os dados como um parâmetro
+    required this.listNames,
+    required this.data,
   });
 
   @override
@@ -15,27 +17,7 @@ class CustomFilterChip extends StatefulWidget {
 }
 
 class _CustomFilterChipState extends State<CustomFilterChip> {
-  final List<Map<String, dynamic>> blocosSecundarios = [
-    {"id": 1, "name": "Bloco A (Central)", "selected": false},
-    {"id": 2, "name": "Bloco B", "selected": false},
-    {"id": 3, "name": "Bloco C", "selected": false},
-    {"id": 4, "name": "Bloco D", "selected": false},
-    {"id": 5, "name": "Bloco E", "selected": false},
-    {"id": 6, "name": "Bloco F", "selected": false},
-    {"id": 7, "name": "Bloco G", "selected": false},
-    {"id": 8, "name": "Bloco H", "selected": false},
-    {"id": 9, "name": "Bloco I", "selected": false},
-    {"id": 10, "name": "Bloco J", "selected": false},
-    {"id": 11, "name": "Bloco K", "selected": false},
-    {"id": 12, "name": "Bosque", "selected": false},
-    {"id": 13, "name": "Cantina", "selected": false},
-    {"id": 14, "name": "ISO", "selected": false},
-    {"id": 15, "name": "Violinha", "selected": false},
-    {"id": 16, "name": "Boteko", "selected": false},
-    {"id": 17, "name": "Espetinho", "selected": false},
-    {"id": 18, "name": "Milho", "selected": false},
-    {"id": 19, "name": "Banca TOP", "selected": false},
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +30,7 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
           Wrap(
             spacing: 7.0,
             runSpacing: 4.0,
-            children: blocosSecundarios.map((block) {
+            children: widget.data.map((block) {
               return FilterChip(
                 label: Text(
                   block['name'],
@@ -59,11 +41,11 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
                   setState(() {
                     block['selected'] = selected;
                     if (selected) {
-                      widget.secondaryBlocksIds.add(block['id']);
-                      widget.secondaryBlocks.add(block['name']);
+                      widget.listIds?.add(block['id']);
+                      widget.listNames.add(block['name']);
                     } else {
-                      widget.secondaryBlocksIds.remove(block['id']);
-                      widget.secondaryBlocks.remove(block['name']);
+                      widget.listIds?.remove(block['id']);
+                      widget.listNames.remove(block['name']);
                     }
                   });
                 },
@@ -79,7 +61,7 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
           ),
           const SizedBox(height: 20.0),
           Text(
-            'Locais selecionados: ${blocosSecundarios.where((block) => block['selected']).map((e) => e['name']).join(', ')}.',
+            'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['name']).join(', ')}.',
             style: textTheme.bodySmall,
             textAlign: TextAlign.left,
           ),

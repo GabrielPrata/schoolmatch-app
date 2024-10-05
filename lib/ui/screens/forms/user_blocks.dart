@@ -35,11 +35,11 @@ class _UserBlocksState extends State<UserBlocks> {
   salvarDados() {
     if (mainBlockId != null && mainBlockName != null) {
       //Ver depois porque nao esta setando os valores
-      // userController.setUserMainBlockId(mainBlockId!);
-      // userController.setUserMainBlock(mainBlockName!);
+      userController.setUserMainBlockId(mainBlockId!);
+      userController.setUserMainBlock(mainBlockName!);
 
-      // userController.setUserSecondaryBlocksIds(secondaryBlocksIds);
-      // userController.setUserSecondaryBlocks(secondaryBlocks);
+      userController.setUserSecondaryBlocksIds(secondaryBlocksIds);
+      userController.setUserSecondaryBlocks(secondaryBlocks);
 
       Navigator.push(
         context,
@@ -74,6 +74,28 @@ class _UserBlocksState extends State<UserBlocks> {
           {"id": 11, "nome": "Bloco K"}
         ]
       }''';
+
+    final List<Map<String, dynamic>> blocosSecundarios = [
+    {"id": 1, "name": "Bloco A (Central)", "selected": false},
+    {"id": 2, "name": "Bloco B", "selected": false},
+    {"id": 3, "name": "Bloco C", "selected": false},
+    {"id": 4, "name": "Bloco D", "selected": false},
+    {"id": 5, "name": "Bloco E", "selected": false},
+    {"id": 6, "name": "Bloco F", "selected": false},
+    {"id": 7, "name": "Bloco G", "selected": false},
+    {"id": 8, "name": "Bloco H", "selected": false},
+    {"id": 9, "name": "Bloco I", "selected": false},
+    {"id": 10, "name": "Bloco J", "selected": false},
+    {"id": 11, "name": "Bloco K", "selected": false},
+    {"id": 12, "name": "Bosque", "selected": false},
+    {"id": 13, "name": "Cantina", "selected": false},
+    {"id": 14, "name": "ISO", "selected": false},
+    {"id": 15, "name": "Violinha", "selected": false},
+    {"id": 16, "name": "Boteko", "selected": false},
+    {"id": 17, "name": "Espetinho", "selected": false},
+    {"id": 18, "name": "Milho", "selected": false},
+    {"id": 19, "name": "Banca TOP", "selected": false},
+  ];
 
     Map<String, dynamic> data = jsonDecode(blocosPrincipais);
     List<Map<String, dynamic>> courses =
@@ -165,8 +187,9 @@ class _UserBlocksState extends State<UserBlocks> {
             ),
             SizedBox(
               child: CustomFilterChip(
-                secondaryBlocksIds: secondaryBlocksIds,
-                secondaryBlocks: secondaryBlocks,
+                listIds: secondaryBlocksIds,
+                listNames: secondaryBlocks,
+                data: blocosSecundarios,
               ),
             ),
             SizedBox(

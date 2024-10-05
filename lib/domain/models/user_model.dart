@@ -1,92 +1,125 @@
 import 'package:image_picker/image_picker.dart';
 
 class UserModel {
-  String? nome;
-  String? sobrenome;
+  String? firstName;
+  String? lastName;
   String? email;
-  String? senha;
-  
-  int? idCurso;
-  String? curso;
+  String? password;
 
-  int? idBlocoPrincipal;
-  String? blocoPrincipal;
+  int? courseId;
+  String? course;
 
-  List<int?> idsBlocosSecundarios;
-  List<String?> blocosSecundarios;
+  int? mainBlockId;
+  String? mainBlock;
 
-  DateTime? dataNascimento;
-  DateTime? dataIngresso;
+  List<int?> secondaryBlockIds;
+  List<String?> secondaryBlocks;
 
-  int? idGenero;
-  String? genero;
+  DateTime? birthDate;
+  DateTime? admissionDate;
 
-  List<int?> idsPreferencia;
-  List<String?> nomesPreferencia;
+  int? genderId;
+  String? gender;
 
-  String? sexualidade;
+  List<int?> preferenceIds;
+  List<String?> preferenceNames;
+
+  String? sexuality;
 
   String? bio;
-  String? cidade;
-  String? signo;
-  String? semestre;
-  int? idSemestre;
-  String? linguagemAmor;
-  List<String?> interesses;
+  String? city;
+  String? zodiacSign;
+  String? semester;
+  int? semesterId;
+  String? loveLanguage;
+  List<String?> interests;
   String? pets;
-  String? bebida;
-  String? fumante;
-  String? atividadeFisica;
-  String? tipoRole;
-  String? musica;
+  String? drink;
+  String? smoker;
+  String? physicalActivity;
+  String? typeOfOuting;
+  String? music;
 
-  List<XFile?> imagens;
+  List<XFile?> images;
 
-  bool? exibirSexualidade;
+  bool? showSexuality;
 
   UserModel({
-    this.nome,
-    this.sobrenome,
+    this.firstName,
+    this.lastName,
     this.email,
-    this.senha,
-    this.idCurso,
-    this.curso,
-    this.idBlocoPrincipal,
-    this.blocoPrincipal,
-    this.idsBlocosSecundarios = const [],
-    this.blocosSecundarios = const [],
-    this.dataNascimento,
-    this.dataIngresso,
-    this.idGenero,
-    this.genero,
-    this.idsPreferencia  = const [],
-    this.nomesPreferencia = const [],
-    this.sexualidade,
+    this.password,
+    this.courseId,
+    this.course,
+    this.mainBlockId,
+    this.mainBlock,
+    List<int?>? secondaryBlockIds,
+    List<String?>? secondaryBlocks,
+    this.birthDate,
+    this.admissionDate,
+    this.genderId,
+    this.gender,
+    List<int?>? preferenceIds,
+    List<String?>? preferenceNames,
+    this.sexuality,
     this.bio,
-    this.cidade,
-    this.signo,
-    this.semestre,
-    this.idSemestre,
-    this.linguagemAmor,
-    this.interesses = const [],
+    this.city,
+    this.zodiacSign,
+    this.semester,
+    this.semesterId,
+    this.loveLanguage,
+    List<String?>? interests,
     this.pets,
-    this.bebida,
-    this.fumante,
-    this.atividadeFisica,
-    this.tipoRole,
-    this.musica,
-    this.imagens = const [],
-    this.exibirSexualidade,
-  }) {
-    // Inicializa as listas se não forem nulas, senão usa listas vazias
-    idsBlocosSecundarios = idsBlocosSecundarios ?? [];
-    blocosSecundarios = blocosSecundarios ?? [];
-    interesses = interesses ?? [];
-    imagens = imagens ?? [];
+    this.drink,
+    this.smoker,
+    this.physicalActivity,
+    this.typeOfOuting,
+    this.music,
+    List<XFile?>? images,
+    this.showSexuality,
+  }) : secondaryBlockIds = secondaryBlockIds ?? <int?>[],
+       secondaryBlocks = secondaryBlocks ?? <String?>[],
+       preferenceIds = preferenceIds ?? <int?>[],
+       preferenceNames = preferenceNames ?? <String?>[],
+       interests = interests ?? <String?>[],
+       images = images ?? <XFile?>[] {}
+
+  @override
+  String toString() {
+    return '''
+UserModel{
+  interests: ${interests.join(", ")},
+  firstName: $firstName,
+  lastName: $lastName,
+  email: $email,
+  password: $password,
+  courseId: $courseId,
+  course: $course,
+  mainBlockId: $mainBlockId,
+  mainBlock: $mainBlock,
+  secondaryBlockIds: ${secondaryBlockIds.join(", ")},
+  secondaryBlocks: ${secondaryBlocks.join(", ")},
+  birthDate: ${birthDate?.toIso8601String()},
+  admissionDate: ${admissionDate?.toIso8601String()},
+  genderId: $genderId,
+  gender: $gender,
+  preferenceIds: ${preferenceIds.join(", ")},
+  preferenceNames: ${preferenceNames.join(", ")},
+  sexuality: $sexuality,
+  bio: $bio,
+  city: $city,
+  zodiacSign: $zodiacSign,
+  semester: $semester,
+  semesterId: $semesterId,
+  loveLanguage: $loveLanguage,
+  pets: $pets,
+  drink: $drink,
+  smoker: $smoker,
+  physicalActivity: $physicalActivity,
+  typeOfOuting: $typeOfOuting,
+  music: $music,
+  images: ${images.map((x) => x?.path).join(", ")},
+  showSexuality: $showSexuality
+}''';
   }
-  
-  // @override
-  // String toString() {
-  //   return 'PropouseModel{numeroOrc: $numeroOrc, idOrcamento: $idOrcamento, nomeCliente: $nomeCliente, ruaEntrega: $ruaEntrega, dataEmissao: $dataEmissao, km: $km, entret: $entret, descStatus: $descStatus}';
-  // }
 }

@@ -24,7 +24,7 @@ class _UserLastNameState extends State<UserLastName> {
   }
 
   salvarDados() {
-    userController.setUserName(inputController.text);
+    userController.setUserLastName(inputController.text);
     Navigator.push(
       context,
       MaterialPageRoute(

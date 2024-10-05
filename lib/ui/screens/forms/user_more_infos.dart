@@ -1,15 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_images.dart';
-import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
-import 'package:school_match/ui/widgets/forms/filter_chip.dart';
+import 'package:school_match/ui/screens/forms/user_interests.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
-import 'package:school_match/ui/widgets/forms/unique_filter_chip.dart';
 import 'package:school_match/ui/widgets/forms/userMoreInfos/user_more_infos_topics.dart';
 
 class UserMoreInfos extends StatefulWidget {
@@ -44,12 +39,12 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
     userController.setUserPets(petsController.text);
     userController.setUserLoveLanguage(linguagemController.text);
 
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) => UserImages(),
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => UserInterests(),
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -197,25 +192,25 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
               title: "Seu signo?",
               icon: Icons.dark_mode,
               data: signosData,
-              controller: bebidaController,
+              controller: signoController,
             ),
             UserMoreInfosTopics(
               title: "Qual seu tipo de rolê?",
               icon: Icons.celebration,
               data: tipoRoleData,
-              controller: bebidaController,
+              controller: tipoRoleController,
             ),
             UserMoreInfosTopics(
               title: "Gosta de animais?",
               icon: Icons.pets,
               data: petsData,
-              controller: bebidaController,
+              controller: petsController,
             ),
             UserMoreInfosTopics(
               title: "Sua linguagem do amor?",
               icon: Icons.volunteer_activism,
               data: linguagemData,
-              controller: bebidaController,
+              controller: linguagemController,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
@@ -224,7 +219,7 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () => salvarDados(),
               child: Text(
-                "PRÓXIMO",
+                "PRÓXIMO (CALMA JÁ TÁ ACABANDO)",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),

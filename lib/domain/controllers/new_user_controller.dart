@@ -8,70 +8,64 @@ class NewUserController extends GetxController {
 
   int step = 0;
 
-  //vou salvando os valores direto no objeto, acessando a controller no decorrer das páginas
+  // Salvando os valores diretamente no objeto, acessando a controller ao longo das páginas
   UserModel userModel = new UserModel();
 
-  // Métodos de coleta dos dados dos formulários.
-  //As validações devem ser feitas aqui.
+  // Métodos para coleta de dados dos formulários.
+  // As validações devem ser feitas aqui.
   setUserEmail(String userEmail) {
     userModel.email = userEmail;
   }
 
   setUserPassword(String userPassword) {
-    userModel.senha = userPassword;
+    userModel.password = userPassword;
   }
 
   setUserName(String userName) {
-    userModel.nome = userName;
+    userModel.firstName = userName;
   }
 
   setUserLastName(String userLastName) {
-    userModel.sobrenome = userLastName;
+    userModel.lastName = userLastName;
   }
 
   setUserCourseId(int courseId) {
-    userModel.idCurso = courseId;
+    userModel.courseId = courseId;
   }
 
   setUserCourse(String userCourse) {
-    userModel.curso = userCourse;
+    userModel.course = userCourse;
   }
 
   setUserSemester(String userSemester) {
-    userModel.semestre = userSemester;
+    userModel.semester = userSemester;
   }
 
   setUserIdSemester(int userIdSemester) {
-    userModel.idSemestre = userIdSemester;
+    userModel.semesterId = userIdSemester;
   }
 
   setUserMainBlockId(int mainBlockId) {
-    userModel.idBlocoPrincipal = mainBlockId;
+    userModel.mainBlockId = mainBlockId;
   }
 
   setUserMainBlock(String mainBlock) {
-    userModel.blocoPrincipal = mainBlock;
+    userModel.mainBlock = mainBlock;
   }
 
   setUserSecondaryBlocksIds(List<int> idsBlocks) {
-    for (int id in idsBlocks) {
-      userModel.idsBlocosSecundarios.add(id);
-    }
+    userModel.secondaryBlockIds.clear();
+    userModel.secondaryBlockIds = idsBlocks;
   }
 
   setUserSecondaryBlocks(List<String> secondaryBlocks) {
-    for (String name in secondaryBlocks) {
-      userModel.blocosSecundarios.add(name);
-    }
+    userModel.secondaryBlocks.clear();
+    userModel.secondaryBlocks = secondaryBlocks;
   }
 
   setUserImages(List<XFile> images) {
-    //Limpo a lista para caso o usuário já tenha selecionado as imagens e volte a tela.
-    userModel.imagens.clear();
-
-    for (var image in images) {
-      userModel.imagens.add(image);
-    }
+    userModel.images.clear();
+    userModel.images = images;
   }
 
   setUserBio(String userBio) {
@@ -79,43 +73,44 @@ class NewUserController extends GetxController {
   }
 
   setUserBirthdate(DateTime birthdate) {
-    userModel.dataNascimento = birthdate;
+    userModel.birthDate = birthdate;
   }
 
   setUserGender(int genderId, String genderName) {
-    userModel.idGenero = genderId;
-    userModel.genero = genderName;
+    userModel.genderId = genderId;
+    userModel.gender = genderName;
   }
 
   setUserSexuality(String sexualityName, bool showSexualityInProfile) {
-    userModel.sexualidade = sexualityName;
-    userModel.exibirSexualidade = showSexualityInProfile;
+    userModel.sexuality = sexualityName;
+    userModel.showSexuality = showSexualityInProfile;
   }
 
   setUserPreferences(List<int> preferencesIds, List<String> preferencesNames) {
-    userModel.idsPreferencia = preferencesIds;
-    userModel.nomesPreferencia = preferencesNames;
+    userModel.preferenceIds.clear();
+    userModel.preferenceNames.clear();
+    userModel.preferenceIds = preferencesIds;
+    userModel.preferenceNames = preferencesNames;
   }
 
   setUserCity(String userCity) {
-    userModel.cidade = userCity;
+    userModel.city = userCity;
   }
 
   setUserDrink(String userDrink) {
-    userModel.bebida = userDrink;
+    userModel.drink = userDrink;
   }
 
   setUserSmoke(String userSmoke) {
-    userModel.fumante = userSmoke;
+    userModel.smoker = userSmoke;
   }
 
-  //Signo do usuário
   setUserSign(String userSign) {
-    userModel.signo = userSign;
+    userModel.zodiacSign = userSign;
   }
 
   setUserParty(String userParty) {
-    userModel.tipoRole = userParty;
+    userModel.typeOfOuting = userParty;
   }
 
   setUserPets(String userPets) {
@@ -123,10 +118,16 @@ class NewUserController extends GetxController {
   }
 
   setUserLoveLanguage(String userLoveLanguage) {
-    userModel.linguagemAmor = userLoveLanguage;
+    userModel.loveLanguage = userLoveLanguage;
   }
 
   setUserPhysical(String userPhysical) {
-    userModel.atividadeFisica = userPhysical;
+    userModel.physicalActivity = userPhysical;
   }
+
+  setUserInterests(List<String> interests) {
+    userModel.interests.clear();
+    userModel.interests = interests;
+  }
+
 }

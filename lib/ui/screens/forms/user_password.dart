@@ -27,6 +27,7 @@ class _UserPasswordState extends State<UserPassword> {
   }
 
   savePassword() {
+    userController.setUserPassword(passController.text, confirmPassController.text);
     Navigator.push(
       context,
       MaterialPageRoute(
