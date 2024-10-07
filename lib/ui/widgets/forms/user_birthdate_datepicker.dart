@@ -23,7 +23,7 @@ class UserBirthdateDatePicker extends StatefulWidget {
 
 class _UserBirthdateDatePickerState extends State<UserBirthdateDatePicker> {
   DateTime? selectedDate;
-  final DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+  final DateFormat dateFormat = DateFormat('dd  /  MM  /  yyyy');
 
   @override
   void initState() {

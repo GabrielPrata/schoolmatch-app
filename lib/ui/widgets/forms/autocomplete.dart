@@ -113,7 +113,7 @@ class _CitiesAutocompleteState extends State<CitiesAutocomplete> {
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme
-                                    .onBackground)), // Text color
+                                    .onPrimary)), // Text color
                       ),
                     );
                   },

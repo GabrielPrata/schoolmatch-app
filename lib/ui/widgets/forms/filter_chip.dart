@@ -4,12 +4,14 @@ class CustomFilterChip extends StatefulWidget {
   final List<int>? listIds;
   final List<String> listNames;
   final List<Map<String, dynamic>> data;
+  final bool showOptions;
 
   const CustomFilterChip({
     super.key,
     this.listIds, // Passa os dados como um parâmetro
     required this.listNames,
     required this.data,
+    this.showOptions = true,
   });
 
   @override
@@ -60,6 +62,7 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
             }).toList(),
           ),
           const SizedBox(height: 20.0),
+          if (widget.showOptions)
           Text(
             'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['name']).join(', ')}.',
             style: textTheme.bodySmall,

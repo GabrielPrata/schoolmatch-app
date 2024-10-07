@@ -121,6 +121,7 @@ class _UserInterestsState extends State<UserInterests> {
               child: CustomFilterChip(
                 listNames: interests,
                 data: interesses,
+                showOptions: false,
               ),
             ),
             SizedBox(
