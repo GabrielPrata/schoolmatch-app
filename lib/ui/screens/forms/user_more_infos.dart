@@ -219,7 +219,7 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () => salvarDados(),
               child: Text(
-                "PRÓXIMO (CALMA JÁ TÁ ACABANDO)",
+                "PRÓXIMO (JÁ TÁ ACABANDO)",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),

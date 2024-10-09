@@ -67,7 +67,7 @@ class _UserFirstNameState extends State<UserFirstName> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: 30,
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
               child: TextField(

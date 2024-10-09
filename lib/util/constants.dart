@@ -4,4 +4,10 @@ class Constants {
   //Total de páginas do formulário de cadastro
   static int totalPagesFormNewUser = 19; 
 
+  static String spotifyUrl = "https://api.spotify.com/v1/";
+  static String spotifyClientId = "a3a5bece3819449d9cd7dd86266f82f3";
+  static String spotifyClientSecret = "d36f0243a8404e4db03ba12f8b014fb8";
+  static String spotifyAuthUrl = "https://accounts.spotify.com/api/token";
+  static String spotifyGrantType = "client_credentials";
+
 }

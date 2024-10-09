@@ -7,6 +7,7 @@ import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:school_match/ui/screens/forms/user_birthdate.dart';
 import 'package:school_match/ui/screens/forms/user_city.dart';
 import 'package:school_match/ui/screens/forms/user_sexuality.dart';
+import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => SelectThemeScreen(),
-          // builder: (_) => UserCity(),
+          // builder: (_) => SelectThemeScreen(),
+          builder: (_) => UserSpotifyMusic(),
         ),
       );
     }

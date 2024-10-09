@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_images.dart';
+
+import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/widgets/forms/filter_chip.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
@@ -28,13 +29,13 @@ class _UserInterestsState extends State<UserInterests> {
   salvarDados() {
     userController.setUserInterests(interests);
     print(userController.userModel.toString());
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) => UserImages(),
-    //   ),
-    // );
-    // // }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => UserSpotifyMusic(),
+      ),
+    );
+    // }
   }
 
   Widget build(BuildContext context) {

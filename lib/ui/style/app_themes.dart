@@ -20,7 +20,7 @@ class AppThemes {
         onPrimary: Color(0xFFFFFFFF),
         onSecondary: Colors.black,
         onSurface: Color.fromARGB(255, 50, 49, 71),
-        onError: Colors.white,
+        onError: Color(0xFF09011B),
       ),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
@@ -100,7 +100,7 @@ class AppThemes {
         onPrimary: Color(0xFFFFFFFF),
         onSecondary: Colors.white,
         onSurface: Color(0xFF444444),
-        onError: Colors.white,
+        onError: Color(0xFF0F0F0F),
       ),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
@@ -180,7 +180,7 @@ class AppThemes {
         onPrimary: Color(0xFF000000),
         onSecondary: Colors.black,
         onSurface: Color(0xFFC0C0C0),
-        onError: Colors.white,
+        onError: Color(0xFF696969),
       ),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
