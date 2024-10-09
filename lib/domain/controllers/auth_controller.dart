@@ -12,6 +12,10 @@ class AuthController extends GetxController {
   var errorText = false.obs;
   var isLoading = false.obs;
 
+  static logout() async {
+    print("Saiu do sistema");
+  }
+
   validateUserLogin(String username, String password, BuildContext context) async {
     if (username.isEmpty || password.isEmpty) {
       errorText.value = true;

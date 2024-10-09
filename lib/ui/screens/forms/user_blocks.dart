@@ -9,6 +9,7 @@ import 'package:school_match/ui/widgets/forms/filter_chip.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserBlocks extends StatefulWidget {
   const UserBlocks({super.key});
@@ -35,18 +36,21 @@ class _UserBlocksState extends State<UserBlocks> {
   salvarDados() {
     if (mainBlockId != null && mainBlockName != null) {
       //Ver depois porque nao esta setando os valores
-      userController.setUserMainBlockId(mainBlockId!);
-      userController.setUserMainBlock(mainBlockName!);
-
-      userController.setUserSecondaryBlocksIds(secondaryBlocksIds);
-      userController.setUserSecondaryBlocks(secondaryBlocks);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => UserImages(),
-        ),
-      );
+      userController.setUserMainBlock(mainBlockId!, mainBlockName!);
+      try {
+        userController.setUserSecondaryBlocks(secondaryBlocksIds, secondaryBlocks);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => UserImages(),
+          ),
+        );
+      } catch (e) {
+        Alerts.showErrorSnackBar(e.toString(), context);
+      }
+    } else {
+      Alerts.showErrorSnackBar(
+          "Querem que te achem como? Escolhe seu bloco principal!", context);
     }
   }
 
@@ -57,25 +61,7 @@ class _UserBlocksState extends State<UserBlocks> {
     });
   }
 
-  Widget build(BuildContext context) {
-    String blocosPrincipais = '''
-      {
-        "cursos": [
-          {"id": 1, "nome": "Bloco A (Central)"},
-          {"id": 2, "nome": "Bloco B"},
-          {"id": 3, "nome": "Bloco C"},
-          {"id": 4, "nome": "Bloco D"},
-          {"id": 5, "nome": "Bloco E"},
-          {"id": 6, "nome": "Bloco F"},
-          {"id": 7, "nome": "Bloco G"},
-          {"id": 8, "nome": "Bloco H"},
-          {"id": 9, "nome": "Bloco I"},
-          {"id": 10, "nome": "Bloco J"},
-          {"id": 11, "nome": "Bloco K"}
-        ]
-      }''';
-
-    final List<Map<String, dynamic>> blocosSecundarios = [
+  final List<Map<String, dynamic>> blocosSecundarios = [
     {"id": 1, "name": "Bloco A (Central)", "selected": false},
     {"id": 2, "name": "Bloco B", "selected": false},
     {"id": 3, "name": "Bloco C", "selected": false},
@@ -96,6 +82,24 @@ class _UserBlocksState extends State<UserBlocks> {
     {"id": 18, "name": "Milho", "selected": false},
     {"id": 19, "name": "Banca TOP", "selected": false},
   ];
+
+  Widget build(BuildContext context) {
+    String blocosPrincipais = '''
+      {
+        "cursos": [
+          {"id": 1, "nome": "Bloco A (Central)"},
+          {"id": 2, "nome": "Bloco B"},
+          {"id": 3, "nome": "Bloco C"},
+          {"id": 4, "nome": "Bloco D"},
+          {"id": 5, "nome": "Bloco E"},
+          {"id": 6, "nome": "Bloco F"},
+          {"id": 7, "nome": "Bloco G"},
+          {"id": 8, "nome": "Bloco H"},
+          {"id": 9, "nome": "Bloco I"},
+          {"id": 10, "nome": "Bloco J"},
+          {"id": 11, "nome": "Bloco K"}
+        ]
+      }''';
 
     Map<String, dynamic> data = jsonDecode(blocosPrincipais);
     List<Map<String, dynamic>> courses =
@@ -190,6 +194,7 @@ class _UserBlocksState extends State<UserBlocks> {
                 listIds: secondaryBlocksIds,
                 listNames: secondaryBlocks,
                 data: blocosSecundarios,
+                maxSelections: 5,
               ),
             ),
             SizedBox(

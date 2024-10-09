@@ -5,13 +5,15 @@ class CustomFilterChip extends StatefulWidget {
   final List<String> listNames;
   final List<Map<String, dynamic>> data;
   final bool showOptions;
+  final int maxSelections; // Novo parâmetro para o número máximo de seleções
 
   const CustomFilterChip({
     super.key,
-    this.listIds, // Passa os dados como um parâmetro
+    this.listIds,
     required this.listNames,
     required this.data,
     this.showOptions = true,
+    this.maxSelections = 3, // Valor padrão para máximo de seleções, ajuste conforme necessário
   });
 
   @override
@@ -19,8 +21,6 @@ class CustomFilterChip extends StatefulWidget {
 }
 
 class _CustomFilterChipState extends State<CustomFilterChip> {
-  
-
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -41,18 +41,21 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
                 selected: block['selected'],
                 onSelected: (bool selected) {
                   setState(() {
-                    block['selected'] = selected;
+                    // Verifica se o chip pode ser selecionado baseado no limite de seleções
                     if (selected) {
-                      widget.listIds?.add(block['id']);
-                      widget.listNames.add(block['name']);
+                      if ((widget.listIds?.length ?? 0) < widget.maxSelections) {
+                        block['selected'] = true;
+                        widget.listIds?.add(block['id']);
+                        widget.listNames.add(block['name']);
+                      }
                     } else {
+                      block['selected'] = false;
                       widget.listIds?.remove(block['id']);
                       widget.listNames.remove(block['name']);
                     }
                   });
                 },
                 selectedColor: Theme.of(context).colorScheme.secondary,
-                // selectedColor: Colors.white,
                 backgroundColor: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
@@ -63,11 +66,11 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
           ),
           const SizedBox(height: 20.0),
           if (widget.showOptions)
-          Text(
-            'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['name']).join(', ')}.',
-            style: textTheme.bodySmall,
-            textAlign: TextAlign.left,
-          ),
+            Text(
+              'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['name']).join(', ')}.',
+              style: textTheme.bodySmall,
+              textAlign: TextAlign.left,
+            ),
         ],
       ),
     );

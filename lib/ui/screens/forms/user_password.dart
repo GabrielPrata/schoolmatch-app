@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_firstname.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserPassword extends StatefulWidget {
   const UserPassword({super.key});
@@ -27,13 +28,19 @@ class _UserPasswordState extends State<UserPassword> {
   }
 
   savePassword() {
-    userController.setUserPassword(passController.text, confirmPassController.text);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserFirstName(),
-      ),
-    );
+    try{
+      userController.setUserPassword(passController.text, confirmPassController.text);
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => UserFirstName(),
+            ),
+          );
+    } catch (e) {
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
+    
+    
   }
 
   Widget build(BuildContext context) {

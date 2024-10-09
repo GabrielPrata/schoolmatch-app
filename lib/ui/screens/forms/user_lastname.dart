@@ -5,6 +5,7 @@ import 'package:school_match/ui/screens/forms/user_course.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserLastName extends StatefulWidget {
   const UserLastName({super.key});
@@ -24,13 +25,17 @@ class _UserLastNameState extends State<UserLastName> {
   }
 
   salvarDados() {
-    userController.setUserLastName(inputController.text);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserCourse(),
-      ),
-    );
+    try {
+      userController.setUserLastName(inputController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserCourse(),
+        ),
+      );
+    } catch (e) {
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
   }
 
   Widget build(BuildContext context) {

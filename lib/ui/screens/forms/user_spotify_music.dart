@@ -1,10 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/controllers/spotify_controller.dart';
+import 'package:school_match/domain/models/spotifyModels/track.dart';
+import 'package:school_match/domain/models/spotifyModels/trackResponse.dart';
+import 'package:school_match/domain/services/spotify_service.dart';
 import 'package:school_match/ui/screens/forms/user_lastname.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserSpotifyMusic extends StatefulWidget {
   const UserSpotifyMusic({super.key});
@@ -15,12 +23,42 @@ class UserSpotifyMusic extends StatefulWidget {
 
 NewUserController userController = Get.put(NewUserController());
 TextEditingController inputController = TextEditingController();
+SpotifyController spotify = SpotifyController();
+final GetStorage box = GetStorage();
 
 class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
   @override
   void initState() {
     userController.step += 1;
     super.initState();
+  }
+
+  findMusic(String token, String userSearch) async {
+    try {
+      var musics = await SpotifyService.findMusicByName(
+        userSearch: userSearch,
+        jwtToken: token,
+      );
+
+      if (musics.statusCode != 200) {
+        print("obtendo um novo token");
+        if (musics.statusCode == 401) {
+          SpotifyService.getAuthToken();
+          findMusic(box.read("spotifyToken").toString(), userSearch);
+        }
+        return Alerts.showErrorSnackBar("Erro ao conectar-se com o serviço do Spotify. Tente novamente mais tarde!", context);
+      }
+
+      var jsonMusics = jsonDecode(musics.body);
+      TrackResponse returnedTracks = TrackResponse.fromJson(jsonMusics);
+
+      for (Track item in returnedTracks.items) {
+        print(item.name);
+      }
+    } catch (e) {
+      print("Erro ao buscar a música: " + e.toString());
+      return Alerts.showErrorSnackBar("Erro ao conectar-se com o serviço do Spotify. Tente novamente mais tarde!", context);
+    }
   }
 
   salvarDados() {
@@ -184,7 +222,9 @@ class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        findMusic(box.read("spotifyToken").toString(), "matue");
+                      },
                       child: SizedBox(
                         width: double.infinity, // Largura do botão
                         child: Row(

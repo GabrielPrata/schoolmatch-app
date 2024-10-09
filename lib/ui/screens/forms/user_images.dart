@@ -5,6 +5,7 @@ import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_bio.dart';
 import 'package:school_match/ui/widgets/forms/images_picker.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserImages extends StatefulWidget {
   const UserImages({super.key});
@@ -66,14 +67,19 @@ class _UserImagesState extends State<UserImages> {
   }
 
   void salvarDados() {
-    //Descomentar e depois debugar porque não está salvando
-    // userController.setUserImages(_imageFiles);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserBio(),
-      ),
-    );
+    try {
+      userController.setUserImages(_imageFiles);
+      
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserBio(),
+        ),
+      );
+    } catch (e) {
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
+    
   }
 
   @override
