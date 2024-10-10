@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_city.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserLikeFind extends StatefulWidget {
   const UserLikeFind({super.key});
@@ -19,7 +20,7 @@ class _UserLikeFindState extends State<UserLikeFind> {
     userController.step += 1;
     super.initState();
   }
-  
+
   final List<Map<String, dynamic>> genders = [
     {"id": 1, "name": "Homens", "selected": false},
     {"id": 2, "name": "Mulheres", "selected": false},
@@ -37,34 +38,39 @@ class _UserLikeFindState extends State<UserLikeFind> {
         preferencesNames.add(item["name"]);
       }
     }
-    userController.setUserPreferences(preferencesIds, preferencesNames);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserCity(),
-      ),
-    );
-  }
-
- void checkSpecialSelection() {
-  // Conta quantas das primeiras três opções estão selecionadas
-  int count = genders.take(3).where((gender) => gender['selected']).length;
-
-  // Se as três primeiras opções estão selecionadas
-  if (count == 3) {
-    // Desmarca as três primeiras
-    for (var i = 0; i < 3; i++) {
-      genders[i]['selected'] = false;
-    }
-    // Marca a quarta opção
-    genders.last['selected'] = true;
-  } else {
-    // Se alguma opção é selecionada enquanto a quarta está ativa
-    if (genders.last['selected'] && count > 0) {
-      genders.last['selected'] = false;  // Desmarca a quarta opção
+    try {
+      userController.setUserPreferences(preferencesIds, preferencesNames);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserCity(),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      Alerts.showErrorSnackBar(e.toString(), context);
     }
   }
-}
+
+  void checkSpecialSelection() {
+    // Conta quantas das primeiras três opções estão selecionadas
+    int count = genders.take(3).where((gender) => gender['selected']).length;
+
+    // Se as três primeiras opções estão selecionadas
+    if (count == 3) {
+      // Desmarca as três primeiras
+      for (var i = 0; i < 3; i++) {
+        genders[i]['selected'] = false;
+      }
+      // Marca a quarta opção
+      genders.last['selected'] = true;
+    } else {
+      // Se alguma opção é selecionada enquanto a quarta está ativa
+      if (genders.last['selected'] && count > 0) {
+        genders.last['selected'] = false; // Desmarca a quarta opção
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

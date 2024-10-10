@@ -93,7 +93,7 @@ class Validations {
 
   static String? validateImages(List<XFile> images) {
     if (images.length < 2!) {
-      return 'Pelo menos duas fotos!';
+      return 'Escolha menos duas fotos!';
     }
 
     if (images.length > 6!) {
@@ -106,5 +106,34 @@ class Validations {
   static String capitalizeFirstLetter(String text) {
     if (text.isEmpty) return text; // Retorna a string original se estiver vazia
     return text[0].toUpperCase() + text.substring(1);
+  }
+
+  static String? validateDateOfBirth(DateTime? dateOfBirth) {
+    if (dateOfBirth == null) {
+      return 'Pensa que vai aonde? Faltou sua data de nascimento!';
+    }
+
+    // Verifica se a data de nascimento é futura
+    if (dateOfBirth.isAfter(DateTime.now())) {
+      return 'Ops! Você nem nasceu ainda!';
+    }
+
+    // Calcula a idade
+    final int currentYear = DateTime.now().year;
+    final int currentMonth = DateTime.now().month;
+    final int currentDay = DateTime.now().day;
+
+    int age = currentYear - dateOfBirth.year;
+    if (dateOfBirth.month > currentMonth || (dateOfBirth.month == currentMonth && dateOfBirth.day > currentDay)) {
+      // Se ainda não chegou ao aniversário deste ano, subtrai 1 da idade
+      age--;
+    }
+
+    // Verifica se a idade é pelo menos 18 anos
+    if (age < 18) {
+      return 'Que pena! Você deve ser maior de 18 anos para usar nosso app...';
+    }
+
+    return null; // Retorna null se a data de nascimento for válida
   }
 }

@@ -6,6 +6,7 @@ import 'package:school_match/ui/widgets/forms/autocomplete.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserCity extends StatefulWidget {
   const UserCity({super.key});
@@ -24,15 +25,19 @@ class _UserCityState extends State<UserCity> {
     super.initState();
   }
 
-  salvarDados() {
-    // print(inputController.text);
-    userController.setUserCity(inputController.text);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserMoreInfos(),
-      ),
-    );
+  salvarDados() async{
+    try {
+      await userController.setUserCity(inputController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserMoreInfos(),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
   }
 
   Widget build(BuildContext context) {
@@ -71,7 +76,9 @@ class _UserCityState extends State<UserCity> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            CitiesAutocomplete(controller: inputController,),
+            CitiesAutocomplete(
+              controller: inputController,
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.42,
             ),

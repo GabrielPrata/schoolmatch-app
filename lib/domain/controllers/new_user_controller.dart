@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/models/user_model.dart';
@@ -89,18 +92,11 @@ class NewUserController extends GetxController {
     //Uso uma imagem padrão para quando o usuário não enviou nenhuma imagem, ou seja o quadrado branco com um + na verdade é uma imagem
     //Isso faz com que o array sempre esteja cheio, portanto é nencessário remover as imagens padrão da lista para saber quantas imagens
     //o usuário de fato enviou
-    //PAREI AQUI
-    for (var image in images) {
-      if(image.name == 'emptyPhoto.png')
-        images.remove(image);
-    }
+    var filteredImages = List<XFile>.from(
+        images.where((image) => image.name != 'emptyPhoto.png'));
 
-    print("1.1");
-    print(images.length);
-    var errors = Validations.validateImages(images);
-    print("1.2");
+    var errors = Validations.validateImages(filteredImages);
     if (errors == null) {
-      print("1.3");
       userModel.images.clear();
       userModel.images = images;
     } else
@@ -108,59 +104,94 @@ class NewUserController extends GetxController {
   }
 
   setUserBio(String userBio) {
-    userModel.bio = userBio;
+    var errors = Validations.validateString(userBio,
+        maxLength: 500, fieldName: "Sua bio");
+    if (errors == null)
+      userModel.bio = userBio;
+    else
+      throw new CustomException(errors);
   }
 
   setUserBirthdate(DateTime birthdate) {
-    userModel.birthDate = birthdate;
+    var errors = Validations.validateDateOfBirth(birthdate);
+    if (errors == null)
+      userModel.birthDate = birthdate;
+    else
+      throw new CustomException(errors);
   }
 
-  setUserGender(int genderId, String genderName) {
+  setUserGender(int? genderId, String genderName) {
+    if(genderId == null || genderId == 0){
+      throw new CustomException("Por favor, nos informe como você se identifica.");
+    }
     userModel.genderId = genderId;
     userModel.gender = genderName;
   }
 
   setUserSexuality(String sexualityName, bool showSexualityInProfile) {
+    if(sexualityName == null || sexualityName.isEmpty){
+      throw new CustomException("Por favor, nos informe a sua orientação sexual.");
+    }
     userModel.sexuality = sexualityName;
     userModel.showSexuality = showSexualityInProfile;
   }
 
   setUserPreferences(List<int> preferencesIds, List<String> preferencesNames) {
+    if(preferencesIds.isEmpty){
+      throw new CustomException("Por favor, com que tipo de pessoa você se relaciona.");
+    }
     userModel.preferenceIds.clear();
     userModel.preferenceNames.clear();
     userModel.preferenceIds = preferencesIds;
     userModel.preferenceNames = preferencesNames;
   }
 
-  setUserCity(String userCity) {
+  setUserCity(String userCity) async {
+    //Validação se está vazio
+    if(userCity.isEmpty){
+      throw CustomException("Selecione sua cidade!");
+    }
+    List<String> cities = [];
+    final String response = await rootBundle.loadString('assets/cidades_sp_mg.json');
+    final data = await json.decode(response);
+    List<dynamic> states = data['estados'];
+    for (var state in states) {
+      List<dynamic> citiesData = state['cidades'];
+      cities.addAll(citiesData.cast<String>());
+    }
+
+    if (!cities.contains(userCity)) {
+      // Se a cidade do usuário não estiver na lista, realiza uma ação (por exemplo, lançar uma exceção)
+      throw CustomException("Não encontramos '$userCity' em nosso sistema! Tente novamente ou escolha outra cidade!");
+    }
     userModel.city = userCity;
   }
 
-  setUserDrink(String userDrink) {
+  setUserDrink(String? userDrink) {
     userModel.drink = userDrink;
   }
 
-  setUserSmoke(String userSmoke) {
+  setUserSmoke(String? userSmoke) {
     userModel.smoker = userSmoke;
   }
 
-  setUserSign(String userSign) {
+  setUserSign(String? userSign) {
     userModel.zodiacSign = userSign;
   }
 
-  setUserParty(String userParty) {
+  setUserParty(String? userParty) {
     userModel.typeOfOuting = userParty;
   }
 
-  setUserPets(String userPets) {
+  setUserPets(String? userPets) {
     userModel.pets = userPets;
   }
 
-  setUserLoveLanguage(String userLoveLanguage) {
+  setUserLoveLanguage(String? userLoveLanguage) {
     userModel.loveLanguage = userLoveLanguage;
   }
 
-  setUserPhysical(String userPhysical) {
+  setUserPhysical(String? userPhysical) {
     userModel.physicalActivity = userPhysical;
   }
 

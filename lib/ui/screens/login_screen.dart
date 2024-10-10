@@ -43,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          // builder: (_) => SelectThemeScreen(),
-          builder: (_) => UserImages(),
+          builder: (_) => SelectThemeScreen(),
+          // builder: (_) => UserCity(),
         ),
       );
     }

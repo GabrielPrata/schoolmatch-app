@@ -6,6 +6,7 @@ import 'package:school_match/ui/screens/forms/user_birthdate.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/ui/widgets/forms/text_area_with_counter.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserBio extends StatefulWidget {
   const UserBio({super.key});
@@ -32,13 +33,18 @@ class _UserBioState extends State<UserBio> {
   }
 
   salvarDados() {
-    userController.setUserBio(inputController.text);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserBirthdate(),
-      ),
-    );
+    try {
+      userController.setUserBio(inputController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserBirthdate(),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
   }
 
   Widget build(BuildContext context) {
@@ -100,7 +106,7 @@ class _UserBioState extends State<UserBio> {
                 ),
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             )
           ]),

@@ -6,6 +6,7 @@ import 'package:school_match/ui/screens/forms/user_gender.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/ui/widgets/forms/user_birthdate_datepicker.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserBirthdate extends StatefulWidget {
   const UserBirthdate({super.key});
@@ -33,14 +34,23 @@ class _UserBirthdateState extends State<UserBirthdate> {
   }
 
   salvarDados() {
-    userController.setUserBirthdate(selectedDate!);
-    print(selectedDate);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserGender(),
-      ),
-    );
+    try {
+      userController.setUserBirthdate(selectedDate!);
+      print(selectedDate);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserGender(),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      if(e.toString() == "Null check operator used on a null value"){
+        Alerts.showErrorSnackBar("Pensa que vai aonde? Faltou sua data de aniversário!", context);
+        return;
+      }  
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
   }
 
   Widget build(BuildContext context) {

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserGender extends StatefulWidget {
   const UserGender({super.key});
@@ -21,13 +22,18 @@ class _UserGenderState extends State<UserGender> {
   }
 
   salvarDados() {
-    userController.setUserGender(selectedGenderId, selectedGenderName);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserSexuality(),
-      ),
-    );
+    try {
+      userController.setUserGender(selectedGenderId, selectedGenderName);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserSexuality(),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
   }
 
   late int selectedGenderId = 0; // Inicializa com 0 indicando nenhuma seleção
@@ -90,12 +96,18 @@ class _UserGenderState extends State<UserGender> {
                             vertical: 10.0), // Ajuste do espaçamento
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 15.0), // Tamanho do botão
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15.0), // Tamanho do botão
                             backgroundColor: gender['selected']
-                                ? Theme.of(context).colorScheme.onPrimary // Cor quando selecionado
-                                : Theme.of(context).primaryColor, // Cor quando não selecionado
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // Cor quando selecionado
+                                : Theme.of(context)
+                                    .primaryColor, // Cor quando não selecionado
                             side: BorderSide(
-                              color: Theme.of(context).colorScheme.onPrimary, // Borda
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimary, // Borda
                               width: 1.5,
                             ),
                             shape: RoundedRectangleBorder(
@@ -116,11 +128,16 @@ class _UserGenderState extends State<UserGender> {
                             child: Center(
                               child: Text(
                                 gender['name'],
-                                style: Theme.of(context).textTheme.labelMedium
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
                                     ?.copyWith(
                                       color: gender['selected']
-                                          ? Theme.of(context).primaryColor // Cor do texto quando selecionado
-                                          : Theme.of(context).colorScheme.onPrimary,
+                                          ? Theme.of(context)
+                                              .primaryColor // Cor do texto quando selecionado
+                                          : Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
                                     ),
                               ),
                             ),

@@ -56,6 +56,7 @@ class _UserImagesState extends State<UserImages> {
       }
       setState(() {});
     } catch (e) {
+      Alerts.showErrorSnackBar("Algo deu errado ao selecionar sua imagem. Tente novamente mais tarde!", context);
       print("Erro ao selecionar a imagem: $e");
     }
   }
@@ -69,7 +70,7 @@ class _UserImagesState extends State<UserImages> {
   void salvarDados() {
     try {
       userController.setUserImages(_imageFiles);
-      
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -77,6 +78,7 @@ class _UserImagesState extends State<UserImages> {
         ),
       );
     } catch (e) {
+      print(e);
       Alerts.showErrorSnackBar(e.toString(), context);
     }
     

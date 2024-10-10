@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_like_find.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserSexuality extends StatefulWidget {
   const UserSexuality({super.key});
@@ -21,14 +22,19 @@ class _UserSexualityState extends State<UserSexuality> {
   }
 
   salvarDados() {
-    userController.setUserSexuality(
-        selectedSexualityName, showSexualityInProfile);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => UserLikeFind(),
-      ),
-    );
+    try {
+      userController.setUserSexuality(
+          selectedSexualityName, showSexualityInProfile);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserLikeFind(),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      Alerts.showErrorSnackBar(e.toString(), context);
+    }
   }
 
   late int selectedSexualityId =
