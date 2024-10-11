@@ -19,7 +19,7 @@ SpotifyController spotifyController = Get.put(SpotifyController());
 NewUserController userController = Get.put(NewUserController());
 
 class _ShowMusicState extends State<ShowMusic> {
-   final AudioPlayerService _audioService = AudioPlayerService();
+  final AudioPlayerService _audioService = AudioPlayerService();
 
   @override
   void initState() {
@@ -50,7 +50,9 @@ class _ShowMusicState extends State<ShowMusic> {
                             String url = userController
                                 .userModel.selectedMusic!.previewUrl
                                 .toString();
-                            _audioService.togglePlayPause(userController.userModel.selectedMusic!.previewUrl.toString());
+                            _audioService.togglePlayPause(userController
+                                .userModel.selectedMusic!.previewUrl
+                                .toString());
                           }
                         },
                         child: Stack(
@@ -142,7 +144,11 @@ class _ShowMusicState extends State<ShowMusic> {
                   )
                 : Container(),
           ),
-          SizedBox(height: userController.userModel.hasMusic.isTrue ? 30 : 0),
+          Obx(
+            () => userController.userModel.hasMusic.isTrue
+                ? SizedBox(height: 30)
+                : SizedBox(height: 0),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(
                 vertical: 3.0), // Ajuste do espaçamento

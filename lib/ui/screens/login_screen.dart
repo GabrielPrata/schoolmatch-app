@@ -11,6 +11,7 @@ import 'package:school_match/ui/screens/forms/user_images.dart';
 import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
+import 'package:school_match/util/alerts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -49,6 +50,16 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
 
+    realizaCadastro() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          // builder: (_) => SelectThemeScreen(),
+          builder: (_) => SelectThemeScreen(),
+        ),
+      );
+    }
+
     showPass() {
       setState(() {
         passIsEnabled = !passIsEnabled;
@@ -59,10 +70,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         color: Theme.of(context).colorScheme.primary,
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.06,
-            left: MediaQuery.of(context).size.width * 0.08,
-            right: MediaQuery.of(context).size.width * 0.08,
-            ),
+          top: MediaQuery.of(context).size.height * 0.06,
+          left: MediaQuery.of(context).size.width * 0.08,
+          right: MediaQuery.of(context).size.width * 0.08,
+        ),
         child: ListView(
           children: <Widget>[
             SizedBox(
@@ -176,7 +187,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           ElevatedButton(
                             style: Theme.of(context).filledButtonTheme.style,
-                            onPressed: () => validaLogin(),
+                            onPressed: () => Alerts.showInfonackBar(
+                                "Funcionalidade ainda não desenvolvida!",
+                                context),
                             child: Text(
                               "ENTRAR",
                               style: Theme.of(context).textTheme.labelMedium,
@@ -186,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20,
                           ),
                           OutlinedButton(
-                            onPressed: () => validaLogin(),
+                            onPressed: () => realizaCadastro(),
                             child: Text(
                               "CRIAR CONTA",
                               style: Theme.of(context).textTheme.labelMedium,

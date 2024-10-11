@@ -29,6 +29,7 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
       await SpotifyService.getAuthToken();
     }
 
+    //Retirar essa lógica depois
     bool clearToken = false;
 
     if (clearToken) {
@@ -68,6 +69,7 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
   Widget build(BuildContext context) {
     double maxHeight = MediaQuery.of(context).size.height * 0.32;
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
@@ -93,17 +95,31 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
               SizedBox(height: 10),
               TextField(
                 controller: searchController,
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: Icon(Icons.search,
+                      color: Colors.black), // Cor do ícone
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: Icon(Icons.clear,
+                        color: Colors.black), // Cor do ícone clear
                     onPressed: () {
                       searchController.clear(); // Limpa o texto do TextField
                     },
                   ),
                   labelText: 'Sua música...',
+                  labelStyle:
+                      TextStyle(color: Colors.black), // Cor da label
                   border: OutlineInputBorder(),
                   filled: true,
+                  fillColor: Colors.grey.shade300,
+                  focusedBorder: OutlineInputBorder(
+                    // Borda quando o TextField está focado
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    // Borda quando o TextField não está focado
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
                 ),
               ),
               SizedBox(height: 30),

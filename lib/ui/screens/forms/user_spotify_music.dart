@@ -88,8 +88,10 @@ class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            SizedBox(
-             height: userController.userModel.hasMusic.isTrue ? MediaQuery.of(context).size.height * 0.155 : MediaQuery.of(context).size.height * 0.3
+            Obx(
+              () => userController.userModel.hasMusic.isTrue
+                  ? SizedBox(height: MediaQuery.of(context).size.height * 0.10)
+                  : SizedBox(height: MediaQuery.of(context).size.height * 0.3),
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

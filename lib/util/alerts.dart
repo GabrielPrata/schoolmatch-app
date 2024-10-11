@@ -45,6 +45,21 @@ class Alerts {
     }
   }
 
+  static showInfonackBar(String message, BuildContext context) {
+    final overlay = Overlay.of(context);
+    if (overlay != null) {
+      showTopSnackBar(
+        overlay,
+        CustomSnackBar.info(
+          message: message,
+        ),
+      );
+    } else {
+      // Optionally handle the case where no overlay is found
+      print("No overlay found in current context.");
+    }
+  }
+
   static showAlertLogoutDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       title: Text("Você realmente deseja sair do app?",
@@ -105,6 +120,7 @@ class Alerts {
   static showAlertConfirmDialogMusic(
       BuildContext context, MusicAdapter track, Function action) {
     AlertDialog alert = AlertDialog(
+      backgroundColor: Colors.grey.shade300,
       title: Text(
         "Você realmente deseja adicionar essa música?",
         style: Theme.of(context)

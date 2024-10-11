@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/models/enums/themes.dart';
+import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/screens/notification_screen.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
@@ -37,7 +38,8 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => NotificationScreen(),
+        // builder: (_) => NotificationScreen(),
+        builder: (_) => UserSpotifyMusic(),
       ),
     );
   }

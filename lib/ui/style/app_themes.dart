@@ -5,10 +5,9 @@ class AppThemes {
   final BuildContext context;
   double screenWidth = 375;
 
-   AppThemes(this.context) {
+  AppThemes(this.context) {
     screenWidth = MediaQuery.of(context).size.width;
   }
-
 
   static const Color successGreen = Color(0xFF388E3C);
   static const Color errorColor = Color(0xFFD32F2F);
@@ -180,16 +179,15 @@ class AppThemes {
     return ThemeData(
       primaryColor: Colors.white,
       colorScheme: const ColorScheme(
-        brightness: Brightness.light,
-        primary: Colors.white,
-        secondary: secondaryColor,
-        surface: Color(0xFFBDBDBD),
-        error: errorColor,
-        onPrimary: Color(0xFF000000),
-        onSecondary: Colors.black,
-        onSurface: Color(0xFFC0C0C0),
-        onError: Color(0xFF696969),
-      ),
+          brightness: Brightness.light,
+          primary: Colors.white,
+          secondary: secondaryColor,
+          surface: Color(0xFFBDBDBD),
+          error: errorColor,
+          onPrimary: Color(0xFF000000),
+          onSecondary: Colors.black,
+          onSurface: Color(0xFFC0C0C0),
+          onError: Color(0xFF575757)),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
           fontSize: calculate(36),
