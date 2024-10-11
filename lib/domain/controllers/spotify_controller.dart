@@ -22,7 +22,6 @@ class SpotifyController extends GetxController {
       musicAdapter.albumName = track.album.name;
       musicAdapter.imageUrl = track.album.images.first.url;
       musicAdapter.previewUrl = track.previewUrl;
-
       convertedMusics.add(musicAdapter);
     }
   }

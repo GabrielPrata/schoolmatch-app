@@ -76,6 +76,7 @@ class _UserLastNameState extends State<UserLastName> {
             ),
             SizedBox(
               child: TextField(
+                textCapitalization: TextCapitalization.sentences,
                 controller: inputController,
                 style: Theme.of(context).textTheme.labelMedium,
                 cursorColor: Theme.of(context).colorScheme.surface,

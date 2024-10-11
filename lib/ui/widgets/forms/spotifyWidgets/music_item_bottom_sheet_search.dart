@@ -33,18 +33,18 @@ class _MusicItemBottomSheetSearchState
 
   @override
   Widget build(BuildContext context) {
-    setUserMusic(){
-      try{
+    setUserMusic() {
+      try {
         userController.setUserMusic(widget.track);
         AudioPlayerService().stopMusic();
         Alerts.showSuccessSnackBar("Música definida com sucesso!", context);
 
         Get.back();
-      } catch (e){
+      } catch (e) {
         print(e);
-        Alerts.smartErrorSnackBar("Erro ao definir a música, tente novamente mais tarde!", context);
+        Alerts.smartErrorSnackBar(
+            "Erro ao definir a música, tente novamente mais tarde!", context);
       }
-
     }
 
     return Container(
@@ -88,44 +88,40 @@ class _MusicItemBottomSheetSearchState
           ),
           SizedBox(width: 10),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("${widget.track.musicName}",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700)),
-                SizedBox(height: 5),
-                Text("Album: ${widget.track.albumName}",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade700,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600)),
-                Text("Artistas: ${widget.track.convertArtistListoToString()}",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade500,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600)),
-              ],
+            child: Container(
+              height: 100,
+              child: InkWell(
+                splashColor: Color(0xFF1ED760),
+                onTap: () {
+                  Alerts.showAlertConfirmDialogMusic(
+                      context, widget.track, setUserMusic);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${widget.track.musicName}",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700)),
+                    SizedBox(height: 5),
+                    Text("Album: ${widget.track.albumName}",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey.shade700,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600)),
+                    Text(
+                        "Artistas: ${widget.track.convertArtistListoToString()}",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey.shade500,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ),
             ),
           ),
-          Column(
-            children: [
-              Text("É esssa!",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600)),
-              IconButton(
-                icon: Icon(Icons.check_circle),
-                color: Color(0xFF1ED760),
-                onPressed: () {
-                  Alerts.showAlertConfirmDialogMusic(context, widget.track, setUserMusic);
-                },
-              ),
-            ],
-          )
         ],
       ),
     );

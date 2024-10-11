@@ -38,8 +38,8 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        // builder: (_) => NotificationScreen(),
-        builder: (_) => UserSpotifyMusic(),
+        builder: (_) => NotificationScreen(),
+        // builder: (_) => UserSpotifyMusic(),
       ),
     );
   }

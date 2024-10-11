@@ -19,41 +19,34 @@ class SearchMusicBottomSheet extends StatefulWidget {
 
 TextEditingController searchController = TextEditingController();
 SpotifyController spotifyController = Get.put(SpotifyController());
+SpotifyService spotifyService = SpotifyService();
+final GetStorage box = GetStorage();
 
 class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
   final GetStorage box = GetStorage();
 
-  findMusic(String? token, String search) async {
+  findMusic(String search) async {
     spotifyController.isLoading.trigger(true);
-    if (token == null || token.isEmpty) {
-      await SpotifyService.getAuthToken();
-    }
 
-    //Retirar essa lógica depois
-    bool clearToken = false;
-
-    if (clearToken) {
-      box.remove("spotifyToken");
+    if (box.read("spotifyToken") == "" || box.read("spotifyToken") == null) {
+      await spotifyService.getAuthToken();
     }
 
     try {
-      var musics = await SpotifyService.findMusicByName(
+      var musics = await spotifyService.findMusicByName(
         userSearch: search,
-        jwtToken: token!,
       );
-
       if (musics.statusCode != 200) {
-        print("obtendo um novo token");
-        if (musics.statusCode == 401) {
+        if (musics.statusCode == 401 || musics.statusCode == 400) {
           //Esta caindo no catch na redundância, apresentando um erro "incorreto" para o usuário
-          await SpotifyService.getAuthToken();
-          await findMusic(box.read("spotifyToken").toString(), search);
+          await spotifyService.getAuthToken();
+          await findMusic(search);
         }
         // return Alerts.showErrorSnackBar("Erro ao conectar-se com o serviço do Spotify. Tente novamente mais tarde!", context);
       }
-
       var jsonMusics = jsonDecode(musics.body);
       spotifyController.searchResponse = TrackResponse.fromJson(jsonMusics);
+
       spotifyController.convertSpotifyModelToSystemModel();
     } catch (e) {
       print("Erro ao buscar a música: " + e.toString());
@@ -67,11 +60,11 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    double maxHeight = MediaQuery.of(context).size.height * 0.32;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
+    double maxHeight = MediaQuery.of(context).size.height * 0.55;
+    return FractionallySizedBox(
+      heightFactor: 0.8,
+      // backgroundColor: Colors.white,
+      child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
             top: 20,
@@ -82,23 +75,12 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
               TextField(
                 controller: searchController,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search,
-                      color: Colors.black), // Cor do ícone
+                  prefixIcon:
+                      Icon(Icons.search, color: Colors.black), // Cor do ícone
                   suffixIcon: IconButton(
                     icon: Icon(Icons.clear,
                         color: Colors.black), // Cor do ícone clear
@@ -107,8 +89,7 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
                     },
                   ),
                   labelText: 'Sua música...',
-                  labelStyle:
-                      TextStyle(color: Colors.black), // Cor da label
+                  labelStyle: TextStyle(color: Colors.black), // Cor da label
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.grey.shade300,
@@ -128,10 +109,14 @@ class _SearchMusicBottomSheetState extends State<SearchMusicBottomSheet> {
                   backgroundColor:
                       WidgetStatePropertyAll<Color>(Color(0xFF1ED760)),
                 ),
-                onPressed: () => {
-                  findMusic(box.read("spotifyToken"), searchController.text),
-                  AudioPlayerService().stopMusic(),
-                  FocusScope.of(context).unfocus(),
+                onPressed: ()  {
+                  if(searchController.text.isEmpty){
+                    Alerts.showInfonackBar("Digite algo para poder buscar!", context);
+                    return;
+                  }
+                  findMusic(searchController.text);
+                  AudioPlayerService().stopMusic();
+                  FocusScope.of(context).unfocus();
                 },
                 child: Text(
                   "Buscar...",
