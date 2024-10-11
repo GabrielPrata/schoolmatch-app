@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:school_match/domain/controllers/auth_controller.dart';
+import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/ui/style/app_themes.dart';
 import 'package:smart_snackbars/smart_snackbars.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ class Alerts {
     final overlay = Overlay.of(context);
     if (overlay != null) {
       showTopSnackBar(
-        
         overlay,
         CustomSnackBar.error(
           maxLines: 5,
@@ -95,6 +95,131 @@ class Alerts {
         )
       ],
     );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
+  }
+
+  static showAlertConfirmDialogMusic(
+      BuildContext context, MusicAdapter track, Function action) {
+    AlertDialog alert = AlertDialog(
+      title: Text(
+        "Você realmente deseja adicionar essa música?",
+        style: Theme.of(context)
+            .textTheme
+            .labelSmall
+            ?.copyWith(color: Colors.black, fontSize: 20),
+        textAlign: TextAlign.center,
+      ),
+      content: SingleChildScrollView(
+        // Usando SingleChildScrollView para evitar overflow
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // Para manter o conteúdo compacto
+          children: [
+            if (track.imageUrl != null) // Mostrar a imagem se disponível
+              Image.network(
+                track.imageUrl!,
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              track.musicName, // Nome da música
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20),
+            ),
+            if (track.albumName !=
+                null) // Mostrar o nome do álbum se disponível
+              Padding(
+                padding: const EdgeInsets.only(top: 2.0),
+                child: Text(
+                  "Álbum: ${track.albumName}",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey.shade700,
+                        fontSize: 16,
+                      ),
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Text(
+                "Artistas: ${track.convertArtistListoToString()}", // Lista de artistas
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Colors.grey.shade700, fontSize: 16),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            )
+          ],
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.red.shade500),
+          onPressed: () => Get.back(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.close,
+                color: Colors.white,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Não",
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        ElevatedButton(
+          onPressed: () => action(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Sim!",
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+              ),
+            ],
+          ),
+          style:
+              ElevatedButton.styleFrom(backgroundColor: Colors.green.shade500),
+        )
+      ],
+    );
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -193,7 +318,7 @@ class Alerts {
   }
 
   //Smart snack bars
-  static smartSuccessSnackBar(BuildContext context, String message,
+  static smartSuccessSnackBar(String message, BuildContext context,
       {Color? color}) {
     return SmartSnackBars.showTemplatedSnackbar(
       context: context,
@@ -210,7 +335,7 @@ class Alerts {
     );
   }
 
-  static smartErrorSnackBar(BuildContext context, String message,
+  static smartErrorSnackBar(String message, BuildContext context, 
       {Color? color}) {
     return SmartSnackBars.showTemplatedSnackbar(
       context: context,
@@ -227,7 +352,7 @@ class Alerts {
     );
   }
 
-  static smartWarningSnackBar(BuildContext context, String message,
+  static smartWarningSnackBar(String message, BuildContext context, 
       {Color? color}) {
     return SmartSnackBars.showTemplatedSnackbar(
       context: context,

@@ -68,7 +68,7 @@ class _UserMailFormState extends State<UserMailForm> {
             ),
             SizedBox(
                 child: Text(
-              "Qual o seu e-mail @alunos.fho.edu.br?",
+              "Qual seu e-mail @alunos.fho.edu.br?",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
@@ -106,7 +106,7 @@ class _UserMailFormState extends State<UserMailForm> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.42,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

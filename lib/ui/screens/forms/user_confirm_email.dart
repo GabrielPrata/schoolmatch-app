@@ -63,7 +63,7 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.41,
+              height: MediaQuery.of(context).size.height * 0.43,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

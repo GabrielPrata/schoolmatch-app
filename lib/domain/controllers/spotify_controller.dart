@@ -1,17 +1,29 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:school_match/domain/services/spotify_service.dart';
-// import 'package:rc_mineracao/domain/services/auth_service.dart';
-// import 'package:rc_mineracao/ui/screens/home_page.dart';
-// import 'package:rc_mineracao/ui/screens/login_page.dart';
-// import 'package:rc_mineracao/ui/screens/select_subsidiary_page.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import '../../util/constants.dart';
+import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
+import 'package:school_match/domain/models/spotifyModels/trackResponse.dart';
 
 class SpotifyController extends GetxController {
+  late TrackResponse searchResponse;
+
+  List<MusicAdapter> convertedMusics = [];
+
   var errorText = false.obs;
   var isLoading = false.obs;
 
- 
+  convertSpotifyModelToSystemModel() {
+    convertedMusics.clear();
+    for (var track in searchResponse.items) {
+      MusicAdapter musicAdapter = MusicAdapter(musicName: "", artistName: []);
+
+      for (var artist in track.artists) {
+        musicAdapter.artistName.add(artist.name.toString());
+      }
+      musicAdapter.musicName = track.name;
+      musicAdapter.albumName = track.album.name;
+      musicAdapter.imageUrl = track.album.images.first.url;
+      musicAdapter.previewUrl = track.previewUrl;
+
+      convertedMusics.add(musicAdapter);
+    }
+  }
 }

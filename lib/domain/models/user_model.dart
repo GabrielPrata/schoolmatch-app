@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 
 class UserModel {
   String? firstName;
@@ -44,6 +46,9 @@ class UserModel {
 
   bool? showSexuality;
 
+  RxBool hasMusic = false.obs;
+  MusicAdapter? selectedMusic;
+
   UserModel({
     this.firstName,
     this.lastName,
@@ -74,16 +79,16 @@ class UserModel {
     this.smoker,
     this.physicalActivity,
     this.typeOfOuting,
-    this.music,
     List<XFile?>? images,
     this.showSexuality,
-  }) : secondaryBlockIds = secondaryBlockIds ?? <int?>[],
-       secondaryBlocks = secondaryBlocks ?? <String?>[],
-       preferenceIds = preferenceIds ?? <int?>[],
-       preferenceNames = preferenceNames ?? <String?>[],
-       interests = interests ?? <String?>[],
-       images = images ?? <XFile?>[] {}
-
+    required this.hasMusic,
+    this.selectedMusic,
+  })  : secondaryBlockIds = secondaryBlockIds ?? <int?>[],
+        secondaryBlocks = secondaryBlocks ?? <String?>[],
+        preferenceIds = preferenceIds ?? <int?>[],
+        preferenceNames = preferenceNames ?? <String?>[],
+        interests = interests ?? <String?>[],
+        images = images ?? <XFile?>[] {}
   @override
   String toString() {
     return '''
@@ -119,7 +124,9 @@ UserModel{
   typeOfOuting: $typeOfOuting,
   music: $music,
   images: ${images.map((x) => x?.path).join(", ")},
-  showSexuality: $showSexuality
+  showSexuality: $showSexuality,
+  hasMusic: $hasMusic,
+  selectedMusic: ${selectedMusic?.toString() ?? 'None'},
 }''';
   }
 }

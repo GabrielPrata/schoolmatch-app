@@ -1,18 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/controllers/spotify_controller.dart';
-import 'package:school_match/domain/models/spotifyModels/track.dart';
-import 'package:school_match/domain/models/spotifyModels/trackResponse.dart';
-import 'package:school_match/domain/services/spotify_service.dart';
 import 'package:school_match/ui/screens/forms/user_lastname.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
-import 'package:school_match/util/alerts.dart';
+import 'package:school_match/ui/widgets/forms/spotifyWidgets/show_music.dart';
 
 class UserSpotifyMusic extends StatefulWidget {
   const UserSpotifyMusic({super.key});
@@ -21,48 +16,23 @@ class UserSpotifyMusic extends StatefulWidget {
   State<UserSpotifyMusic> createState() => _UserSpotifyMusicState();
 }
 
-NewUserController userController = Get.put(NewUserController());
 TextEditingController inputController = TextEditingController();
-SpotifyController spotify = SpotifyController();
+SpotifyController spotifyController = Get.put(SpotifyController());
+NewUserController userController = Get.put(NewUserController());
+
 final GetStorage box = GetStorage();
 
 class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
+  String userSearch = "Matue";
+
   @override
   void initState() {
     userController.step += 1;
     super.initState();
   }
 
-  findMusic(String token, String userSearch) async {
-    try {
-      var musics = await SpotifyService.findMusicByName(
-        userSearch: userSearch,
-        jwtToken: token,
-      );
-
-      if (musics.statusCode != 200) {
-        print("obtendo um novo token");
-        if (musics.statusCode == 401) {
-          SpotifyService.getAuthToken();
-          findMusic(box.read("spotifyToken").toString(), userSearch);
-        }
-        return Alerts.showErrorSnackBar("Erro ao conectar-se com o serviço do Spotify. Tente novamente mais tarde!", context);
-      }
-
-      var jsonMusics = jsonDecode(musics.body);
-      TrackResponse returnedTracks = TrackResponse.fromJson(jsonMusics);
-
-      for (Track item in returnedTracks.items) {
-        print(item.name);
-      }
-    } catch (e) {
-      print("Erro ao buscar a música: " + e.toString());
-      return Alerts.showErrorSnackBar("Erro ao conectar-se com o serviço do Spotify. Tente novamente mais tarde!", context);
-    }
-  }
-
   salvarDados() {
-    userController.setUserName(inputController.text);
+    // userController.setUserName(inputController.text);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -109,154 +79,17 @@ class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
             ),
             SizedBox(
                 child: Text(
-              "Atenção! É necessário ter uma conta no Spotify!",
+              "Não é necessário ter uma conta no Spotify!",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             )),
+            SizedBox(height: 30),
+            ShowMusic(),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            Container(
-              padding: EdgeInsets.all(20),
-              width: 300,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onError,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width:
-                            100, // Garante que a imagem tem largura fixa de 100
-                        height:
-                            100, // Garante que a imagem tem altura fixa de 100
-                        child: Image.network(
-                          'https://placehold.co/100/png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(
-                          width:
-                              10), // Adiciona um espaço entre a imagem e o texto
-                      Expanded(
-                        // Faz o texto ocupar o espaço restante na linha
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment
-                              .start, // Alinha os textos à esquerda
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.volume_up,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Minha Música:",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium
-                                      ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurface),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text("Reza do Milhão",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                            SizedBox(height: 5),
-                            Text(
-                              "Matuê - Sabor Overdose no Yakisoba",
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  // TextButton(
-                  //   style: TextButton.styleFrom(
-                  //     backgroundColor: Colors.green,
-                  //     padding:
-                  //         EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  //   ),
-                  //   onPressed: () {
-                  //     // Adicione a lógica para escolher a música
-                  //   },
-                  //   child: Row(
-                  //     mainAxisSize: MainAxisSize.min,
-                  //     children: [
-                  //       Icon(Icons.music_note, color: Colors.white),
-                  //       SizedBox(width: 10),
-                  //       Text(
-                  //         "ESCOLHER MÚSICA",
-                  //         style: TextStyle(color: Colors.white),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 3.0), // Ajuste do espaçamento
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0), // Tamanho do botão
-                        backgroundColor: Theme.of(context)
-                            .colorScheme
-                            .onError, // Cor quando não selecionado
-                        side: BorderSide(
-                          color: Color(0xFF1ED760), // Borda
-                          width: 1.5,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      onPressed: () {
-                        findMusic(box.read("spotifyToken").toString(), "matue");
-                      },
-                      child: SizedBox(
-                        width: double.infinity, // Largura do botão
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment
-                              .center, // Centraliza os elementos no Row
-                          children: [
-                            SizedBox(
-                              height: 35,
-                              child: Image.asset('assets/spotifyIcon.png'),
-                            ),
-                            SizedBox(
-                                width:
-                                    20), // Adiciona espaço entre a imagem e o texto
-                            Text(
-                              "Escolher Música",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                    color: Color(0xFF1ED760),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.15,
+             height: userController.userModel.hasMusic.isTrue ? MediaQuery.of(context).size.height * 0.155 : MediaQuery.of(context).size.height * 0.3
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

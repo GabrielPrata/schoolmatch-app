@@ -30,7 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Container(
         color: Theme.of(context).colorScheme.primary,
         padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.08,
+          top: MediaQuery.of(context).size.height * 0.07,
           left: MediaQuery.of(context).size.width * 0.07,
           right: MediaQuery.of(context).size.width * 0.07,
         ),

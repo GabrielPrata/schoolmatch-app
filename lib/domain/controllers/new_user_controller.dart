@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/util/custom_exception.dart';
 import 'package:school_match/util/validations.dart';
@@ -14,7 +15,7 @@ class NewUserController extends GetxController {
   int step = 0;
 
   // Salvando os valores diretamente no objeto, acessando a controller ao longo das páginas
-  UserModel userModel = new UserModel();
+  UserModel userModel = new UserModel(hasMusic: RxBool(false));
 
   // Métodos para coleta de dados dos formulários.
   // As validações devem ser feitas aqui.
@@ -198,5 +199,11 @@ class NewUserController extends GetxController {
   setUserInterests(List<String> interests) {
     userModel.interests.clear();
     userModel.interests = interests;
+  }
+
+  setUserMusic(MusicAdapter track){
+      userModel.selectedMusic = track;
+      userModel.hasMusic?.trigger(true);
+      Get.back();
   }
 }

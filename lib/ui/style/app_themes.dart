@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
+  final BuildContext context;
+  double screenWidth = 375;
+
+   AppThemes(this.context) {
+    screenWidth = MediaQuery.of(context).size.width;
+  }
+
+
   static const Color successGreen = Color(0xFF388E3C);
   static const Color errorColor = Color(0xFFD32F2F);
   static const Color yellowWarning = Color(0xFFFBC02D);
   static const Color greyColor = Color(0xFFBABABA);
   static const Color secondaryColor = Color(0xFFFF0000);
 
-  static ThemeData get classicTheme {
+  ThemeData get classicTheme {
     return ThemeData(
       primaryColor: Color(0xFF110231),
       colorScheme: const ColorScheme(
@@ -24,47 +32,47 @@ class AppThemes {
       ),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
-          fontSize: 36,
+          fontSize: calculate(36),
           fontWeight: FontWeight.w900,
           color: Colors.white,
         ),
         titleMedium: GoogleFonts.montserrat(
-          fontSize: 32,
+          fontSize: calculate(32),
           fontWeight: FontWeight.w900,
           color: Colors.white,
         ),
         titleSmall: GoogleFonts.montserrat(
-          fontSize: 26,
+          fontSize: calculate(26),
           fontWeight: FontWeight.w900,
           color: Colors.white,
         ),
         bodyMedium: GoogleFonts.montserrat(
-          fontSize: 24,
+          fontSize: calculate(24),
           fontWeight: FontWeight.w400,
           color: Colors.white,
         ),
         bodySmall: GoogleFonts.montserrat(
-          fontSize: 18,
+          fontSize: calculate(18),
           fontWeight: FontWeight.w400,
           color: Colors.white,
         ),
         labelMedium: GoogleFonts.montserrat(
-          fontSize: 17,
+          fontSize: calculate(17),
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
         labelLarge: GoogleFonts.montserrat(
-          fontSize: 24,
+          fontSize: calculate(24),
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
         labelSmall: GoogleFonts.montserrat(
-          fontSize: 17,
+          fontSize: calculate(17),
           fontWeight: FontWeight.w600,
           color: Color(0xFF110231),
         ),
         headlineSmall: GoogleFonts.montserrat(
-          fontSize: 20,
+          fontSize: calculate(20),
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -88,7 +96,7 @@ class AppThemes {
     );
   }
 
-  static ThemeData get darkTheme {
+  ThemeData get darkTheme {
     return ThemeData(
       primaryColor: Color(0xFF1B1B1B),
       colorScheme: ColorScheme(
@@ -104,47 +112,47 @@ class AppThemes {
       ),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
-          fontSize: 36,
+          fontSize: calculate(36),
           fontWeight: FontWeight.w900,
           color: Colors.white,
         ),
         titleMedium: GoogleFonts.montserrat(
-          fontSize: 32,
+          fontSize: calculate(32),
           fontWeight: FontWeight.w900,
           color: Colors.white,
         ),
         titleSmall: GoogleFonts.montserrat(
-          fontSize: 26,
+          fontSize: calculate(26),
           fontWeight: FontWeight.w900,
           color: Colors.white,
         ),
         bodyMedium: GoogleFonts.montserrat(
-          fontSize: 24,
+          fontSize: calculate(24),
           fontWeight: FontWeight.w400,
           color: Colors.white,
         ),
         bodySmall: GoogleFonts.montserrat(
-          fontSize: 18,
+          fontSize: calculate(18),
           fontWeight: FontWeight.w400,
           color: Colors.white,
         ),
         labelMedium: GoogleFonts.montserrat(
-          fontSize: 17,
+          fontSize: calculate(17),
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
         labelLarge: GoogleFonts.montserrat(
-          fontSize: 24,
+          fontSize: calculate(24),
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
         labelSmall: GoogleFonts.montserrat(
-          fontSize: 17,
+          fontSize: calculate(17),
           fontWeight: FontWeight.w600,
           color: Color(0xFF1B1B1B),
         ),
         headlineSmall: GoogleFonts.montserrat(
-          fontSize: 20,
+          fontSize: calculate(20),
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -168,7 +176,7 @@ class AppThemes {
     );
   }
 
-  static ThemeData get lightTheme {
+  ThemeData get lightTheme {
     return ThemeData(
       primaryColor: Colors.white,
       colorScheme: const ColorScheme(
@@ -184,47 +192,47 @@ class AppThemes {
       ),
       textTheme: TextTheme(
         titleLarge: GoogleFonts.montserrat(
-          fontSize: 36,
+          fontSize: calculate(36),
           fontWeight: FontWeight.w900,
           color: Colors.black,
         ),
         titleMedium: GoogleFonts.montserrat(
-          fontSize: 32,
+          fontSize: calculate(32),
           fontWeight: FontWeight.w900,
           color: Colors.black,
         ),
         titleSmall: GoogleFonts.montserrat(
-          fontSize: 26,
+          fontSize: calculate(26),
           fontWeight: FontWeight.w900,
           color: Colors.black,
         ),
         bodyMedium: GoogleFonts.montserrat(
-          fontSize: 24,
+          fontSize: calculate(24),
           fontWeight: FontWeight.w400,
           color: Colors.black,
         ),
         bodySmall: GoogleFonts.montserrat(
-          fontSize: 18,
+          fontSize: calculate(18),
           fontWeight: FontWeight.w400,
           color: Colors.black,
         ),
         labelMedium: GoogleFonts.montserrat(
-          fontSize: 17,
+          fontSize: calculate(17),
           fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
         labelLarge: GoogleFonts.montserrat(
-          fontSize: 24,
+          fontSize: calculate(24),
           fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
         labelSmall: GoogleFonts.montserrat(
-          fontSize: 17,
+          fontSize: calculate(17),
           fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
         headlineSmall: GoogleFonts.montserrat(
-          fontSize: 20,
+          fontSize: calculate(20),
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -247,22 +255,13 @@ class AppThemes {
       ),
     );
   }
+
+  double calculate(double baseSize) {
+    // Define um tamanho base para a largura de 375 pixels (um ponto de referência comum)
+    const double baseWidth = 450;
+    // Define um fator de escala baseado na largura da tela
+    double scaleFactor = screenWidth / baseWidth;
+    // Retorna um tamanho de fonte base proporcional
+    return baseSize * scaleFactor;
+  }
 }
-
-// static void classicTheme() {
-//     Color primaryColor = Color(0xFF110231);
-//     Color primaryVariant = Color(0xFF0B0022);
-//     Color primaryTextColor = Color(0xFFFFFFFF);
-//   }
-
-//   static void darkTheme() {
-//     Color primaryColor = Color(0x1B1B1B);
-//     Color primaryVariant = Color(0xFF080808);
-//     Color primaryTextColor = Color(0xFFFFFFFF);
-//   }
-
-//   static void lightTheme() {
-//     Color primaryColor = Color(0xFFFFFFFF);
-//     Color primaryVariant = Color(0xFFBDBDBD);
-//     Color primaryTextColor = Color(0xFF000000);
-//   }

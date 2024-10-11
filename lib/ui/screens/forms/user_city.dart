@@ -80,7 +80,7 @@ class _UserCityState extends State<UserCity> {
               controller: inputController,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.42,
+              height: MediaQuery.of(context).size.height * 0.45,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,

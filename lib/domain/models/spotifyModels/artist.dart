@@ -1,6 +1,6 @@
 class Artist {
   final String id;
-  final String name;
+  final String? name;
   final String uri;
 
   Artist({

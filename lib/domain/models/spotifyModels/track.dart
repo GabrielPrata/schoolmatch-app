@@ -1,6 +1,8 @@
+import 'package:school_match/domain/models/spotifyModels/album.dart';
 import 'package:school_match/domain/models/spotifyModels/artist.dart';
 
 class Track {
+  final Album album;
   final List<Artist> artists;
   final Map<String, dynamic> externalIds;
   final String href;
@@ -11,6 +13,7 @@ class Track {
   final String uri;
 
   Track({
+    required this.album,
     required this.artists,
     required this.externalIds,
     required this.href,
@@ -23,6 +26,7 @@ class Track {
 
   factory Track.fromJson(Map<String, dynamic> json) {
     return Track(
+      album: Album.fromJson(json['album']),
       artists:
           List<Artist>.from(json['artists'].map((x) => Artist.fromJson(x))),
       externalIds: json['external_ids'],

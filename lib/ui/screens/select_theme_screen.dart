@@ -34,7 +34,6 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
   }
 
   SalvarTema() {
-    userController.setUserName(inputController.text);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -169,7 +168,7 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.26,
+            height: MediaQuery.of(context).size.height * 0.22,
           ),
           ElevatedButton(
             style: Theme.of(context).filledButtonTheme.style,

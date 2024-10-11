@@ -41,7 +41,7 @@ class Validations {
     if (!letterRegex.hasMatch(password) ||
         !numberRegex.hasMatch(password) ||
         !specialCharRegex.hasMatch(password)) {
-      return 'A gente sabe que é um **, mas é pro seu bem. Sua senha deve conter ao menos um número, uma letra e um caracter especial';
+      return 'A gente sabe que é chato, mas é pro seu bem. Sua senha deve conter ao menos um número, uma letra e um caracter especial';
     }
 
     if (confirmPassword != password) {
@@ -93,7 +93,7 @@ class Validations {
 
   static String? validateImages(List<XFile> images) {
     if (images.length < 2!) {
-      return 'Escolha menos duas fotos!';
+      return 'Escolha pelo menos duas fotos!';
     }
 
     if (images.length > 6!) {
