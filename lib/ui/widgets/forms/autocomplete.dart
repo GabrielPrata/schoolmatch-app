@@ -98,7 +98,7 @@ class _CitiesAutocompleteState extends State<CitiesAutocomplete> {
                     95, // This will match the padding of the main body
                 color: Theme.of(context)
                     .colorScheme
-                    .surface, // Use a different background color
+                    .surface,
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemCount: options.length,
@@ -113,7 +113,7 @@ class _CitiesAutocompleteState extends State<CitiesAutocomplete> {
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme
-                                    .onSurface)), // Text color
+                                    .onSecondary)), // Text color
                       ),
                     );
                   },

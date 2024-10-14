@@ -41,7 +41,7 @@ class Validations {
     if (!letterRegex.hasMatch(password) ||
         !numberRegex.hasMatch(password) ||
         !specialCharRegex.hasMatch(password)) {
-      return 'A gente sabe que é chato, mas é pro seu bem. Sua senha deve conter ao menos um número, uma letra e um caracter especial';
+      return 'Sabemos que é chato, mas a sua senha deve conter ao menos um número, uma letra e um caracter especial';
     }
 
     if (confirmPassword != password) {

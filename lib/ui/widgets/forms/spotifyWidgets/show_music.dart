@@ -170,6 +170,7 @@ class _ShowMusicState extends State<ShowMusic> {
               onPressed: () {
                 // await findMusic(box.read("spotifyToken").toString(), "lady gaga");
                 showModalBottomSheet(
+                    backgroundColor: Colors.white,
                     isScrollControlled: true,
                     context: context,
                     enableDrag: true,

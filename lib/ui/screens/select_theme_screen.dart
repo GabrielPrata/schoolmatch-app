@@ -21,169 +21,82 @@ TextEditingController inputController = TextEditingController();
 
 class _SelectThemeScreenState extends State<SelectThemeScreen> {
   Themes _selectedTheme = Themes.classicTheme;
-  bool _isInit = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      final themeProvider = Provider.of<ThemeProvider>(context);
-      _selectedTheme =
-          themeProvider.getCurrentTheme(); // Obter o tema atual do Provider
-      _isInit = false;
-    }
-  }
-
-  SalvarTema() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => NotificationScreen(),
-        // builder: (_) => UserSpotifyMusic(),
-      ),
-    );
-  }
-
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Scaffold(
       body: Container(
         color: Theme.of(context).colorScheme.primary,
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.08,
-          left: MediaQuery.of(context).size.width * 0.07,
-          right: MediaQuery.of(context).size.width * 0.07,
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.08,
+          horizontal: MediaQuery.of(context).size.width * 0.07,
         ),
-        child: ListView(children: <Widget>[
-          SizedBox(
-            width: 300,
-            height: 150,
-            child: Theme.of(context).brightness == Brightness.dark
-                ? Image.asset("assets/LogoSchoolMatchBranca.png")
-                : Image.asset("assets/LogoSchoolMatch.png"),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
-          ),
-          SizedBox(
-            child: Text(
+        child: ListView(
+          children: <Widget>[
+            SizedBox(
+              width: 300,
+              height: 150,
+              child: Theme.of(context).brightness == Brightness.dark
+                  ? Image.asset("assets/LogoSchoolMatchBranca.png")
+                  : Image.asset("assets/LogoSchoolMatch.png"),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            Text(
               "Escolha o tema que mais combina com você!",
               style: Theme.of(context).textTheme.titleSmall,
               textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-          ),
-          ListTile(
-            title: Text('Tema Clássico',
-                style: Theme.of(context).textTheme.labelLarge),
-            leading: Transform.scale(
-              scale: 1.35, // Aumenta o tamanho do Radio
-              child: Radio<Themes>(
-                value: Themes.classicTheme,
-                groupValue: _selectedTheme,
-                activeColor: Theme.of(context)
-                    .colorScheme
-                    .secondary, // Cor quando o radio está selecionado
-                fillColor: WidgetStateProperty.resolveWith<Color>(
-                    (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return Theme.of(context)
-                        .colorScheme
-                        .secondary; // Cor quando selecionado
-                  }
-                  return Colors.grey; // Cor padrão quando não selecionado
-                }),
-                onChanged: (Themes? value) {
-                  setState(() {
-                    _selectedTheme = value!;
-                    themeProvider.setTheme(
-                        _selectedTheme); // Atualiza o tema globalmente
-                  });
-                },
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            buildThemeOptionTile(context, 'Tema Clássico', Themes.classicTheme),
+            buildThemeOptionTile(context, 'Tema Escuro', Themes.darkTheme),
+            buildThemeOptionTile(context, 'Tema Claro', Themes.lightTheme),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.22),
+            ElevatedButton(
+              style: Theme.of(context).filledButtonTheme.style,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => NotificationScreen()),
               ),
+              child: Text("PRONTO!",
+                  style: Theme.of(context).textTheme.labelMedium),
             ),
-          ),
-          ListTile(
-            title: Text(
-              'Tema Escuro',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            leading: Transform.scale(
-              scale: 1.35, // Aumenta o tamanho do Radio
-              child: Radio<Themes>(
-                value: Themes.darkTheme,
-                groupValue: _selectedTheme,
-                activeColor: Theme.of(context)
-                    .colorScheme
-                    .secondary, // Cor quando o radio está selecionado
-                fillColor: WidgetStateProperty.resolveWith<Color>(
-                    (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return Theme.of(context)
-                        .colorScheme
-                        .secondary; // Cor quando selecionado
-                  }
-                  return Colors.grey; // Cor padrão quando não selecionado
-                }),
-                onChanged: (Themes? value) {
-                  setState(() {
-                    _selectedTheme = value!;
-                    themeProvider.setTheme(
-                        _selectedTheme); // Atualiza o tema globalmente
-                  });
-                },
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Tema Claro',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            leading: Transform.scale(
-              scale: 1.35, // Aumenta o tamanho do Radio
-              child: Radio<Themes>(
-                value: Themes.lightTheme,
-                groupValue: _selectedTheme,
-                activeColor: Theme.of(context)
-                    .colorScheme
-                    .secondary, // Cor quando o radio está selecionado
-                fillColor: WidgetStateProperty.resolveWith<Color>(
-                    (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return Theme.of(context)
-                        .colorScheme
-                        .secondary; // Cor quando selecionado
-                  }
-                  return Colors.grey; // Cor padrão quando não selecionado
-                }),
-                onChanged: (Themes? value) {
-                  setState(() {
-                    _selectedTheme = value!;
-                    themeProvider.setTheme(
-                        _selectedTheme); // Atualiza o tema globalmente
-                  });
-                },
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.22,
-          ),
-          ElevatedButton(
-            style: Theme.of(context).filledButtonTheme.style,
-            onPressed: () => SalvarTema(),
-            child: Text(
-              "PRONTO!",
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
-          )
-        ]),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildThemeOptionTile(
+      BuildContext context, String title, Themes theme) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    return ListTile(
+      title: InkWell(
+        onTap: () {
+          setState(() {
+            _selectedTheme = theme;
+            themeProvider.setTheme(_selectedTheme);
+          });
+        },
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+      ),
+      leading: Transform.scale(
+        scale: 1.35,
+        child: Radio<Themes>(
+          value: theme,
+          groupValue: _selectedTheme,
+          activeColor: Theme.of(context).colorScheme.secondary,
+          onChanged: (Themes? value) {
+            setState(() {
+              _selectedTheme = value!;
+              themeProvider.setTheme(_selectedTheme);
+            });
+          },
+        ),
       ),
     );
   }

@@ -20,7 +20,7 @@ class Alerts {
       showTopSnackBar(
         overlay,
         CustomSnackBar.error(
-          maxLines: 5,
+          maxLines: 7,
           message: message,
         ),
       );
