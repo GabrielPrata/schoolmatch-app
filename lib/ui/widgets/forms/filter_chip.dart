@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomFilterChip extends StatefulWidget {
-  final List<int>? listIds;
-  final List<String> listNames;
+  final List<int?>? listIds;
+  final List<String?> listNames;
   final List<Map<String, dynamic>> data;
   final bool showOptions;
-  final int maxSelections; // Novo parâmetro para o número máximo de seleções
+  final int maxSelections;
 
   const CustomFilterChip({
     super.key,
@@ -13,7 +13,7 @@ class CustomFilterChip extends StatefulWidget {
     required this.listNames,
     required this.data,
     this.showOptions = true,
-    this.maxSelections = 3, // Valor padrão para máximo de seleções, ajuste conforme necessário
+    this.maxSelections = 3, // Valor padrão para máximo de seleções,
   });
 
   @override

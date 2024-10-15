@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           // builder: (_) => SelectThemeScreen(),
-          builder: (_) => SelectThemeScreen(),
+          builder: (_) => UserBlocks(),
         ),
       );
     }

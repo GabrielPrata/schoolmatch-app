@@ -24,42 +24,8 @@ class _UserBlocksState extends State<UserBlocks> {
   int? mainBlockId;
   String? mainBlockName;
 
-  List<int> secondaryBlocksIds = [];
-  List<String> secondaryBlocks = [];
-
-  @override
-  void initState() {
-    userController.step += 1;
-    super.initState();
-  }
-
-  salvarDados() {
-    if (mainBlockId != null && mainBlockName != null) {
-      //Ver depois porque nao esta setando os valores
-      userController.setUserMainBlock(mainBlockId!, mainBlockName!);
-      try {
-        userController.setUserSecondaryBlocks(secondaryBlocksIds, secondaryBlocks);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => UserImages(),
-          ),
-        );
-      } catch (e) {
-        Alerts.showErrorSnackBar(e.toString(), context);
-      }
-    } else {
-      Alerts.showErrorSnackBar(
-          "Querem que te achem como? Escolhe seu bloco principal!", context);
-    }
-  }
-
-  void handleCourseSelection(int id, String name) {
-    setState(() {
-      mainBlockId = id;
-      mainBlockName = name;
-    });
-  }
+  List<int?> secondaryBlocksIds = [];
+  List<String?> secondaryBlocks = [];
 
   final List<Map<String, dynamic>> blocosSecundarios = [
     {"id": 1, "name": "Bloco A (Central)", "selected": false},
@@ -82,6 +48,53 @@ class _UserBlocksState extends State<UserBlocks> {
     {"id": 18, "name": "Milho", "selected": false},
     {"id": 19, "name": "Banca TOP", "selected": false},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    userController.step += 1;
+    setState(() {
+      if (userController.userModel.secondaryBlockIds.isNotEmpty) {
+        for (var bloco in blocosSecundarios) {
+          if (secondaryBlocksIds.contains(bloco['id'])) {
+            bloco['selected'] = true;
+          }
+        }
+      }
+    });
+  }
+
+  salvarDados() {
+    if (mainBlockId != null && mainBlockName != null) {
+      if((secondaryBlocksIds.isEmpty || secondaryBlocks.isEmpty) && userController.userModel.secondaryBlockIds.isNotEmpty){
+        secondaryBlocks =  userController.userModel.secondaryBlocks;
+        secondaryBlocksIds =  userController.userModel.secondaryBlockIds;
+      }
+      userController.setUserMainBlock(mainBlockId!, mainBlockName!);
+      try {
+        userController.setUserSecondaryBlocks(secondaryBlocksIds, secondaryBlocks);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => UserImages(),
+          ),
+        );
+      } catch (e) {
+        Alerts.showErrorSnackBar(e.toString(), context);
+      }
+    } else {
+      Alerts.showErrorSnackBar(
+          "Querem que te achem como? Escolhe seu bloco principal!", context);
+    }
+  }
+
+  void handleCourseSelection(int id, String name) {
+    setState(() {
+      mainBlockId = id;
+      mainBlockName = name;
+    });
+  }
 
   Widget build(BuildContext context) {
     String blocosPrincipais = '''
@@ -195,6 +208,7 @@ class _UserBlocksState extends State<UserBlocks> {
                 listNames: secondaryBlocks,
                 data: blocosSecundarios,
                 maxSelections: 5,
+                
               ),
             ),
             SizedBox(

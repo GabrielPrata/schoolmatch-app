@@ -20,8 +20,8 @@ class UserYear extends StatefulWidget {
 NewUserController userController = Get.put(NewUserController());
 
 class _UserYearState extends State<UserYear> {
-  int? selectedCourseId;
-  String? selectedCourseName;
+  int? selectedSemesterId;
+  String? selectedSemester;
 
   @override
   void initState() {
@@ -30,12 +30,12 @@ class _UserYearState extends State<UserYear> {
   }
 
   salvarDados() {
-    if (selectedCourseId != null && selectedCourseName != null) {
-      userController.setUserCourseId(selectedCourseId!);
-      userController.setUserCourse(selectedCourseName!);
+    if (selectedSemesterId != null && selectedSemester != null) {
+      userController.setUserIdSemester(selectedSemesterId!);
+      userController.setUserSemester(selectedSemester!);
 
       print(
-          'Curso selecionado: ID $selectedCourseId, Nome $selectedCourseName');
+          'Curso selecionado: ID $selectedSemesterId, Nome $selectedSemester');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -49,8 +49,8 @@ class _UserYearState extends State<UserYear> {
 
   void handleCourseSelection(int id, String name) {
     setState(() {
-      selectedCourseId = id;
-      selectedCourseName = name;
+      selectedSemesterId = id;
+      selectedSemester = name;
     });
   }
 

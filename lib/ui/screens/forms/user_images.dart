@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_bio.dart';
+import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/widgets/forms/images_picker.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
@@ -56,7 +57,9 @@ class _UserImagesState extends State<UserImages> {
       }
       setState(() {});
     } catch (e) {
-      Alerts.showErrorSnackBar("Algo deu errado ao selecionar sua imagem. Tente novamente mais tarde!", context);
+      Alerts.showErrorSnackBar(
+          "Algo deu errado ao selecionar sua imagem. Tente novamente mais tarde!",
+          context);
       print("Erro ao selecionar a imagem: $e");
     }
   }
@@ -81,65 +84,70 @@ class _UserImagesState extends State<UserImages> {
       print(e);
       Alerts.showErrorSnackBar(e.toString(), context);
     }
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Theme.of(context).colorScheme.primary,
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.06,
-          left: MediaQuery.of(context).size.width * 0.07,
-          right: MediaQuery.of(context).size.width * 0.07,
-        ),
-        child: ListView(
-          children: <Widget>[
-            ProgressBar(userController.step),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-            SizedBox(
-              height: 60,
-              child: Theme.of(context).brightness == Brightness.dark
-                  ? Image.asset("assets/LogoSchoolMatchBranca.png")
-                  : Image.asset("assets/LogoSchoolMatch.png"),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              child: Text(
-                "É hora das fotos!",
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
+    return PopScope(
+      onPopInvoked: (result) {
+        userController.step -= 1;
+        // Get.to(UserBlocks());
+      },
+      child: Scaffold(
+        body: Container(
+          color: Theme.of(context).colorScheme.primary,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.06,
+            left: MediaQuery.of(context).size.width * 0.07,
+            right: MediaQuery.of(context).size.width * 0.07,
+          ),
+          child: ListView(
+            children: <Widget>[
+              ProgressBar(userController.step),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              SizedBox(
+                height: 60,
+                child: Theme.of(context).brightness == Brightness.dark
+                    ? Image.asset("assets/LogoSchoolMatchBranca.png")
+                    : Image.asset("assets/LogoSchoolMatch.png"),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.005),
-            SizedBox(
-              child: Text(
-                "Escolha pelo menos 2 fotos.\nUma dica, deixe as melhores fotos na frente ;)",
-                style: Theme.of(context).textTheme.bodySmall,
-                textAlign: TextAlign.center,
+              const SizedBox(height: 30),
+              SizedBox(
+                child: Text(
+                  "É hora das fotos!",
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            ImagesPicker(
-              newImageFunction: selectImages, // Aqui está passando a função
-              imageFiles: _imageFiles,
-              allowReorderingUserImagesOnly: true, // Modificação importante
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
-            ),
-            ElevatedButton(
-              onPressed: salvarDados,
-              child: Text(
-                "PRÓXIMO",
-                style: Theme.of(context).textTheme.labelMedium,
+              SizedBox(height: MediaQuery.of(context).size.height * 0.005),
+              SizedBox(
+                child: Text(
+                  "Escolha pelo menos 2 fotos.\nUma dica, deixe as melhores fotos na frente ;)",
+                  style: Theme.of(context).textTheme.bodySmall,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-          ],
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              ImagesPicker(
+                newImageFunction: selectImages, // Aqui está passando a função
+                imageFiles: _imageFiles,
+                allowReorderingUserImagesOnly: true, // Modificação importante
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+              ),
+              ElevatedButton(
+                onPressed: salvarDados,
+                child: Text(
+                  "PRÓXIMO",
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+            ],
+          ),
         ),
       ),
     );

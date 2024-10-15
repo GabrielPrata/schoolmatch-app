@@ -89,15 +89,15 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserSecondaryBlocks(List<int> idsBlocks, List<String> secondaryBlocks) {
+  setUserSecondaryBlocks(List<int?> idsBlocks, List<String?> secondaryBlocks) {
     var errors = Validations.validateList(idsBlocks,
         maxLength: 5, minLength: 2, fieldName: "seus Blocos Secundários!");
     if (errors == null) {
       userModel.secondaryBlockIds.clear();
-      userModel.secondaryBlockIds = idsBlocks;
+      userModel.secondaryBlockIds.addAll(idsBlocks);
 
       userModel.secondaryBlocks.clear();
-      userModel.secondaryBlocks = secondaryBlocks;
+      userModel.secondaryBlocks.addAll(secondaryBlocks);
     } else
       throw new CustomException(errors);
       print(userModel.toString());
@@ -113,7 +113,7 @@ class NewUserController extends GetxController {
     var errors = Validations.validateImages(filteredImages);
     if (errors == null) {
       userModel.images.clear();
-      userModel.images = images;
+      userModel.images.addAll(images);
     } else
       throw new CustomException(errors);
 
@@ -167,8 +167,8 @@ class NewUserController extends GetxController {
     }
     userModel.preferenceIds.clear();
     userModel.preferenceNames.clear();
-    userModel.preferenceIds = preferencesIds;
-    userModel.preferenceNames = preferencesNames;
+    userModel.preferenceIds.addAll(preferencesIds);
+    userModel.preferenceNames.addAll(preferencesNames);
 
     print(userModel.toString());
   }
@@ -233,7 +233,7 @@ class NewUserController extends GetxController {
 
   setUserInterests(List<String> interests) {
     userModel.interests.clear();
-    userModel.interests = interests;
+    userModel.interests.addAll(interests);
     print(userModel.toString());
   }
 
