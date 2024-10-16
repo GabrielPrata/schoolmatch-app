@@ -77,13 +77,18 @@ class _ShowMusicState extends State<ShowMusic> {
                                         userController
                                             .userModel.selectedMusic!.previewUrl
                                             .toString();
-                                return Icon(
-                                  isPlaying && isCurrentTrack
-                                      ? Icons.pause_circle_filled
-                                      : Icons.play_circle_fill,
-                                  size: 48,
-                                  color: Colors.white70,
-                                );
+                                if (userController.userModel.selectedMusic?.previewUrl != null) {
+                                  // Verifica se o URL existe antes de usar o ternário
+                                  return Icon(
+                                    isPlaying && isCurrentTrack
+                                        ? Icons.pause_circle_filled
+                                        : Icons.play_circle_fill,
+                                    size: 48,
+                                    color: Colors.white70,
+                                  );
+                                } else {
+                                  return Container(); // Retorna um widget vazio se não houver URL
+                                }
                               },
                             ),
                           ],

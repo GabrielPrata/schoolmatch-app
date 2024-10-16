@@ -47,6 +47,9 @@ class _MusicItemBottomSheetSearchState
       }
     }
 
+
+    print(widget.track.previewUrl);
+
     return Container(
       margin: EdgeInsets.only(
           bottom: 15), // Adicionando uma margem na parte inferior de cada item
@@ -74,13 +77,19 @@ class _MusicItemBottomSheetSearchState
                     final isPlaying = playerState?.playing ?? false;
                     final isCurrentTrack =
                         AudioPlayerService().currentUrl == url;
-                    return Icon(
-                      isPlaying && isCurrentTrack
-                          ? Icons.pause_circle_filled
-                          : Icons.play_circle_fill,
-                      size: 48,
-                      color: Colors.white70,
-                    );
+
+                    if (widget.track.previewUrl != null) {
+                      // Verifica se o URL existe antes de usar o ternário
+                      return Icon(
+                        isPlaying && isCurrentTrack
+                            ? Icons.pause_circle_filled
+                            : Icons.play_circle_fill,
+                        size: 48,
+                        color: Colors.white70,
+                      );
+                    } else {
+                      return Container(); // Retorna um widget vazio se não houver URL
+                    }
                   },
                 ),
               ],
