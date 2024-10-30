@@ -1,10 +1,17 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/domain/models/user_model.dart';
+import 'package:school_match/domain/services/auth_service.dart';
+import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
+import 'package:school_match/ui/screens/forms/user_finish_signup.dart';
+import 'package:school_match/ui/screens/forms/user_password.dart';
+import 'package:school_match/util/alerts.dart';
 import 'package:school_match/util/custom_exception.dart';
 import 'package:school_match/util/validations.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +23,100 @@ class NewUserController extends GetxController {
 
   // Salvando os valores diretamente no objeto, acessando a controller ao longo das páginas
   UserModel userModel = new UserModel(hasMusic: RxBool(false));
+  var logger = Logger();
+
+  checkIfEmailIsVerified(BuildContext? context) async {
+    try {
+      var response = await AuthService.checkIfEmailIsVerified(userModel.email);
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        var responseData = jsonDecode(response.body);
+        if (response.statusCode == 403) {
+          Alerts.showErrorSnackBar(responseData['message'], context!);
+        } else if (response.statusCode >= 400) {
+          Alerts.showErrorSnackBar(
+              "Erro número ${response.statusCode}", context!);
+        }
+        return;
+      }
+      Alerts.showSuccessSnackBar("E-mail validado com sucesso!", context!);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => UserPassword(),
+        ),
+      );
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+          'Algo inesperado aconteceu! Tente novamente mais tarde ou contate o suporte.',
+          context!);
+    } finally {
+      isLoading.trigger(false);
+    }
+  }
+
+  sendEmailToVerify(BuildContext? context) async {
+    try {
+      var response = await AuthService.sendEmailToVerify(userModel.email);
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        var responseData = jsonDecode(response.body);
+        if (response.statusCode == 409) {
+          Alerts.showErrorSnackBar(responseData['message'], context!);
+        } else if (response.statusCode >= 400) {
+          Alerts.showErrorSnackBar(
+              "Erro número ${response.statusCode}", context!);
+        }
+        return;
+      }
+
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (_) => UserConfirmEmail(),
+        ),
+      );
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+          'Algo inesperado aconteceu! Tente novamente mais tarde ou contate o suporte.',
+          context!);
+    } finally {
+      isLoading.trigger(false);
+    }
+  }
+
+  saveUserData(BuildContext? context) async {
+    try {
+      isLoading.trigger(true);
+
+      //Futuramente remover a linha abaixo.
+      var response = await AuthService.saveUserData(data: userModel);
+
+      await Future.delayed(Duration(seconds: 5));
+      print(response.body);
+      // print(response.body);
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        var responseData = jsonDecode(response.body);
+        if (response.statusCode == 409) {
+          Alerts.showErrorSnackBar(responseData['message'], context!);
+        } else if (response.statusCode >= 400) {
+          Alerts.showErrorSnackBar(
+              "Erro número ${response.statusCode}", context!);
+        }
+        return;
+      }
+      Navigator.push(
+      context!,
+      MaterialPageRoute(
+        builder: (_) => UserFinishSignup(),
+      ),
+    );
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+          'Algo inesperado aconteceu! Tente novamente mais tarde ou contate o suporte.',
+          context!);
+    } finally {
+      isLoading.trigger(false);
+    }
+  }
 
   // Métodos para coleta de dados dos formulários.
   // As validações devem ser feitas aqui.
@@ -100,7 +201,7 @@ class NewUserController extends GetxController {
       userModel.secondaryBlocks.addAll(secondaryBlocks);
     } else
       throw new CustomException(errors);
-      print(userModel.toString());
+    print(userModel.toString());
   }
 
   setUserImages(List<XFile> images) {
@@ -142,8 +243,9 @@ class NewUserController extends GetxController {
   }
 
   setUserGender(int? genderId, String genderName) {
-    if(genderId == null || genderId == 0){
-      throw new CustomException("Por favor, nos informe como você se identifica.");
+    if (genderId == null || genderId == 0) {
+      throw new CustomException(
+          "Por favor, nos informe como você se identifica.");
     }
     userModel.genderId = genderId;
     userModel.gender = genderName;
@@ -152,8 +254,9 @@ class NewUserController extends GetxController {
   }
 
   setUserSexuality(String sexualityName, bool showSexualityInProfile) {
-    if(sexualityName == null || sexualityName.isEmpty){
-      throw new CustomException("Por favor, nos informe a sua orientação sexual.");
+    if (sexualityName == null || sexualityName.isEmpty) {
+      throw new CustomException(
+          "Por favor, nos informe a sua orientação sexual.");
     }
     userModel.sexuality = sexualityName;
     userModel.showSexuality = showSexualityInProfile;
@@ -162,8 +265,9 @@ class NewUserController extends GetxController {
   }
 
   setUserPreferences(List<int> preferencesIds, List<String> preferencesNames) {
-    if(preferencesIds.isEmpty){
-      throw new CustomException("Por favor, com que tipo de pessoa você se relaciona.");
+    if (preferencesIds.isEmpty) {
+      throw new CustomException(
+          "Por favor, com que tipo de pessoa você se relaciona.");
     }
     userModel.preferenceIds.clear();
     userModel.preferenceNames.clear();
@@ -175,11 +279,12 @@ class NewUserController extends GetxController {
 
   setUserCity(String userCity) async {
     //Validação se está vazio
-    if(userCity.isEmpty){
+    if (userCity.isEmpty) {
       throw CustomException("Selecione sua cidade!");
     }
     List<String> cities = [];
-    final String response = await rootBundle.loadString('assets/cidades_sp_mg.json');
+    final String response =
+        await rootBundle.loadString('assets/cidades_sp_mg.json');
     final data = await json.decode(response);
     List<dynamic> states = data['estados'];
     for (var state in states) {
@@ -189,7 +294,8 @@ class NewUserController extends GetxController {
 
     if (!cities.contains(userCity)) {
       // Se a cidade do usuário não estiver na lista, realiza uma ação (por exemplo, lançar uma exceção)
-      throw CustomException("Não encontramos '$userCity' em nosso sistema! Tente novamente ou escolha outra cidade!");
+      throw CustomException(
+          "Não encontramos '$userCity' em nosso sistema! Tente novamente ou escolha outra cidade!");
     }
     userModel.city = userCity;
 
@@ -237,11 +343,10 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserMusic(MusicAdapter track){
-      userModel.selectedMusic = track;
-      userModel.hasMusic?.trigger(true);
-      print(userModel.toString());
-      Get.back();
-
+  setUserMusic(MusicAdapter track) {
+    userModel.selectedMusic = track;
+    userModel.hasMusic?.trigger(true);
+    print(userModel.toString());
+    Get.back();
   }
 }

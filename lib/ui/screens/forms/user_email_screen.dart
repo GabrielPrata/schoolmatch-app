@@ -27,12 +27,9 @@ class _UserMailFormState extends State<UserMailForm> {
   salvarDados() {
     try {
       userController.setUserEmail(inputController.text);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => UserConfirmEmail(),
-        ),
-      );
+      //Redirecionamento feito na controller
+      userController.sendEmailToVerify(context);
+      
     } catch (e) {
       print(e);
       Alerts.showErrorSnackBar(e.toString(), context);

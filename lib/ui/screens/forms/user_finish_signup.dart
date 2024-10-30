@@ -4,16 +4,16 @@ import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_password.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
-class UserConfirmEmail extends StatefulWidget {
-  const UserConfirmEmail({super.key});
+class UserFinishSignup extends StatefulWidget {
+  const UserFinishSignup({super.key});
 
   @override
-  State<UserConfirmEmail> createState() => _UserConfirmEmailState();
+  State<UserFinishSignup> createState() => _UserFinishSignupState();
 }
 
 NewUserController userController = Get.put(NewUserController());
 
-class _UserConfirmEmailState extends State<UserConfirmEmail> {
+class _UserFinishSignupState extends State<UserFinishSignup> {
   @override
   void initState() {
     userController.step += 1;
@@ -21,9 +21,12 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
   }
 
   verificaEmail() {
-    //Redirecionamento na Controller
-    userController.checkIfEmailIsVerified(context);
-   
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => UserPassword(),
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
             ),
             SizedBox(
                 child: Text(
-              "A gente te enviou um link lá no seu e-mail, clica nele, e depois pode voltar aqui.",
+              "CADASTRO FINALIZADO! VOU TERMINAR ESSA TELA DEPOIS",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
@@ -66,7 +69,7 @@ class _UserConfirmEmailState extends State<UserConfirmEmail> {
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () => verificaEmail(),
               child: Text(
-                "CLIQUEI NO LINK",
+                "BOTAO BONITO E LEGAL",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),

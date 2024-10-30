@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +9,16 @@ import 'package:school_match/ui/screens/login_screen.dart';
 import 'package:school_match/util/theme_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
   await GetStorage.init(); // Initialize GetStorage
   runApp(MyApp());
 }
