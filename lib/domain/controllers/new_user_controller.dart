@@ -346,7 +346,6 @@ class NewUserController extends GetxController {
   setUserMusic(MusicAdapter track) {
     userModel.selectedMusic = track;
     userModel.hasMusic?.trigger(true);
-    print(userModel.toString());
     Get.back();
   }
 }

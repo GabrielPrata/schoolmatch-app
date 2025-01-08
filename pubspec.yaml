@@ -50,6 +50,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   just_audio: ^0.9.28
+  flutter_card_swiper: ^7.0.2
+  curved_navigation_bar: ^1.0.6
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -122,4 +124,5 @@ flutter:
     - assets/Notification_azul.gif
     - assets/emptyPhoto.png
     - assets/cidades_sp_mg.json
+    - assets/imagens_mockadas.json
     - assets/spotifyIcon.png

@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
-import 'package:school_match/domain/controllers/spotify_controller.dart';
-import 'package:school_match/ui/screens/forms/user_birthdate.dart';
-import 'package:school_match/ui/screens/forms/user_blocks.dart';
-import 'package:school_match/ui/screens/forms/user_city.dart';
-import 'package:school_match/ui/screens/forms/user_images.dart';
-import 'package:school_match/ui/screens/forms/user_sexuality.dart';
-import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
+import 'package:school_match/ui/screens/home_screen.dart';
+import 'package:school_match/ui/screens/menu_screen.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
 import 'package:school_match/util/alerts.dart';
 
@@ -46,7 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           // builder: (_) => SelectThemeScreen(),
-          builder: (_) => UserSpotifyMusic(),
+          // builder: (_) => HomeScreen(),
+          builder: (_) => MenuScreen(),
         ),
       );
     }
@@ -188,9 +182,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           ElevatedButton(
                             style: Theme.of(context).filledButtonTheme.style,
-                            onPressed: () => Alerts.showInfonackBar(
-                                "Funcionalidade ainda não desenvolvida!",
-                                context),
+                            onPressed: () => validaLogin(),
+                            // () => Alerts.showInfonackBar(
+                            //     "Funcionalidade ainda não desenvolvida!",
+                            //     context),
                             child: Text(
                               "ENTRAR",
                               style: Theme.of(context).textTheme.labelMedium,
