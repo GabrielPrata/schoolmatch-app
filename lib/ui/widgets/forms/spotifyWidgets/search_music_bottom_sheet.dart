@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/controllers/spotify_controller.dart';
-import 'package:school_match/domain/models/spotifyModels/track.dart';
 import 'package:school_match/domain/models/spotifyModels/trackResponse.dart';
 import 'package:school_match/domain/services/spotify_service.dart';
 import 'package:school_match/ui/widgets/forms/spotifyWidgets/music_item_bottom_sheet_search.dart';

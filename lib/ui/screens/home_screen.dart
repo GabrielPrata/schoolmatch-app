@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/home_page_controller.dart';
-import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/userCard.dart';
 
 class HomeScreen extends StatefulWidget {

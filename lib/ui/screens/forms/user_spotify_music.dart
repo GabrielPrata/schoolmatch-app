@@ -4,10 +4,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/controllers/spotify_controller.dart';
-import 'package:school_match/ui/screens/forms/user_finish_signup.dart';
-import 'package:school_match/ui/screens/forms/user_lastname.dart';
-// import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/ui/widgets/forms/spotifyWidgets/show_music.dart';
 

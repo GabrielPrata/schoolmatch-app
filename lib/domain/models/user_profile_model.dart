@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
 

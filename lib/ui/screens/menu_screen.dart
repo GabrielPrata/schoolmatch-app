@@ -1,8 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:school_match/ui/screens/forms/user_bio.dart';
-import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/screens/home_screen.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';

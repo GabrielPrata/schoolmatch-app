@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
-import 'package:school_match/ui/widgets/homeScreenWidgets/show_user_details_bottomsheet.dart';
-import 'package:school_match/util/functions.dart';
 
 class UserLifestyle extends StatefulWidget {
   final UserProfileModel candidate;

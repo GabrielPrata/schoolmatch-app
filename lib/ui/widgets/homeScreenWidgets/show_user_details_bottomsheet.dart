@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
-import 'package:school_match/ui/screens/forms/user_images.dart';
-import 'package:school_match/ui/screens/forms/user_interests.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_about.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_basic_infos.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_extra_infos.dart';
@@ -11,8 +7,6 @@ import 'package:school_match/ui/widgets/homeScreenWidgets/user_lifestyle.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_list_images.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_list_interests.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_music.dart';
-import 'package:school_match/util/functions.dart';
-
 class ShowUserDetailsBottomsheet extends StatefulWidget {
   final UserProfileModel candidate;
 

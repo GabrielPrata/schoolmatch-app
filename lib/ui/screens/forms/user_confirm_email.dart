@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_password.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
 class UserConfirmEmail extends StatefulWidget {
