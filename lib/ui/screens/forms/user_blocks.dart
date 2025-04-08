@@ -27,6 +27,7 @@ class _UserBlocksState extends State<UserBlocks> {
   List<int?> secondaryBlocksIds = [];
   List<String?> secondaryBlocks = [];
 
+  //TODO: ISSO VEM DA API
   final List<Map<String, dynamic>> blocosSecundarios = [
     {"id": 1, "name": "Bloco A (Central)", "selected": false},
     {"id": 2, "name": "Bloco B", "selected": false},
@@ -97,6 +98,7 @@ class _UserBlocksState extends State<UserBlocks> {
   }
 
   Widget build(BuildContext context) {
+    //TODO: ISSO VEM DA API
     String blocosPrincipais = '''
       {
         "cursos": [

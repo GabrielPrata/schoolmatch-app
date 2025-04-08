@@ -42,6 +42,7 @@ class _UserSexualityState extends State<UserSexuality> {
   late String selectedSexualityName = ""; // Inicializa vazio
   late bool showSexualityInProfile = true;
 
+  //TODO: ISSO AQUI VAI VIR DA API
   final List<Map<String, dynamic>> sexualities = [
     {
       "id": 1,

@@ -21,6 +21,7 @@ class _UserLikeFindState extends State<UserLikeFind> {
     super.initState();
   }
 
+  //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
   final List<Map<String, dynamic>> genders = [
     {"id": 1, "name": "Homens", "selected": false},
     {"id": 2, "name": "Mulheres", "selected": false},

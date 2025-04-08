@@ -37,7 +37,7 @@ class _UserInterestsState extends State<UserInterests> {
     );
     // }
   }
-
+  //TODO: ISSO VAI VIR DA API
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> interesses = [
       {"id": 1, "name": "Viajar", "selected": false},
