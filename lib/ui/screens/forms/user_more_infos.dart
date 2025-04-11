@@ -48,6 +48,8 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
   }
 
   Widget build(BuildContext context) {
+
+    //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
     final List<Map<String, dynamic>> bebidasData = [
       {"id": 1, "name": "Não bebo", "selected": false},
       {"id": 2, "name": "De final de semana", "selected": false},

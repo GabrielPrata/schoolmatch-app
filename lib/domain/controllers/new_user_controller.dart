@@ -70,7 +70,8 @@ class NewUserController extends GetxController {
       Navigator.push(
         context!,
         MaterialPageRoute(
-          builder: (_) => UserConfirmEmail(),
+          // builder: (_) => UserConfirmEmail(),
+          builder: (_) => UserPassword(),
         ),
       );
     } catch (e) {

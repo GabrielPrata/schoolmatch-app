@@ -5,7 +5,13 @@ class Constants {
   static int totalPagesFormNewUser = 19; 
 
   static String apiUrl = "https://10.0.2.2:7290";
+  static String apiUser = "schoolMatchApi!@#123";
+  static String apiPass = "batatinhaQuandoNasce&*(789";
+
   static String userData = "/users/data";
+  static String appData = "/appData/";
+  static String courses = 'courses/';
+  static String getAllCourses = appData + "AppCourses";
 
   static String siteVerifyEmail = "/schoolmach-web/src/verifyEmail.php?";
 
