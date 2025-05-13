@@ -5,7 +5,7 @@ class AppDataController extends GetxController {
   var isLoading = false.obs;
 
   static logout() async {
-    print("Saiu do sistema");
+    print("Saiu do sistema.");
   }
 
  
