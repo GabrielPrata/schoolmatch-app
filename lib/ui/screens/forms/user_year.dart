@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
@@ -18,6 +19,7 @@ class UserYear extends StatefulWidget {
 }
 
 NewUserController userController = Get.put(NewUserController());
+AppDataController appDataController = Get.put(AppDataController());
 
 class _UserYearState extends State<UserYear> {
   int? selectedSemesterId;
@@ -26,7 +28,30 @@ class _UserYearState extends State<UserYear> {
   @override
   void initState() {
     userController.step += 1;
+    _loadCourseDuration();
     super.initState();
+  }
+
+  Future<void> _loadCourseDuration() async {
+    try {
+      await appDataController.getCourseDuration(context);
+      setState(() {
+        appDataController.isLoading.trigger(false); // marca que já pode construir a UI
+      });
+    } catch (e) {
+      print("Erro ao obter a duração do curso: $e");
+      setState(() {
+        appDataController.isLoading.trigger(false); // mesmo com erro, evita loop infinito
+      });
+    }
+  }
+
+  Future<void> getCourseDuration() async {
+    try {
+      await appDataController.getCourseDuration(context);
+    } catch (e) {
+      print("Erro ao obter a duração do curso: $e");
+    }
   }
 
   salvarDados() {
@@ -47,6 +72,22 @@ class _UserYearState extends State<UserYear> {
     }
   }
 
+  montarJsonDuracaoCurso() {
+    String jsonData = '''
+      {
+        "cursos": [''';
+
+    for (var i = 1; i <= appDataController.courseDuration; i++) {
+      jsonData += '''{"id": $i, "nome": "$iº semestre"},''';
+    }
+
+    jsonData += ''' {"id": 13, "nome": "DP é f***"} 
+        ]
+      }''';
+
+    return jsonData;
+  }
+
   void handleCourseSelection(int id, String name) {
     setState(() {
       selectedSemesterId = id;
@@ -54,26 +95,17 @@ class _UserYearState extends State<UserYear> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    //TODO: ISSO AQUI VAI VIR DA API
-    String jsonData = '''
-      {
-        "cursos": [
-          {"id": 1, "nome": "1º semestre"},
-          {"id": 2, "nome": "2º semestre"},
-          {"id": 3, "nome": "3º semestre"},
-          {"id": 4, "nome": "4º semestre"},
-          {"id": 5, "nome": "5º semestre"},
-          {"id": 6, "nome": "6º semestre"},
-          {"id": 7, "nome": "7º semestre"},
-          {"id": 8, "nome": "8º semestre"},
-          {"id": 9, "nome": "9º semestre"},
-          {"id": 10, "nome": "10º semestre"},
-          {"id": 11, "nome": "11º semestre"},
-          {"id": 12, "nome": "12º semestre"},
-          {"id": 13, "nome": "DP é f***"}
-        ]
-      }''';
+    if (appDataController.isLoading.value) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    String jsonData = montarJsonDuracaoCurso();
 
     Map<String, dynamic> data = jsonDecode(jsonData);
     List<Map<String, dynamic>> courses =

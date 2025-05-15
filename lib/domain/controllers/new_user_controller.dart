@@ -26,17 +26,17 @@ class NewUserController extends GetxController {
 
   checkIfEmailIsVerified(BuildContext? context) async {
     try {
-      var response = await AuthService.checkIfEmailIsVerified(userModel.email);
-      if (response.statusCode < 200 || response.statusCode >= 300) {
-        var responseData = jsonDecode(response.body);
-        if (response.statusCode == 403) {
-          Alerts.showErrorSnackBar(responseData['message'], context!);
-        } else if (response.statusCode >= 400) {
-          Alerts.showErrorSnackBar(
-              "Erro número ${response.statusCode}", context!);
-        }
-        return;
-      }
+      // var response = await AuthService.checkIfEmailIsVerified(userModel.email);
+      // if (response.statusCode < 200 || response.statusCode >= 300) {
+      //   var responseData = jsonDecode(response.body);
+      //   if (response.statusCode == 403) {
+      //     Alerts.showErrorSnackBar(responseData['message'], context!);
+      //   } else if (response.statusCode >= 400) {
+      //     Alerts.showErrorSnackBar(
+      //         "Erro número ${response.statusCode}", context!);
+      //   }
+      //   return;
+      // }
       Alerts.showSuccessSnackBar("E-mail validado com sucesso!", context!);
       Navigator.push(
         context,

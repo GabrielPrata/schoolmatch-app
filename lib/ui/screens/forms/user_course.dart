@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_year.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
@@ -18,6 +17,7 @@ class UserCourse extends StatefulWidget {
 }
 
 NewUserController userController = Get.put(NewUserController());
+AppDataController appDataController = Get.put(AppDataController());
 
 class _UserCourseState extends State<UserCourse> {
   int? selectedCourseId;
@@ -26,6 +26,7 @@ class _UserCourseState extends State<UserCourse> {
   @override
   void initState() {
     userController.step += 1;
+    _loadCourses();
     super.initState();
   }
 
@@ -34,8 +35,7 @@ class _UserCourseState extends State<UserCourse> {
       userController.setUserCourseId(selectedCourseId!);
       userController.setUserCourse(selectedCourse!);
 
-      print(
-          'Semestre selecionado: ID $selectedCourseId, Nome $selectedCourse');
+      print('Semestre selecionado: ID $selectedCourseId, Nome $selectedCourse');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -47,46 +47,31 @@ class _UserCourseState extends State<UserCourse> {
     }
   }
 
+  Future<void> _loadCourses() async {
+    if (appDataController.appCourses.isEmpty) {
+      await getAppCourses();
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getAppCourses() async {
+    try {
+      return await appDataController.getAppCourses(context);
+    } catch (e) {
+      print("Erro ao decodificar JSON: $e");
+      return [];
+    }
+  }
+
   void handleCourseSelection(int id, String name) {
     setState(() {
+      appDataController.setUserCourseId(id);
       selectedCourseId = id;
       selectedCourse = name;
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    //TODO: ISSO VEM DA API
-    String jsonData = '''
-      {
-        "cursos": [
-          {"id": 1, "nome": "Administração"},
-          {"id": 2, "nome": "Biologia"},
-          {"id": 3, "nome": "Biomedicina"},
-          {"id": 4, "nome": "Contabilidade"},
-          {"id": 5, "nome": "Economia"},
-          {"id": 6, "nome": "Educação Física"},
-          {"id": 7, "nome": "Enfermagem"},
-          {"id": 8, "nome": "Engenharia Civil"},
-          {"id": 9, "nome": "Engenharia de Computação"},
-          {"id": 10, "nome": "Engenharia de Produção"},
-          {"id": 11, "nome": "Engenharia Elétrica"},
-          {"id": 12, "nome": "Engenharia Mecânica"},
-          {"id": 13, "nome": "Engenharia Química"},
-          {"id": 14, "nome": "Estética"},
-          {"id": 15, "nome": "Farmácia"},
-          {"id": 16, "nome": "Fisioterapia"},
-          {"id": 17, "nome": "Odontologia"},
-          {"id": 18, "nome": "Pedagogia"},
-          {"id": 19, "nome": "Psicologia"},
-          {"id": 20, "nome": "Química"},
-          {"id": 21, "nome": "Sistemas de Informação"}
-        ]
-      }''';
-
-    Map<String, dynamic> data = jsonDecode(jsonData);
-    List<Map<String, dynamic>> courses =
-        List<Map<String, dynamic>>.from(data['cursos']);
-
     return PopScope(
       onPopInvoked: (result) {
         userController.step -= 1;
@@ -99,50 +84,42 @@ class _UserCourseState extends State<UserCourse> {
             left: MediaQuery.of(context).size.width * 0.07,
             right: MediaQuery.of(context).size.width * 0.07,
           ),
-          child: ListView(children: <Widget>[
-            ProgressBar(userController.step),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.04,
-            ),
-            SizedBox(
-              child: Theme.of(context).brightness == Brightness.dark
-                  ? Image.asset("assets/LogoSchoolMatchBranca.png")
-                  : Image.asset("assets/LogoSchoolMatch.png"),
-              height: 60,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            SizedBox(
-                child: Text(
-              "Você faz?",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
-            )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            SizedBox(
-                child: DropdownMenuData(
-              data: courses,
-              onCourseSelected: handleCourseSelection,
-              defaultText: "Selecione seu curso...",
-            )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.48,
-            ),
-            ElevatedButton(
-              style: Theme.of(context).filledButtonTheme.style,
-              onPressed: () => salvarDados(),
-              child: Text(
-                "PRÓXIMO",
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            )
-          ]),
+          child: appDataController.appCourses.isEmpty
+              ? Center(child: CircularProgressIndicator())
+              : ListView(
+                  children: <Widget>[
+                    ProgressBar(userController.step),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                    SizedBox(
+                      height: 60,
+                      child: Theme.of(context).brightness == Brightness.dark
+                          ? Image.asset("assets/LogoSchoolMatchBranca.png")
+                          : Image.asset("assets/LogoSchoolMatch.png"),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    Text(
+                      "Você faz?",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    DropdownMenuData(
+                      data: appDataController.appCourses,
+                      onCourseSelected: handleCourseSelection,
+                      defaultText: "Selecione seu curso...",
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.48),
+                    ElevatedButton(
+                      style: Theme.of(context).filledButtonTheme.style,
+                      onPressed: () => salvarDados(),
+                      child: Text(
+                        "PRÓXIMO",
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  ],
+                ),
         ),
       ),
     );

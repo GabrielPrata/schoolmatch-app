@@ -38,7 +38,7 @@ class AuthService {
     final String body = jsonEncode(data.toJson());
     // Make the POST request
     final http.Response response = await http.post(
-      Uri.parse(Constants.apiUrl + Constants.userData),
+      Uri.parse(Constants.userData),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -51,7 +51,7 @@ class AuthService {
     // Encode the UserModel to JSON
     // Make the POST request
     final http.Response response = await http.get(
-      Uri.parse("${Constants.apiUrl}${Constants.userData}${Constants.verifyEmail}?userEmail=$userEmail"),
+      Uri.parse("${Constants.siteVerifyEmail}?userEmail=$userEmail"),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -63,7 +63,7 @@ class AuthService {
     // Encode the UserModel to JSON
     // Make the POST request
     final http.Response response = await http.post(
-      Uri.parse("${Constants.apiUrl}${Constants.userData}${Constants.verifyEmail}?userEmail=$userEmail"),
+      Uri.parse("${Constants.verifyEmail}?userEmail=$userEmail"),
       headers: {
         'Content-Type': 'application/json',
       },
