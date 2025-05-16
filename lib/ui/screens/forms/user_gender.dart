@@ -38,6 +38,8 @@ class _UserGenderState extends State<UserGender> {
 
   late int selectedGenderId = 0; // Inicializa com 0 indicando nenhuma seleção
   late String selectedGenderName = ""; // Inicializa vazio
+
+  //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
   final List<Map<String, dynamic>> genders = [
     {"id": 1, "name": "Homem", "selected": false},
     {"id": 2, "name": "Mulher", "selected": false},
