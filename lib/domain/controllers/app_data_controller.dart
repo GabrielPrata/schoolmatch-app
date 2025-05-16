@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -62,18 +61,5 @@ class AppDataController extends GetxController {
   setUserCourseId(int courseId) {
     userCouseId = courseId;
   }
-=======
-import 'package:get/get.dart';
-
-class AppDataController extends GetxController {
-  var errorText = false.obs;
-  var isLoading = false.obs;
-
-  static logout() async {
-    print("Saiu do sistema.");
-  }
-
- 
->>>>>>> 4a2ea58d4834707163bcbc2cba1aa2a035a53b17
 
 }
