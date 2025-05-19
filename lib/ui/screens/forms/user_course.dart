@@ -49,16 +49,10 @@ class _UserCourseState extends State<UserCourse> {
 
   Future<void> _loadCourses() async {
     if (appDataController.appCourses.isEmpty) {
-      await getAppCourses();
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> getAppCourses() async {
-    try {
-      return await appDataController.getAppCourses(context);
-    } catch (e) {
-      print("Erro ao decodificar JSON: $e");
-      return [];
+      await appDataController.getAppCourses(context);
+      setState(() {
+        
+      });
     }
   }
 

@@ -35,7 +35,7 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
             children: widget.data.map((block) {
               return FilterChip(
                 label: Text(
-                  block['name'],
+                  block['nome'],
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
                 selected: block['selected'],
@@ -67,7 +67,7 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
           const SizedBox(height: 20.0),
           if (widget.showOptions)
             Text(
-              'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['name']).join(', ')}.',
+              'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['nome']).join(', ')}.',
               style: textTheme.bodySmall,
               textAlign: TextAlign.left,
             ),

@@ -16,6 +16,9 @@ class Constants {
   static String appData = "$appDataApiUrl/appdata";
   static String courses = "$appData/courses";
   static String getAllCourses = "$courses/AppCourses";
+  static String blocks = "$appData/blocks";
+  static String getMainBlocks = "$blocks/MainBlocks";
+  static String getSecondaryBlocks = "$blocks/SecondaryBlocks";
   static String getCourseDuration = "$courses/AppCourseDuration";
 
 

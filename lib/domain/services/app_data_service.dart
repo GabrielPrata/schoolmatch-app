@@ -30,4 +30,34 @@ class AppDataService {
     print('Response body, ${response.body}');
     return response.body;
   }
+
+  static Future<String> getMainBlocks() async {
+    final http.Response response = await http.get(
+      Uri.parse("${Constants.getMainBlocks}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic ${base64Encode(utf8.encode('${Constants.basicAuthUser}:${Constants.basicAuthPass}'))}',
+      },
+    );
+    print('Response status, ${response.statusCode}');
+    print('Response body, ${response.body}');
+    return response.body;
+  }
+
+   static Future<String> getSecondaryBlocks() async {
+    final http.Response response = await http.get(
+      Uri.parse("${Constants.getSecondaryBlocks}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic ${base64Encode(utf8.encode('${Constants.basicAuthUser}:${Constants.basicAuthPass}'))}',
+      },
+    );
+    print('Response status, ${response.statusCode}');
+    print('Response body, ${response.body}');
+    return response.body;
+  }
+
+
 }
