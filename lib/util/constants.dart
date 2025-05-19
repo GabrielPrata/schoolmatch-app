@@ -14,12 +14,21 @@ class Constants {
 
   static String appDataApiUrl = "https://10.0.2.2:7142";
   static String appData = "$appDataApiUrl/appdata";
+
   static String courses = "$appData/courses";
   static String getAllCourses = "$courses/AppCourses";
+  static String getCourseDuration = "$courses/AppCourseDuration";
+
   static String blocks = "$appData/blocks";
   static String getMainBlocks = "$blocks/MainBlocks";
   static String getSecondaryBlocks = "$blocks/SecondaryBlocks";
-  static String getCourseDuration = "$courses/AppCourseDuration";
+  
+  static String sexuality = "$appDataApiUrl/sexuality";
+  static String getAllSexualities = "$sexuality/GetAllSexualities";
+
+  static String interests = "$appDataApiUrl/interests";
+  static String getAllInterests = "$interests/GetAllInterests";
+
 
 
   static String spotifyUrl = "https://api.spotify.com/v1/";

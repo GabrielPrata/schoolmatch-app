@@ -59,5 +59,19 @@ class AppDataService {
     return response.body;
   }
 
+  static Future<String> getAllSexualities() async {
+    final http.Response response = await http.get(
+      Uri.parse("${Constants.getAllSexualities}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Basic ${base64Encode(utf8.encode('${Constants.basicAuthUser}:${Constants.basicAuthPass}'))}',
+      },
+    );
+    print('Response status, ${response.statusCode}');
+    print('Response body, ${response.body}');
+    return response.body;
+  }
+
 
 }

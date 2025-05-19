@@ -109,6 +109,34 @@ class AppDataController extends GetxController {
     }
   }
 
+  getAllSexualities(BuildContext? context) async {
+    try {
+      final response = await AppDataService.getAllSexualities();
+
+      if (response.isEmpty) {
+        return [];
+      }
+
+      final List<dynamic> jsonList = jsonDecode(response);
+
+      final updatedBlocks = jsonList.map((item) {
+        return {
+          'id': item['idBloco'],
+          'nome': item['nomeBloco'],
+          'selected': false,
+        };
+      }).toList();
+
+      appSecondaryBlocks = updatedBlocks;
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+        'Algo inesperado aconteceu ao obter os blocos! Tente novamente mais tarde ou contate o suporte.',
+        context!,
+      );
+      return [];
+    }
+  }
+
   setUserCourseId(int courseId) {
     userCouseId = courseId;
   }
