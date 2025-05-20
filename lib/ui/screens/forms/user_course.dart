@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/ui/screens/forms/user_year.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
@@ -50,9 +51,7 @@ class _UserCourseState extends State<UserCourse> {
   Future<void> _loadCourses() async {
     if (appDataController.appCourses.isEmpty) {
       await appDataController.getAppCourses(context);
-      setState(() {
-        
-      });
+      setState(() {});
     }
   }
 
@@ -97,10 +96,13 @@ class _UserCourseState extends State<UserCourse> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                    DropdownMenuData(
-                      data: appDataController.appCourses,
-                      onCourseSelected: handleCourseSelection,
-                      defaultText: "Selecione seu curso...",
+                    DropdownMenuData<CourseModel>(
+                      items: appDataController.appCourses,
+                      defaultText: "Selecione o curso",
+                      getId: (course) => course.courseId,
+                      getLabel: (course) => course.courseName,
+                      selectedId: selectedCourseId,
+                      onItemSelected: handleCourseSelection,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.48),
                     ElevatedButton(

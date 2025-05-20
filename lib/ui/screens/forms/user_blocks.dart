@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/ui/screens/forms/user_images.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 import 'package:school_match/ui/widgets/forms/filter_chip.dart';
@@ -83,7 +84,7 @@ class _UserBlocksState extends State<UserBlocks> {
     }
   }
 
-  void handleCourseSelection(int id, String name) {
+  void handleBlockSelection(int id, String name) {
     setState(() {
       mainBlockId = id;
       mainBlockName = name;
@@ -152,10 +153,14 @@ class _UserBlocksState extends State<UserBlocks> {
               height: MediaQuery.of(context).size.height * 0.02,
             ),
             SizedBox(
-              child: DropdownMenuData(
-                  data: appDataController.appMainBlocks,
-                  onCourseSelected: handleCourseSelection,
-                  defaultText: "Selecione um bloco"),
+              child: DropdownMenuData<BlockModel>(
+                items: appDataController.appMainBlocks,
+                defaultText: "Selecione um bloco",
+                getId: (block) => block.blockId,
+                getLabel: (block) => block.blockName,
+                selectedId: mainBlockId,
+                onItemSelected: handleBlockSelection,
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,

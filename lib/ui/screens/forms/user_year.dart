@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
@@ -36,12 +37,14 @@ class _UserYearState extends State<UserYear> {
     try {
       await appDataController.getCourseDuration(context);
       setState(() {
-        appDataController.isLoading.trigger(false); // marca que já pode construir a UI
+        appDataController.isLoading
+            .trigger(false); // marca que já pode construir a UI
       });
     } catch (e) {
       print("Erro ao obter a duração do curso: $e");
       setState(() {
-        appDataController.isLoading.trigger(false); // mesmo com erro, evita loop infinito
+        appDataController.isLoading
+            .trigger(false); // mesmo com erro, evita loop infinito
       });
     }
   }
@@ -72,23 +75,21 @@ class _UserYearState extends State<UserYear> {
     }
   }
 
-  montarJsonDuracaoCurso() {
-    String jsonData = '''
-      {
-        "cursos": [''';
+  montarListaDuracaoCurso() {
+    List<CourseDurationModel> courseDurationOptions = [];
 
     for (var i = 1; i <= appDataController.courseDuration; i++) {
-      jsonData += '''{"id": $i, "nome": "$iº semestre"},''';
+      courseDurationOptions.add(CourseDurationModel(id: i, name: "$iº Semestre"));
     }
 
-    jsonData += ''' {"id": 13, "nome": "DP é f***"} 
-        ]
-      }''';
+    //Número 12 + 1 mockado por conta que os cursos mais longos possuem 12 semestres
+    //
+    courseDurationOptions.add(CourseDurationModel(id: 13, name: "DP é Fod*"));
 
-    return jsonData;
+    return courseDurationOptions;
   }
 
-  void handleCourseSelection(int id, String name) {
+  void handleCourseDurationSelection(int id, String name) {
     setState(() {
       selectedSemesterId = id;
       selectedSemester = name;
@@ -104,12 +105,6 @@ class _UserYearState extends State<UserYear> {
         ),
       );
     }
-
-    String jsonData = montarJsonDuracaoCurso();
-
-    Map<String, dynamic> data = jsonDecode(jsonData);
-    List<Map<String, dynamic>> courses =
-        List<Map<String, dynamic>>.from(data['cursos']);
 
     return PopScope(
       onPopInvoked: (result) {
@@ -147,10 +142,15 @@ class _UserYearState extends State<UserYear> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             SizedBox(
-                child: DropdownMenuData(
-                    data: courses,
-                    onCourseSelected: handleCourseSelection,
-                    defaultText: "Selecione o semestre...")),
+              child: DropdownMenuData<CourseDurationModel>(
+                items: montarListaDuracaoCurso(),
+                defaultText: "Selecione o semestre...",
+                getId: (year) => year.id,
+                getLabel: (year) => year.name,
+                selectedId: selectedSemesterId,
+                onItemSelected: handleCourseDurationSelection,
+              ),
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.44,
             ),

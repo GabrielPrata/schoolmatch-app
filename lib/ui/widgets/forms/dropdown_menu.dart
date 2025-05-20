@@ -1,29 +1,45 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class DropdownMenuData extends StatefulWidget {
-  final List<Map<String, dynamic>> data; // Adiciona isso
-  final void Function(int, String) onCourseSelected; 
+class DropdownMenuData<T> extends StatefulWidget {
+  final List<T> items;
+  final int? selectedId;
+  final void Function(int, String) onItemSelected;
   final String defaultText;
+  final int Function(T) getId;
+  final String Function(T) getLabel;
 
   const DropdownMenuData({
     super.key,
-    required this.data, // Passa os dados como um parâmetro
-    required this.onCourseSelected,
+    required this.items,
+    required this.onItemSelected,
     required this.defaultText,
+    required this.getId,
+    required this.getLabel,
+    this.selectedId,
   });
 
   @override
-  State<DropdownMenuData> createState() => _DropdownMenuDataState();
+  State<DropdownMenuData<T>> createState() => _DropdownMenuDataState<T>();
 }
 
-class _DropdownMenuDataState extends State<DropdownMenuData> {
+class _DropdownMenuDataState<T> extends State<DropdownMenuData<T>> {
   int? selectedValue;
 
   @override
   void initState() {
     super.initState();
-    selectedValue = null;
+    selectedValue = widget.selectedId;
+  }
+
+  @override
+  void didUpdateWidget(covariant DropdownMenuData<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selectedId != oldWidget.selectedId) {
+      setState(() {
+        selectedValue = widget.selectedId;
+      });
+    }
   }
 
   @override
@@ -33,9 +49,7 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
         isExpanded: true,
         hint: Row(
           children: [
-            SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 widget.defaultText,
@@ -45,11 +59,11 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
             ),
           ],
         ),
-        items: widget.data
-            .map((Map<String, dynamic> item) => DropdownMenuItem<int>(
-                  value: item['id'], // Ensure this is an integer
+        items: widget.items
+            .map((item) => DropdownMenuItem<int>(
+                  value: widget.getId(item),
                   child: Text(
-                    item['nome'], // Assuming you want to display the name
+                    widget.getLabel(item),
                     style: Theme.of(context).textTheme.labelMedium,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -59,18 +73,19 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
         onChanged: (newValue) {
           setState(() {
             selectedValue = newValue;
-            final selectedCourse = widget.data.firstWhere(
-              (course) => course['id'] == newValue,
-            );
-            if (selectedCourse != null) {
-              widget.onCourseSelected(selectedCourse['id'], selectedCourse['nome']);
-            }
           });
+
+          final selectedItem = widget.items.firstWhere(
+            (item) => widget.getId(item) == newValue,
+          );
+
+          widget.onItemSelected(
+              widget.getId(selectedItem), widget.getLabel(selectedItem));
         },
         buttonStyleData: ButtonStyleData(
           height: 70,
           width: 160,
-          padding: const EdgeInsets.only(left: 14, right: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             color: Theme.of(context).colorScheme.onSurface,
@@ -78,9 +93,7 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
           elevation: 2,
         ),
         iconStyleData: IconStyleData(
-          icon: Icon(
-            Icons.arrow_forward_ios_outlined,
-          ),
+          icon: const Icon(Icons.arrow_forward_ios_outlined),
           iconSize: 14,
           iconEnabledColor: Theme.of(context).colorScheme.secondary,
           iconDisabledColor: Colors.grey,
@@ -92,7 +105,6 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
             borderRadius: BorderRadius.circular(14),
             color: Theme.of(context).colorScheme.onSurface,
           ),
-          // offset: const Offset(-20, 0),
           scrollbarTheme: ScrollbarThemeData(
             radius: const Radius.circular(40),
             thickness: WidgetStateProperty.all(6),
@@ -101,7 +113,7 @@ class _DropdownMenuDataState extends State<DropdownMenuData> {
         ),
         menuItemStyleData: const MenuItemStyleData(
           height: 40,
-          padding: EdgeInsets.only(left: 14, right: 14),
+          padding: EdgeInsets.symmetric(horizontal: 14),
         ),
       ),
     );
