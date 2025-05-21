@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:school_match/domain/models/appDataModels/block_model.dart';
+import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
 
@@ -6,11 +8,11 @@ class UserProfileModel {
   String? firstName;
   String? lastName;
 
-  String? course;
+  CourseModel? course;
 
-  String? mainBlock;
+  BlockModel? mainBlock;
 
-  List<String?> secondaryBlocks;
+  List<BlockModel?> secondaryBlocks;
 
   DateTime? birthDate;
   DateTime? admissionDate;
@@ -43,8 +45,7 @@ class UserProfileModel {
     this.lastName,
     this.course,
     this.mainBlock,
-    List<int?>? secondaryBlockIds,
-    List<String?>? secondaryBlocks,
+    List<BlockModel?>? secondaryBlocks,
     this.birthDate,
     this.admissionDate,
     List<int?>? preferenceIds,
@@ -66,7 +67,7 @@ class UserProfileModel {
     required this.hasMusic,
     this.selectedMusic,
   })  : 
-        secondaryBlocks = secondaryBlocks ?? <String?>[],
+        secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
         interests = interests ?? <String?>[],
         // images = images ?? <XFile?>[] {}
         images = images ?? <String?>[] {}
@@ -78,9 +79,9 @@ UserProfileModel{
   interests: ${interests.join(", ")},
   firstName: $firstName,
   lastName: $lastName,
-  course: $course,
-  mainBlock: $mainBlock,
-  secondaryBlocks: ${secondaryBlocks.join(", ")},
+  course: ${course?.courseName},
+  mainBlock: ${mainBlock?.blockName},
+  secondaryBlocks: CORRIGIR DEPOIS,
   birthDate: ${birthDate?.toIso8601String()},
   admissionDate: ${admissionDate?.toIso8601String()},
   sexuality: $sexuality,
@@ -105,8 +106,8 @@ UserProfileModel{
     return {
       'nome': firstName,
       'sobrenome': lastName,
-      'curso': course,
-      'blocoPrincipal': mainBlock,
+      'curso': course?.courseName,
+      'blocoPrincipal': mainBlock?.blockName,
       'blocosSecundarios': secondaryBlocks,
       'dataNascimento':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
       'usuarioCreatedAt':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),

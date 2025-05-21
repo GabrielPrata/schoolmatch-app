@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 
-class CustomFilterChip extends StatefulWidget {
-  final List<int?>? listIds;
-  final List<String?> listNames;
-  final List<Map<String, dynamic>> data;
+class CustomFilterChip<T> extends StatefulWidget {
+  final List<T> dataList;
+  final List<T?> selectedItems;
   final bool showOptions;
   final int maxSelections;
 
+  // Funções de extração:
+  final String Function(T) labelExtractor;
+  final dynamic Function(T) idExtractor;
+
   const CustomFilterChip({
     super.key,
-    this.listIds,
-    required this.listNames,
-    required this.data,
+    required this.dataList,
+    required this.selectedItems,
+    required this.labelExtractor,
+    required this.idExtractor,
     this.showOptions = true,
-    this.maxSelections = 3, // Valor padrão para máximo de seleções,
+    this.maxSelections = 3,
   });
 
   @override
-  State<CustomFilterChip> createState() => _CustomFilterChipState();
+  State<CustomFilterChip<T>> createState() => _CustomFilterChipState<T>();
 }
 
-class _CustomFilterChipState extends State<CustomFilterChip> {
+class _CustomFilterChipState<T> extends State<CustomFilterChip<T>> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -32,26 +36,21 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
           Wrap(
             spacing: 7.0,
             runSpacing: 4.0,
-            children: widget.data.map((block) {
+            children: widget.dataList.map((item) {
+              final String label = widget.labelExtractor(item);
+              final bool isSelected = widget.selectedItems.contains(item);
+
               return FilterChip(
-                label: Text(
-                  block['nome'],
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-                selected: block['selected'],
+                label: Text(label, style: textTheme.labelMedium),
+                selected: isSelected,
                 onSelected: (bool selected) {
                   setState(() {
-                    // Verifica se o chip pode ser selecionado baseado no limite de seleções
                     if (selected) {
-                      if ((widget.listIds?.length ?? 0) < widget.maxSelections) {
-                        block['selected'] = true;
-                        widget.listIds?.add(block['id']);
-                        widget.listNames.add(block['name']);
+                      if (widget.selectedItems.length < widget.maxSelections) {
+                        widget.selectedItems.add(item);
                       }
                     } else {
-                      block['selected'] = false;
-                      widget.listIds?.remove(block['id']);
-                      widget.listNames.remove(block['name']);
+                      widget.selectedItems.remove(item);
                     }
                   });
                 },
@@ -67,7 +66,7 @@ class _CustomFilterChipState extends State<CustomFilterChip> {
           const SizedBox(height: 20.0),
           if (widget.showOptions)
             Text(
-              'Locais selecionados: ${widget.data.where((block) => block['selected']).map((e) => e['nome']).join(', ')}.',
+              'Selecionados: ${widget.selectedItems.whereType<T>().map(widget.labelExtractor).join(', ')}.',
               style: textTheme.bodySmall,
               textAlign: TextAlign.left,
             ),

@@ -118,13 +118,13 @@ class _UserInterestsState extends State<UserInterests> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            SizedBox(
-              child: CustomFilterChip(
-                listNames: interests,
-                data: interesses,
-                showOptions: false,
-              ),
-            ),
+            // SizedBox(
+            //   child: CustomFilterChip(
+            //     listNames: interests,
+            //     data: interesses,
+            //     showOptions: false,
+            //   ),
+            // ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),

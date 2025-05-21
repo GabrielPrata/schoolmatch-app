@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:school_match/domain/models/appDataModels/block_model.dart';
+import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
 
@@ -12,14 +14,11 @@ class UserModel {
   String? email;
   String? password;
 
-  int? courseId;
-  String? course;
+  CourseModel? userCourse;
 
-  int? mainBlockId;
-  String? mainBlock;
+  BlockModel? userBlock;
 
-  List<int?> secondaryBlockIds;
-  List<String?> secondaryBlocks;
+  List<BlockModel?> secondaryBlocks;
 
   DateTime? birthDate;
   DateTime? admissionDate;
@@ -58,12 +57,9 @@ class UserModel {
     this.lastName,
     this.email,
     this.password,
-    this.courseId,
-    this.course,
-    this.mainBlockId,
-    this.mainBlock,
-    List<int?>? secondaryBlockIds,
-    List<String?>? secondaryBlocks,
+    this.userCourse,
+    this.userBlock,
+    List<BlockModel?>? secondaryBlocks,
     this.birthDate,
     this.admissionDate,
     this.genderId,
@@ -87,8 +83,8 @@ class UserModel {
     this.showSexuality,
     required this.hasMusic,
     this.selectedMusic,
-  })  : secondaryBlockIds = secondaryBlockIds ?? <int?>[],
-        secondaryBlocks = secondaryBlocks ?? <String?>[],
+  })  : 
+        secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
         preferenceIds = preferenceIds ?? <int?>[],
         preferenceNames = preferenceNames ?? <String?>[],
         interests = interests ?? <String?>[],
@@ -103,12 +99,12 @@ UserModel{
   lastName: $lastName,
   email: $email,
   password: $password,
-  courseId: $courseId,
-  course: $course,
-  mainBlockId: $mainBlockId,
-  mainBlock: $mainBlock,
-  secondaryBlockIds: ${secondaryBlockIds.join(", ")},
-  secondaryBlocks: ${secondaryBlocks.join(", ")},
+  courseId: ${userCourse?.courseId},
+  course: ${userCourse?.courseName},
+  mainBlockId: ${userBlock?.blockId},
+  mainBlock: ${userBlock?.blockName},
+  secondaryBlockIds: CORRIGIR DEPOIS,
+  secondaryBlocks: CORRIGIR DEPOIS,
   birthDate: ${birthDate?.toIso8601String()},
   admissionDate: ${admissionDate?.toIso8601String()},
   genderId: $genderId,
@@ -141,11 +137,11 @@ UserModel{
       'sobrenome': lastName,
       'emailUsuario': email,
       'senhaUsuario': md5.convert(utf8.encode(password!)).toString(),
-      'cursoId': courseId,
-      'curso': course,
-      'blocoPrincipalId': mainBlockId,
-      'blocoPrincipal': mainBlock,
-      'BlocosUsuario': secondaryBlockIds,
+      'cursoId': userCourse?.courseId,
+      'curso': userCourse?.courseName,
+      'blocoPrincipalId': userBlock?.blockId,
+      'blocoPrincipal': userBlock?.blockName,
+      'BlocosUsuario': userBlock,
       'blocosSecundarios': secondaryBlocks,
       'dataNascimento':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
       'usuarioCreatedAt':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),

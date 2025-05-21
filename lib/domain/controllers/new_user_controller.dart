@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:school_match/domain/models/appDataModels/block_model.dart';
+import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/services/auth_service.dart';
+import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/screens/forms/user_finish_signup.dart';
 import 'package:school_match/ui/screens/forms/user_password.dart';
@@ -164,13 +167,8 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserCourseId(int courseId) {
-    userModel.courseId = courseId;
-    print(userModel.toString());
-  }
-
-  setUserCourse(String userCourse) {
-    userModel.course = userCourse;
+  setUserCourse(CourseModel userCourseModel) {
+    userModel.userCourse = userCourseModel;
     print(userModel.toString());
   }
 
@@ -184,21 +182,17 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserMainBlock(int mainBlockId, String mainBlock) {
-    userModel.mainBlockId = mainBlockId;
-    userModel.mainBlock = mainBlock;
+  setUserMainBlock(BlockModel userBlockModel) {
+    userModel.userBlock = userBlockModel;
     print(userModel.toString());
   }
 
-  setUserSecondaryBlocks(List<int?> idsBlocks, List<String?> secondaryBlocks) {
-    var errors = Validations.validateList(idsBlocks,
+  setUserSecondaryBlocks(List<BlockModel?> secondaryBlocksModelsList) {
+    var errors = Validations.validateList(secondaryBlocksModelsList,
         maxLength: 5, minLength: 2, fieldName: "seus Blocos Secundários!");
     if (errors == null) {
-      userModel.secondaryBlockIds.clear();
-      userModel.secondaryBlockIds.addAll(idsBlocks);
-
       userModel.secondaryBlocks.clear();
-      userModel.secondaryBlocks.addAll(secondaryBlocks);
+      userModel.secondaryBlocks.addAll(secondaryBlocksModelsList);
     } else
       throw new CustomException(errors);
     print(userModel.toString());

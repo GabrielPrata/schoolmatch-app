@@ -89,10 +89,10 @@ class _UserYearState extends State<UserYear> {
     return courseDurationOptions;
   }
 
-  void handleCourseDurationSelection(int id, String name) {
+  void handleCourseDurationSelection(CourseDurationModel courseDurationModel) {
     setState(() {
-      selectedSemesterId = id;
-      selectedSemester = name;
+      selectedSemesterId = courseDurationModel.id;
+      selectedSemester = courseDurationModel.name;
     });
   }
 

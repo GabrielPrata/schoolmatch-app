@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -33,9 +34,9 @@ class HomePageController extends GetxController {
     profiles.add(UserProfileModel(
       firstName: "Gabriel",
       lastName: "Prata",
-      course: "Sistemas de Informação",
-      mainBlock: "Bloco C",
-      secondaryBlocks: ["Espetinho", "IZI", "Boteko do Pai"],
+      course: CourseModel(courseId: 16, courseName: "Fisioterapia"),
+      // mainBlock: "Bloco C",
+      // secondaryBlocks: ["Espetinho", "IZI", "Boteko do Pai"],
       birthDate: DateTime(2001, 10, 18),
       admissionDate: DateTime(2022, 1, 1),
       sexuality: "Bixinha",
@@ -72,9 +73,9 @@ class HomePageController extends GetxController {
       hasMusic: RxBool(false),
       firstName: "Mariana",
       lastName: "Costa",
-      course: "Engenharia Civil",
-      mainBlock: "Bloco B",
-      secondaryBlocks: ["Cantina Central", "Biblioteca", "Quadra"],
+      course: CourseModel(courseId: 16, courseName: "Fisioterapia"),
+      // mainBlock: "Bloco B",
+      // secondaryBlocks: ["Cantina Central", "Biblioteca", "Quadra"],
       birthDate: DateTime(1999, 4, 22),
       admissionDate: DateTime(2018, 3, 15),
       sexuality: "Bissexual",
@@ -100,9 +101,9 @@ class HomePageController extends GetxController {
       hasMusic: RxBool(false),
       firstName: "Carlos",
       lastName: "Dias",
-      course: "Medicina",
-      mainBlock: "Bloco A",
-      secondaryBlocks: ["Lanchonete da Saúde", "Laboratório", "Anfiteatro"],
+      course: CourseModel(courseId: 16, courseName: "Fisioterapia"),
+      // mainBlock: "Bloco A",
+      // secondaryBlocks: ["Lanchonete da Saúde", "Laboratório", "Anfiteatro"],
       birthDate: DateTime(1997, 12, 5),
       admissionDate: DateTime(2016, 2, 20),
       sexuality: "Heterossexual",
@@ -127,9 +128,9 @@ class HomePageController extends GetxController {
       hasMusic: RxBool(false),
       firstName: "Ana",
       lastName: "Barbosa",
-      course: "Design Gráfico",
-      mainBlock: "Bloco D",
-      secondaryBlocks: ["Ateliê", "Sala de Exposições", "Centro de Convenções"],
+      course: CourseModel(courseId: 16, courseName: "Fisioterapia"),
+      // mainBlock: "Bloco D",
+      // secondaryBlocks: ["Ateliê", "Sala de Exposições", "Centro de Convenções"],
       birthDate: DateTime(2002, 6, 15),
       admissionDate: DateTime(2020, 8, 10),
       sexuality: "Homossexual",
@@ -155,13 +156,13 @@ class HomePageController extends GetxController {
       hasMusic: RxBool(false),
       firstName: "Thiago",
       lastName: "Nunes",
-      course: "Ciências Econômicas",
-      mainBlock: "Bloco E",
-      secondaryBlocks: [
-        "Auditório",
-        "Sala dos Professores",
-        "Cantina Econômica"
-      ],
+      course: CourseModel(courseId: 16, courseName: "Fisioterapia"),
+      // mainBlock: "Bloco E",
+      // secondaryBlocks: [
+      //   "Auditório",
+      //   "Sala dos Professores",
+      //   "Cantina Econômica"
+      // ],
       birthDate: DateTime(2000, 9, 30),
       admissionDate: DateTime(2019, 1, 25),
       sexuality: "Assexual",

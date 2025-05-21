@@ -21,8 +21,7 @@ NewUserController userController = Get.put(NewUserController());
 AppDataController appDataController = Get.put(AppDataController());
 
 class _UserCourseState extends State<UserCourse> {
-  int? selectedCourseId;
-  String? selectedCourse;
+  CourseModel? selectedCourse;
 
   @override
   void initState() {
@@ -32,11 +31,11 @@ class _UserCourseState extends State<UserCourse> {
   }
 
   salvarDados() {
-    if (selectedCourseId != null && selectedCourse != null) {
-      userController.setUserCourseId(selectedCourseId!);
+    if (selectedCourse != null) {
       userController.setUserCourse(selectedCourse!);
 
-      print('Semestre selecionado: ID $selectedCourseId, Nome $selectedCourse');
+      print(
+          'Semestre selecionado: ID ${selectedCourse?.courseId}, Nome ${selectedCourse?.courseName}');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -55,11 +54,10 @@ class _UserCourseState extends State<UserCourse> {
     }
   }
 
-  void handleCourseSelection(int id, String name) {
+  void handleCourseSelection(CourseModel selectedCourseModel) {
     setState(() {
-      appDataController.setUserCourseId(id);
-      selectedCourseId = id;
-      selectedCourse = name;
+      appDataController.setUserCourse(selectedCourseModel);
+      selectedCourse = selectedCourseModel;
     });
   }
 
@@ -101,7 +99,7 @@ class _UserCourseState extends State<UserCourse> {
                       defaultText: "Selecione o curso",
                       getId: (course) => course.courseId,
                       getLabel: (course) => course.courseName,
-                      selectedId: selectedCourseId,
+                      selectedId: selectedCourse?.courseId,
                       onItemSelected: handleCourseSelection,
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.48),

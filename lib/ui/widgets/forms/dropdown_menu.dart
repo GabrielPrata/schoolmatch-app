@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DropdownMenuData<T> extends StatefulWidget {
   final List<T> items;
   final int? selectedId;
-  final void Function(int, String) onItemSelected;
+  final void Function(T) onItemSelected;
   final String defaultText;
   final int Function(T) getId;
   final String Function(T) getLabel;
@@ -79,8 +79,8 @@ class _DropdownMenuDataState<T> extends State<DropdownMenuData<T>> {
             (item) => widget.getId(item) == newValue,
           );
 
-          widget.onItemSelected(
-              widget.getId(selectedItem), widget.getLabel(selectedItem));
+          widget.onItemSelected(selectedItem);
+          
         },
         buttonStyleData: ButtonStyleData(
           height: 70,

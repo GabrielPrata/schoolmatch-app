@@ -24,11 +24,9 @@ NewUserController userController = Get.put(NewUserController());
 AppDataController appDataController = Get.put(AppDataController());
 
 class _UserBlocksState extends State<UserBlocks> {
-  int? mainBlockId;
-  String? mainBlockName;
+  BlockModel? mainBlock;
 
-  List<int?> secondaryBlocksIds = [];
-  List<String?> secondaryBlocks = [];
+  List<BlockModel?> secondaryBlocks = [];
 
   @override
   void initState() {
@@ -36,13 +34,7 @@ class _UserBlocksState extends State<UserBlocks> {
     userController.step += 1;
     super.initState();
     setState(() {
-      if (userController.userModel.secondaryBlockIds.isNotEmpty) {
-        for (var bloco in appDataController.appSecondaryBlocks) {
-          if (secondaryBlocksIds.contains(bloco['id'])) {
-            bloco['selected'] = true;
-          }
-        }
-      }
+     
     });
   }
 
@@ -58,16 +50,14 @@ class _UserBlocksState extends State<UserBlocks> {
   }
 
   salvarDados() {
-    if (mainBlockId != null && mainBlockName != null) {
-      if ((secondaryBlocksIds.isEmpty || secondaryBlocks.isEmpty) &&
-          userController.userModel.secondaryBlockIds.isNotEmpty) {
+    if (mainBlock != null) {
+      if ((secondaryBlocks.isEmpty) &&
+          userController.userModel.secondaryBlocks.isNotEmpty) {
         secondaryBlocks = userController.userModel.secondaryBlocks;
-        secondaryBlocksIds = userController.userModel.secondaryBlockIds;
       }
-      userController.setUserMainBlock(mainBlockId!, mainBlockName!);
+      userController.setUserMainBlock(mainBlock!);
       try {
-        userController.setUserSecondaryBlocks(
-            secondaryBlocksIds, secondaryBlocks);
+        userController.setUserSecondaryBlocks(secondaryBlocks);
 
         Navigator.push(
           context,
@@ -80,14 +70,13 @@ class _UserBlocksState extends State<UserBlocks> {
       }
     } else {
       Alerts.showErrorSnackBar(
-          "Querem que te achem como? Escolhe seu bloco principal!", context);
+          "Quer que te achem como? Escolhe seu bloco principal!", context);
     }
   }
 
-  void handleBlockSelection(int id, String name) {
+  void handleBlockSelection(BlockModel userBlockModel) {
     setState(() {
-      mainBlockId = id;
-      mainBlockName = name;
+      mainBlock = userBlockModel;
     });
   }
 
@@ -158,7 +147,7 @@ class _UserBlocksState extends State<UserBlocks> {
                 defaultText: "Selecione um bloco",
                 getId: (block) => block.blockId,
                 getLabel: (block) => block.blockName,
-                selectedId: mainBlockId,
+                selectedId: mainBlock?.blockId,
                 onItemSelected: handleBlockSelection,
               ),
             ),
@@ -181,10 +170,11 @@ class _UserBlocksState extends State<UserBlocks> {
               height: MediaQuery.of(context).size.height * 0.02,
             ),
             SizedBox(
-              child: CustomFilterChip(
-                listIds: secondaryBlocksIds,
-                listNames: secondaryBlocks,
-                data: appDataController.appSecondaryBlocks,
+              child: CustomFilterChip<BlockModel>(
+                dataList: appDataController.appSecondaryBlocks,
+                selectedItems: secondaryBlocks,
+                labelExtractor: (block) => block.blockName,
+                idExtractor: (block) => block.blockId,
                 maxSelections: 5,
               ),
             ),
