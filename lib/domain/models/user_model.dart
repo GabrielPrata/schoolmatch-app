@@ -4,11 +4,16 @@ import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
+import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
+import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
 
 class UserModel {
+  //Sepaprar em model
+  //User herança
   String? firstName;
   String? lastName;
   String? email;
@@ -23,31 +28,35 @@ class UserModel {
   DateTime? birthDate;
   DateTime? admissionDate;
 
-  int? genderId;
-  String? gender;
+  GenderModel? userGender;
 
+  //Sepaprar em model (usar model de genero)
   List<int?> preferenceIds;
   List<String?> preferenceNames;
 
-  String? sexuality;
+  SexualityModel? userSexuality;
+
+
 
   String? bio;
   String? city;
-  String? zodiacSign;
-  String? semester;
-  int? semesterId;
-  String? loveLanguage;
+
+  CourseDurationModel? courseSemester;
+
   List<String?> interests;
+
+  //Sepaprar em model (userAbout)
+  String? zodiacSign;
+  String? loveLanguage;
   String? pets;
   String? drink;
   String? smoker;
   String? physicalActivity;
   String? typeOfOuting;
-  String? music;
+  // String? music;
 
   List<XFile?> images;
 
-  bool? showSexuality;
 
   RxBool hasMusic = false.obs;
   MusicAdapter? selectedMusic;
@@ -62,16 +71,14 @@ class UserModel {
     List<BlockModel?>? secondaryBlocks,
     this.birthDate,
     this.admissionDate,
-    this.genderId,
-    this.gender,
+    this.userGender,
     List<int?>? preferenceIds,
     List<String?>? preferenceNames,
-    this.sexuality,
+    this.userSexuality,
     this.bio,
     this.city,
     this.zodiacSign,
-    this.semester,
-    this.semesterId,
+    this.courseSemester,
     this.loveLanguage,
     List<String?>? interests,
     this.pets,
@@ -80,7 +87,6 @@ class UserModel {
     this.physicalActivity,
     this.typeOfOuting,
     List<XFile?>? images,
-    this.showSexuality,
     required this.hasMusic,
     this.selectedMusic,
   })  : 
@@ -107,25 +113,25 @@ UserModel{
   secondaryBlocks: CORRIGIR DEPOIS,
   birthDate: ${birthDate?.toIso8601String()},
   admissionDate: ${admissionDate?.toIso8601String()},
-  genderId: $genderId,
-  gender: $gender,
+  genderId: ${userGender?.genderId},
+  gender: ${userGender?.genderName},
   preferenceIds: ${preferenceIds.join(", ")},
   preferenceNames: ${preferenceNames.join(", ")},
-  sexuality: $sexuality,
+  sexuality: ${userSexuality?.sexualityName},
   bio: $bio,
   city: $city,
   zodiacSign: $zodiacSign,
-  semester: $semester,
-  semesterId: $semesterId,
+  semester: ${courseSemester?.name},
+  semesterId: ${courseSemester?.id},
   loveLanguage: $loveLanguage,
   pets: $pets,
   drink: $drink,
   smoker: $smoker,
   physicalActivity: $physicalActivity,
   typeOfOuting: $typeOfOuting,
-  music: $music,
+  music: -,
   images: ${images.map((x) => x?.path).join(", ")},
-  showSexuality: $showSexuality,
+  showSexuality: ${userSexuality?.showInProfile},
   hasMusic: $hasMusic,
   selectedMusic: ${selectedMusic?.toString() ?? 'None'},
 }''';
@@ -145,15 +151,15 @@ UserModel{
       'blocosSecundarios': secondaryBlocks,
       'dataNascimento':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
       'usuarioCreatedAt':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),
-      'generoId': genderId,
-      'genero': gender,
+      'generoId': userGender?.genderId,
+      'genero': userGender?.genderName,
       'usuarioPreferencia': preferenceIds,
-      'sexualidade': sexuality,
+      'sexualidade': userSexuality?.sexualityName,
       'bio': bio,
       'cidade': city,
       'signo': zodiacSign,
-      'semestre': semester,
-      'semesterId': semesterId,
+      'semestre': courseSemester?.name,
+      'semesterId': courseSemester?.id,
       'linguagemAmor': loveLanguage,
       'interesses': interests,
       'pets': pets,
@@ -164,7 +170,7 @@ UserModel{
       'images': images
           .map((x) => x?.path)
           .toList(), // Assumindo que você quer apenas os caminhos das imagens
-      'exibirSexualidade': showSexuality,
+      'exibirSexualidade': userSexuality?.showInProfile,
       'hasMusic': hasMusic.value,
       'spotifyMusicData': selectedMusic?.toJson(),
       //Alterar após implementar a autenticação

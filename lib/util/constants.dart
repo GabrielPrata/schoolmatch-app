@@ -23,10 +23,10 @@ class Constants {
   static String getMainBlocks = "$blocks/MainBlocks";
   static String getSecondaryBlocks = "$blocks/SecondaryBlocks";
   
-  static String sexuality = "$appDataApiUrl/sexuality";
+  static String sexuality = "$appData/sexuality";
   static String getAllSexualities = "$sexuality/GetAllSexualities";
 
-  static String interests = "$appDataApiUrl/interests";
+  static String interests = "$appData/interests";
   static String getAllInterests = "$interests/GetAllInterests";
 
 

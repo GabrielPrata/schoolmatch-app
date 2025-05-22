@@ -23,8 +23,7 @@ NewUserController userController = Get.put(NewUserController());
 AppDataController appDataController = Get.put(AppDataController());
 
 class _UserYearState extends State<UserYear> {
-  int? selectedSemesterId;
-  String? selectedSemester;
+  CourseDurationModel? userCourseDuration;
 
   @override
   void initState() {
@@ -58,12 +57,11 @@ class _UserYearState extends State<UserYear> {
   }
 
   salvarDados() {
-    if (selectedSemesterId != null && selectedSemester != null) {
-      userController.setUserIdSemester(selectedSemesterId!);
-      userController.setUserSemester(selectedSemester!);
+    if (userCourseDuration != null) {
+      userController.setUserSemester(userCourseDuration!);
 
       print(
-          'Curso selecionado: ID $selectedSemesterId, Nome $selectedSemester');
+          'Curso selecionado: ID ${userCourseDuration?.id}, Nome ${userCourseDuration?.name}');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -79,7 +77,8 @@ class _UserYearState extends State<UserYear> {
     List<CourseDurationModel> courseDurationOptions = [];
 
     for (var i = 1; i <= appDataController.courseDuration; i++) {
-      courseDurationOptions.add(CourseDurationModel(id: i, name: "$iº Semestre"));
+      courseDurationOptions
+          .add(CourseDurationModel(id: i, name: "$iº Semestre"));
     }
 
     //Número 12 + 1 mockado por conta que os cursos mais longos possuem 12 semestres
@@ -91,8 +90,7 @@ class _UserYearState extends State<UserYear> {
 
   void handleCourseDurationSelection(CourseDurationModel courseDurationModel) {
     setState(() {
-      selectedSemesterId = courseDurationModel.id;
-      selectedSemester = courseDurationModel.name;
+      userCourseDuration = courseDurationModel;
     });
   }
 
@@ -147,7 +145,7 @@ class _UserYearState extends State<UserYear> {
                 defaultText: "Selecione o semestre...",
                 getId: (year) => year.id,
                 getLabel: (year) => year.name,
-                selectedId: selectedSemesterId,
+                selectedId: userCourseDuration?.id,
                 onItemSelected: handleCourseDurationSelection,
               ),
             ),

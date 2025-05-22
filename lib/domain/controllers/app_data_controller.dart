@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/services/app_data_service.dart';
 import 'package:school_match/util/alerts.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class AppDataController extends GetxController {
   List<CourseModel> appCourses = [];
   List<BlockModel> appMainBlocks = [];
   List<BlockModel> appSecondaryBlocks = [];
+  List<SexualityModel> appSexualities = [];
 
   getAppCourses(BuildContext? context) async {
     try {
@@ -33,7 +35,8 @@ class AppDataController extends GetxController {
 
   getCourseDuration(BuildContext context) async {
     try {
-      final response = await AppDataService.getCourseDuration(userCourse.courseId);
+      final response =
+          await AppDataService.getCourseDuration(userCourse.courseId);
       final json = jsonDecode(response);
       courseDuration = json['courseDuration'];
     } catch (e) {
@@ -77,31 +80,19 @@ class AppDataController extends GetxController {
   }
 
   getAllSexualities(BuildContext? context) async {
-    //   try {
-    //     final response = await AppDataService.getAllSexualities();
+    try {
+      final response = await AppDataService.getAllSexualities();
 
-    //     if (response.isEmpty) {
-    //       return [];
-    //     }
+      final List<dynamic> jsonList = jsonDecode(response);
 
-    //     final List<dynamic> jsonList = jsonDecode(response);
-
-    //     final updatedBlocks = jsonList.map((item) {
-    //       return {
-    //         'id': item['idBloco'],
-    //         'nome': item['nomeBloco'],
-    //         'selected': false,
-    //       };
-    //     }).toList();
-
-    //     appSecondaryBlocks = updatedBlocks;
-    //   } catch (e) {
-    //     Alerts.showErrorSnackBar(
-    //       'Algo inesperado aconteceu ao obter as sexualidades! Tente novamente mais tarde ou contate o suporte.',
-    //       context!,
-    //     );
-    //     return [];
-    //   }
+      appSexualities =
+          jsonList.map((item) => SexualityModel.fromJson(item)).toList();
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+        'Algo inesperado aconteceu ao obter as sexualidades! Tente novamente mais tarde ou contate o suporte.',
+        context!,
+      );
+    }
   }
 
   setUserCourse(CourseModel courseModel) {

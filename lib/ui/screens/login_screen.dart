@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => UserCourse(),
+          builder: (_) => UserSexuality(),
           // builder: (_) =>UserSpotifyMusic(),
         ),
       );

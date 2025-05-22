@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
+import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
+import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/services/auth_service.dart';
@@ -172,13 +175,8 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserSemester(String userSemester) {
-    userModel.semester = userSemester;
-    print(userModel.toString());
-  }
-
-  setUserIdSemester(int userIdSemester) {
-    userModel.semesterId = userIdSemester;
+  setUserSemester(CourseDurationModel userSemesterModel) {
+    userModel.courseSemester = userSemesterModel;
     print(userModel.toString());
   }
 
@@ -236,24 +234,22 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserGender(int? genderId, String genderName) {
-    if (genderId == null || genderId == 0) {
+  setUserGender(GenderModel userGenderModel) {
+    if (userGenderModel == null) {
       throw new CustomException(
           "Por favor, nos informe como você se identifica.");
     }
-    userModel.genderId = genderId;
-    userModel.gender = genderName;
+    userModel.userGender = userGenderModel;
 
     print(userModel.toString());
   }
 
-  setUserSexuality(String sexualityName, bool showSexualityInProfile) {
-    if (sexualityName == null || sexualityName.isEmpty) {
+  setUserSexuality(SexualityModel userSexualityModel) {
+    if (userSexualityModel == null) {
       throw new CustomException(
           "Por favor, nos informe a sua orientação sexual.");
     }
-    userModel.sexuality = sexualityName;
-    userModel.showSexuality = showSexualityInProfile;
+    userModel.userSexuality = userSexualityModel;
 
     print(userModel.toString());
   }

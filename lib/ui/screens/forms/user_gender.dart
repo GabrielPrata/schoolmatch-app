@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
@@ -23,7 +24,7 @@ class _UserGenderState extends State<UserGender> {
 
   salvarDados() {
     try {
-      userController.setUserGender(selectedGenderId, selectedGenderName);
+      userController.setUserGender(userGender!);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -36,15 +37,10 @@ class _UserGenderState extends State<UserGender> {
     }
   }
 
-  late int selectedGenderId = 0; // Inicializa com 0 indicando nenhuma seleção
-  late String selectedGenderName = ""; // Inicializa vazio
+  GenderModel? userGender;
 
   //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
-  final List<Map<String, dynamic>> genders = [
-    {"id": 1, "name": "Homem", "selected": false},
-    {"id": 2, "name": "Mulher", "selected": false},
-    {"id": 3, "name": "Não Binário", "selected": false},
-  ];
+  final List<GenderModel> genders = GenderModel.createAppGenders();
 
   Widget build(BuildContext context) {
     return PopScope(
@@ -100,7 +96,7 @@ class _UserGenderState extends State<UserGender> {
                           style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 vertical: 15.0), // Tamanho do botão
-                            backgroundColor: gender['selected']
+                            backgroundColor: gender.selected
                                 ? Theme.of(context)
                                     .colorScheme
                                     .onPrimary // Cor quando selecionado
@@ -119,22 +115,21 @@ class _UserGenderState extends State<UserGender> {
                           onPressed: () {
                             setState(() {
                               genders.forEach((g) =>
-                                  g['selected'] = false); // Desmarcar todos
-                              gender['selected'] = true; // Marcar selecionado
-                              selectedGenderId = gender['id'];
-                              selectedGenderName = gender['name'];
+                                  g.selected = false); // Desmarcar todos
+                              gender.selected = true; // Marcar selecionado
+                              userGender = gender;
                             });
                           },
                           child: SizedBox(
                             width: double.infinity, // Largura do botão
                             child: Center(
                               child: Text(
-                                gender['name'],
+                                gender.genderName,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium
                                     ?.copyWith(
-                                      color: gender['selected']
+                                      color: gender.selected
                                           ? Theme.of(context)
                                               .primaryColor // Cor do texto quando selecionado
                                           : Theme.of(context)

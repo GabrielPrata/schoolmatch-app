@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/ui/screens/forms/user_like_find.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
@@ -13,18 +15,26 @@ class UserSexuality extends StatefulWidget {
 }
 
 NewUserController userController = Get.put(NewUserController());
+AppDataController appDataController = Get.put(AppDataController());
 
 class _UserSexualityState extends State<UserSexuality> {
   @override
   void initState() {
     userController.step += 1;
+    _loadSexualities();
     super.initState();
+  }
+
+  Future<void> _loadSexualities() async {
+    if (appDataController.appSexualities.isEmpty) {
+      await appDataController.getAllSexualities(context);
+      setState(() {});
+    }
   }
 
   salvarDados() {
     try {
-      userController.setUserSexuality(
-          selectedSexualityName, showSexualityInProfile);
+      userController.setUserSexuality(selectedSexuality);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -37,98 +47,9 @@ class _UserSexualityState extends State<UserSexuality> {
     }
   }
 
-  late int selectedSexualityId =
-      0; // Inicializa com 0 indicando nenhuma seleção
-  late String selectedSexualityName = ""; // Inicializa vazio
-  late bool showSexualityInProfile = true;
+  SexualityModel selectedSexuality = SexualityModel(
+      sexualityId: 0, sexualityName: "", sexualityDescription: "");
 
-  //TODO: ISSO AQUI VAI VIR DA API
-  final List<Map<String, dynamic>> sexualities = [
-    {
-      "id": 1,
-      "name": "Heterossexual",
-      "description":
-          "Atração emocional, romântica e/ou sexual por pessoas do gênero oposto.",
-      "selected": false
-    },
-    {
-      "id": 2,
-      "name": "Arromântico",
-      "description":
-          "Pessoas que não sentem atração romântica por outras. Elas podem formar conexões emocionais e sexuais, mas não têm interesse em relacionamentos românticos.",
-      "selected": false
-    },
-    {
-      "id": 3,
-      "name": "Assexual",
-      "description":
-          "Falta ou baixa atração sexual por outras pessoas. Pessoas assexuais podem ter interesse em outras formas de relacionamento sem desejo sexual.",
-      "selected": false
-    },
-    {
-      "id": 4,
-      "name": "Bissexual",
-      "description":
-          "Atração emocional, romântica e/ou sexual por mais de um gênero, incluindo homens e mulheres, mas também outras identidades de gênero.",
-      "selected": false
-    },
-    {
-      "id": 5,
-      "name": "Gay",
-      "description":
-          "Geralmente se refere a homens que são atraídos por outros homens. Também pode ser usado como um termo guarda-chuva para pessoas que se atraem pelo mesmo gênero.",
-      "selected": false
-    },
-    {
-      "id": 6,
-      "name": "Lésbica",
-      "description":
-          "Mulheres que são emocional, romântica e/ou sexualmente atraídas por outras mulheres.",
-      "selected": false
-    },
-    {
-      "id": 7,
-      "name": "Onissexual",
-      "description":
-          "Atração emocional, romântica e/ou sexual por pessoas de todos os gêneros, com foco menos no gênero e mais na pessoa em si.",
-      "selected": false
-    },
-    {
-      "id": 8,
-      "name": "Demissexual",
-      "description":
-          "Pessoas que só sentem atração sexual após desenvolver uma conexão emocional profunda com alguém.",
-      "selected": false
-    },
-    {
-      "id": 9,
-      "name": "Pansexual",
-      "description":
-          "Atração emocional, romântica e/ou sexual por pessoas de qualquer gênero, onde a identidade de gênero não é um fator determinante.",
-      "selected": false
-    },
-    {
-      "id": 10,
-      "name": "Queer",
-      "description":
-          "Termo guarda-chuva para descrever uma variedade de orientações sexuais e identidades de gênero fora da norma heterossexual e cisgênero.",
-      "selected": false
-    },
-    {
-      "id": 11,
-      "name": "Questionando",
-      "description":
-          "Refere-se a pessoas que estão explorando sua identidade sexual ou de gênero e ainda não se identificam de forma definitiva com uma orientação.",
-      "selected": false
-    },
-    {
-      "id": 12,
-      "name": "Não Listado",
-      "description":
-          "Indica que a pessoa sente que sua orientação sexual não está representada pelas categorias convencionais, preferindo um rótulo único ou personalizado.",
-      "selected": false
-    },
-  ];
 
   Widget build(BuildContext context) {
     return PopScope(
@@ -170,7 +91,7 @@ class _UserSexualityState extends State<UserSexuality> {
               child: Column(
                 children: <Widget>[
                   Column(
-                    children: sexualities.map((sexuality) {
+                    children: appDataController.appSexualities.map((sexuality) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0), // Ajuste do espaçamento
@@ -178,7 +99,7 @@ class _UserSexualityState extends State<UserSexuality> {
                           style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 vertical: 15.0), // Tamanho do botão
-                            backgroundColor: sexuality['selected']
+                            backgroundColor: sexuality.selected
                                 ? Theme.of(context)
                                     .colorScheme
                                     .onPrimary // Cor quando selecionado
@@ -196,12 +117,9 @@ class _UserSexualityState extends State<UserSexuality> {
                           ),
                           onPressed: () {
                             setState(() {
-                              sexualities.forEach((g) =>
-                                  g['selected'] = false); // Desmarcar todos
-                              sexuality['selected'] =
-                                  true; // Marcar selecionado
-                              selectedSexualityId = sexuality['id'];
-                              selectedSexualityName = sexuality['name'];
+                              appDataController.appSexualities.forEach(
+                                  (g) => g.selected = false); // Desmarcar todos
+                              sexuality.selected = true; // Marcar selecionado
                             });
                           },
                           child: SizedBox(
@@ -214,13 +132,13 @@ class _UserSexualityState extends State<UserSexuality> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    sexuality['name'],
+                                    sexuality.sexualityName,
                                     textAlign: TextAlign.left,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall
                                         ?.copyWith(
-                                          color: sexuality['selected']
+                                          color: sexuality.selected
                                               ? Theme.of(context)
                                                   .primaryColor // Cor do texto quando selecionado
                                               : Theme.of(context)
@@ -234,12 +152,12 @@ class _UserSexualityState extends State<UserSexuality> {
                                   ),
                                   Text(
                                     textAlign: TextAlign.left,
-                                    sexuality['description'],
+                                    sexuality.sexualityDescription,
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall
                                         ?.copyWith(
-                                          color: sexuality['selected']
+                                          color: sexuality.selected
                                               ? Theme.of(context)
                                                   .primaryColor // Cor do texto quando selecionado
                                               : Theme.of(context)
@@ -262,10 +180,10 @@ class _UserSexualityState extends State<UserSexuality> {
                         Transform.scale(
                           scale: 1.25,
                           child: Checkbox(
-                            value: showSexualityInProfile,
+                            value: selectedSexuality.showInProfile,
                             onChanged: (bool? value) {
                               setState(() {
-                                showSexualityInProfile = value!;
+                                selectedSexuality.showInProfile = value!;
                               });
                             },
                             checkColor: Colors.white, // cor do tick
