@@ -61,7 +61,7 @@ class _UserExtraInfosState extends State<UserExtraInfos> {
                       Row(
                         children: [
                           Icon(Icons.cake, size: 24),
-                          Text(" " + widget.candidate.zodiacSign.toString(),
+                          Text(" " + widget.candidate.userAbout!.zodiacSign.toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -117,7 +117,7 @@ class _UserExtraInfosState extends State<UserExtraInfos> {
                       Row(
                         children: [
                           Icon(Icons.volunteer_activism, size: 24),
-                          Text(" " + widget.candidate.loveLanguage.toString(),
+                          Text(" " + widget.candidate.userAbout!.loveLanguage.toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
