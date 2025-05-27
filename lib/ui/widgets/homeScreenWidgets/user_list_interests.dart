@@ -54,7 +54,7 @@ class _UserListInterestsState extends State<UserListInterests> {
                       Wrap(
                         spacing: 7.0,
                         runSpacing: 4.0,
-                        children: widget.candidate.interests.map((item) {
+                        children: widget.candidate.userInterests.map((item) {
                           return FilterChip(
                             label: Text(
                               item.toString(),

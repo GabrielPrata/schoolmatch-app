@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
@@ -42,7 +43,7 @@ class UserModel {
 
   CourseDurationModel? courseSemester;
 
-  List<String?> interests;
+  List<InterestsModel?> userInterests;
 
   UserAboutModel? userAbout;
   // String? music;
@@ -68,14 +69,14 @@ class UserModel {
     this.bio,
     this.city,
     this.courseSemester,
-    List<String?>? interests,
+    List<InterestsModel?>? userInterests,
     this.userAbout,
     List<XFile?>? images,
     required this.hasMusic,
     this.selectedMusic,
   })  : secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
         userGenderPreferences = userGenderPreferences ?? <GenderModel?>[],
-        interests = interests ?? <String?>[],
+        userInterests = userInterests ?? <InterestsModel?>[],
         images = images ?? <XFile?>[] {}
 
   set typeOfOuting(String? typeOfOuting) {}
@@ -84,7 +85,7 @@ class UserModel {
   String toString() {
     return '''
 UserModel{
-  interests: ${interests.join(", ")},
+  interests: ${userInterests.join(", ")},
   firstName: $firstName,
   lastName: $lastName,
   email: $email,
@@ -147,7 +148,7 @@ UserModel{
       'semestre': courseSemester?.name,
       'semesterId': courseSemester?.id,
       'linguagemAmor': userAbout?.loveLanguage,
-      'interesses': interests,
+      'interesses': userInterests,
       'pets': userAbout?.pets,
       'bebida': userAbout?.drink,
       'fuma': userAbout?.smoker,

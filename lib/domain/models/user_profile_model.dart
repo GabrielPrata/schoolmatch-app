@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
 import 'package:school_match/domain/models/user_about_model.dart';
@@ -23,7 +24,8 @@ class UserProfileModel {
   String? bio;
   String? city;
   String? semester;
-  List<String?> interests;
+
+  List<InterestsModel?> userInterests;
   
   UserAboutModel? userAbout;
 
@@ -50,7 +52,7 @@ class UserProfileModel {
     this.city,
     this.userAbout,
     this.semester,
-    List<String?>? interests,
+    List<InterestsModel?>? userInterests,
     // List<XFile?>? images,
     List<String?>? images,
     this.showSexuality,
@@ -58,7 +60,7 @@ class UserProfileModel {
     this.selectedMusic,
   })  : 
         secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
-        interests = interests ?? <String?>[],
+        userInterests = userInterests ?? <InterestsModel?>[],
         // images = images ?? <XFile?>[] {}
         images = images ?? <String?>[] {}
 
@@ -66,7 +68,7 @@ class UserProfileModel {
   String toString() {
     return '''
 UserProfileModel{
-  interests: ${interests.join(", ")},
+  interests: ${userInterests.join(", ")},
   firstName: $firstName,
   lastName: $lastName,
   course: ${course?.courseName},
@@ -107,7 +109,7 @@ UserProfileModel{
       'signo': userAbout?.zodiacSign,
       'semestre': semester,
       'linguagemAmor': userAbout?.loveLanguage,
-      'interesses': interests,
+      'interesses': userInterests,
       'pets': userAbout?.pets,
       'bebida': userAbout?.drink,
       'fuma': userAbout?.smoker,

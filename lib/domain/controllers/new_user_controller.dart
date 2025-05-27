@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
@@ -323,9 +324,9 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserInterests(List<String> interests) {
-    userModel.interests.clear();
-    userModel.interests.addAll(interests);
+  setUserInterests(List<InterestsModel?> interests) {
+    userModel.userInterests.clear();
+    userModel.userInterests.addAll(interests);
     print(userModel.toString());
   }
 
