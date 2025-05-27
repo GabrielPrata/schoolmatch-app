@@ -78,6 +78,8 @@ class UserModel {
         interests = interests ?? <String?>[],
         images = images ?? <XFile?>[] {}
 
+  set typeOfOuting(String? typeOfOuting) {}
+
   @override
   String toString() {
     return '''

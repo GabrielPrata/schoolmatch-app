@@ -12,8 +12,6 @@ import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/services/auth_service.dart';
-import 'package:school_match/ui/screens/forms/user_blocks.dart';
-import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/screens/forms/user_finish_signup.dart';
 import 'package:school_match/ui/screens/forms/user_password.dart';
 import 'package:school_match/util/alerts.dart';
@@ -254,15 +252,13 @@ class NewUserController extends GetxController {
     print(userModel.toString());
   }
 
-  setUserPreferences(List<int> preferencesIds, List<String> preferencesNames) {
-    if (preferencesIds.isEmpty) {
+  setUserPreferences(List<GenderModel> userPreferences) {
+    if (userPreferences.isEmpty) {
       throw new CustomException(
           "Por favor, com que tipo de pessoa você se relaciona.");
     }
-    userModel.preferenceIds.clear();
-    userModel.preferenceNames.clear();
-    userModel.preferenceIds.addAll(preferencesIds);
-    userModel.preferenceNames.addAll(preferencesNames);
+    userModel.userGenderPreferences.clear();
+    userModel.userGenderPreferences.addAll(userPreferences);
 
     print(userModel.toString());
   }
@@ -293,37 +289,37 @@ class NewUserController extends GetxController {
   }
 
   setUserDrink(String? userDrink) {
-    userModel.drink = userDrink;
+    userModel.userAbout?.drink = userDrink!;
     print(userModel.toString());
   }
 
   setUserSmoke(String? userSmoke) {
-    userModel.smoker = userSmoke;
+    userModel.userAbout?.smoker = userSmoke!;
     print(userModel.toString());
   }
 
   setUserSign(String? userSign) {
-    userModel.zodiacSign = userSign;
+    userModel.userAbout?.zodiacSign = userSign!;
     print(userModel.toString());
   }
 
   setUserParty(String? userParty) {
-    userModel.typeOfOuting = userParty;
+    userModel.userAbout?.typeOfOuting = userParty!;
     print(userModel.toString());
   }
 
   setUserPets(String? userPets) {
-    userModel.pets = userPets;
+    userModel.userAbout?.pets = userPets!;
     print(userModel.toString());
   }
 
   setUserLoveLanguage(String? userLoveLanguage) {
-    userModel.loveLanguage = userLoveLanguage;
+    userModel.userAbout?.loveLanguage = userLoveLanguage!;
     print(userModel.toString());
   }
 
   setUserPhysical(String? userPhysical) {
-    userModel.physicalActivity = userPhysical;
+    userModel.userAbout?.physicalActivity = userPhysical!;
     print(userModel.toString());
   }
 

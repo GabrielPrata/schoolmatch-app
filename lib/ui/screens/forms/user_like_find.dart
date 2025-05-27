@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/ui/screens/forms/user_city.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
@@ -22,25 +23,18 @@ class _UserLikeFindState extends State<UserLikeFind> {
   }
 
   //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
-  final List<Map<String, dynamic>> genders = [
-    {"id": 1, "name": "Homens", "selected": false},
-    {"id": 2, "name": "Mulheres", "selected": false},
-    {"id": 3, "name": "Não Binários", "selected": false},
-    {"id": 4, "name": "CAIU NA VILA O PEIXE FUZILA", "selected": false},
-  ];
+  final List<GenderModel> genders = GenderModel.createAppGendersPreferences();
 
   salvarDados() {
-    List<int> preferencesIds = [];
-    List<String> preferencesNames = [];
+    List<GenderModel> userPreferences = [];
 
-    for (var item in genders) {
-      if (item["selected"] == true) {
-        preferencesIds.add(item["id"]);
-        preferencesNames.add(item["name"]);
+    for (GenderModel item in genders) {
+      if (item.selected == true) {
+        userPreferences.add(item);
       }
     }
     try {
-      userController.setUserPreferences(preferencesIds, preferencesNames);
+      userController.setUserPreferences(userPreferences);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -55,20 +49,20 @@ class _UserLikeFindState extends State<UserLikeFind> {
 
   void checkSpecialSelection() {
     // Conta quantas das primeiras três opções estão selecionadas
-    int count = genders.take(3).where((gender) => gender['selected']).length;
+    int count = genders.take(3).where((gender) => gender.selected).length;
 
     // Se as três primeiras opções estão selecionadas
     if (count == 3) {
       // Desmarca as três primeiras
       for (var i = 0; i < 3; i++) {
-        genders[i]['selected'] = false;
+        genders[i].selected = false;
       }
       // Marca a quarta opção
-      genders.last['selected'] = true;
+      genders.last.selected = true;
     } else {
       // Se alguma opção é selecionada enquanto a quarta está ativa
-      if (genders.last['selected'] && count > 0) {
-        genders.last['selected'] = false; // Desmarca a quarta opção
+      if (genders.last.selected && count > 0) {
+        genders.last.selected = false; // Desmarca a quarta opção
       }
     }
   }
@@ -109,7 +103,7 @@ class _UserLikeFindState extends State<UserLikeFind> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
-                    backgroundColor: gender['selected']
+                    backgroundColor: gender.selected
                         ? Theme.of(context).colorScheme.onPrimary
                         : Theme.of(context).primaryColor,
                     side: BorderSide(
@@ -122,7 +116,7 @@ class _UserLikeFindState extends State<UserLikeFind> {
                   ),
                   onPressed: () {
                     setState(() {
-                      gender['selected'] = !gender['selected'];
+                      gender.selected = !gender.selected;
                       checkSpecialSelection();
                     });
                   },
@@ -130,10 +124,10 @@ class _UserLikeFindState extends State<UserLikeFind> {
                     width: double.infinity,
                     child: Center(
                       child: Text(
-                        gender['name'],
+                        gender.genderName,
                         style:
                             Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: gender['selected']
+                                  color: gender.selected
                                       ? Theme.of(context).primaryColor
                                       : Theme.of(context).colorScheme.onPrimary,
                                 ),

@@ -1,11 +1,11 @@
 class UserAboutModel {
-  final String zodiacSign;
-  final String loveLanguage;
-  final String pets;
-  final String drink;
-  final String smoker;
-  final String physicalActivity;
-  final String typeOfOuting;
+  String zodiacSign;
+  String loveLanguage;
+  String pets;
+  String drink;
+  String smoker;
+  String physicalActivity;
+  String typeOfOuting;
 
   UserAboutModel({
     required this.zodiacSign,
