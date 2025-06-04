@@ -30,18 +30,19 @@ class _UserLikeFindState extends State<UserLikeFind> {
     super.initState();
   }
 
-  salvarDados() {
-    List<int> preferencesIds = [];
-    List<String> preferencesNames = [];
+  //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
+  final List<GenderModel> genders = GenderModel.createAppGendersPreferences();
 
-    for (var gender in genders) {
-      if (gender.selected == true) {
-        preferencesIds.add(gender.genderId);
-        preferencesNames.add(gender.genderName);
+  salvarDados() {
+    List<GenderModel> userPreferences = [];
+
+    for (GenderModel item in genders) {
+      if (item.selected == true) {
+        userPreferences.add(item);
       }
     }
     try {
-      userController.setUserPreferences(preferencesIds, preferencesNames);
+      userController.setUserPreferences(userPreferences);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -74,11 +75,12 @@ class _UserLikeFindState extends State<UserLikeFind> {
       for (var i = 0; i < 3; i++) {
         genders[i].selected = false;
       }
+      // Marca a quarta opção
       genders.last.selected = true;
     } else {
-      // Se a 4ª está ativa e uma das 3 foi selecionada, desmarcar a 4ª
+      // Se alguma opção é selecionada enquanto a quarta está ativa
       if (genders.last.selected && count > 0) {
-        genders.last.selected = false;
+        genders.last.selected = false; // Desmarca a quarta opção
       }
     }
   }

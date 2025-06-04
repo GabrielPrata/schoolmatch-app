@@ -6,10 +6,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
+import 'package:school_match/domain/models/user_about_model.dart';
+import 'package:school_match/ui/widgets/homeScreenWidgets/user_about.dart';
 
 class UserModel {
   //Sepaprar em model
@@ -31,32 +34,21 @@ class UserModel {
   GenderModel? userGender;
 
   //Sepaprar em model (usar model de genero)
-  List<int?> preferenceIds;
-  List<String?> preferenceNames;
+  List<GenderModel?> userGenderPreferences;
 
   SexualityModel? userSexuality;
-
-
 
   String? bio;
   String? city;
 
   CourseDurationModel? courseSemester;
 
-  List<String?> interests;
+  List<InterestsModel?> userInterests;
 
-  //Sepaprar em model (userAbout)
-  String? zodiacSign;
-  String? loveLanguage;
-  String? pets;
-  String? drink;
-  String? smoker;
-  String? physicalActivity;
-  String? typeOfOuting;
+  UserAboutModel? userAbout;
   // String? music;
 
   List<XFile?> images;
-
 
   RxBool hasMusic = false.obs;
   MusicAdapter? selectedMusic;
@@ -72,35 +64,28 @@ class UserModel {
     this.birthDate,
     this.admissionDate,
     this.userGender,
-    List<int?>? preferenceIds,
-    List<String?>? preferenceNames,
+    List<GenderModel?>? userGenderPreferences,
     this.userSexuality,
     this.bio,
     this.city,
-    this.zodiacSign,
     this.courseSemester,
-    this.loveLanguage,
-    List<String?>? interests,
-    this.pets,
-    this.drink,
-    this.smoker,
-    this.physicalActivity,
-    this.typeOfOuting,
+    List<InterestsModel?>? userInterests,
+    this.userAbout,
     List<XFile?>? images,
     required this.hasMusic,
     this.selectedMusic,
-  })  : 
-        secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
-        preferenceIds = preferenceIds ?? <int?>[],
-        preferenceNames = preferenceNames ?? <String?>[],
-        interests = interests ?? <String?>[],
+  })  : secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
+        userGenderPreferences = userGenderPreferences ?? <GenderModel?>[],
+        userInterests = userInterests ?? <InterestsModel?>[],
         images = images ?? <XFile?>[] {}
+
+  set typeOfOuting(String? typeOfOuting) {}
 
   @override
   String toString() {
     return '''
 UserModel{
-  interests: ${interests.join(", ")},
+  interests: ${userInterests.join(", ")},
   firstName: $firstName,
   lastName: $lastName,
   email: $email,
@@ -115,20 +100,20 @@ UserModel{
   admissionDate: ${admissionDate?.toIso8601String()},
   genderId: ${userGender?.genderId},
   gender: ${userGender?.genderName},
-  preferenceIds: ${preferenceIds.join(", ")},
-  preferenceNames: ${preferenceNames.join(", ")},
+  preferenceIds: ${userGenderPreferences.join(", ")},
+  preferenceNames: ${userGenderPreferences.join(", ")},
   sexuality: ${userSexuality?.sexualityName},
   bio: $bio,
   city: $city,
-  zodiacSign: $zodiacSign,
+  zodiacSign: ${userAbout?.zodiacSign},
   semester: ${courseSemester?.name},
   semesterId: ${courseSemester?.id},
-  loveLanguage: $loveLanguage,
-  pets: $pets,
-  drink: $drink,
-  smoker: $smoker,
-  physicalActivity: $physicalActivity,
-  typeOfOuting: $typeOfOuting,
+  loveLanguage: ${userAbout?.loveLanguage},
+  pets: ${userAbout?.pets},
+  drink: ${userAbout?.drink},
+  smoker: ${userAbout?.smoker},
+  physicalActivity: ${userAbout?.physicalActivity},
+  typeOfOuting: ${userAbout?.typeOfOuting},
   music: -,
   images: ${images.map((x) => x?.path).join(", ")},
   showSexuality: ${userSexuality?.showInProfile},
@@ -149,24 +134,26 @@ UserModel{
       'blocoPrincipal': userBlock?.blockName,
       'BlocosUsuario': userBlock,
       'blocosSecundarios': secondaryBlocks,
-      'dataNascimento':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
-      'usuarioCreatedAt':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),
+      'dataNascimento':
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
+      'usuarioCreatedAt':
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),
       'generoId': userGender?.genderId,
       'genero': userGender?.genderName,
-      'usuarioPreferencia': preferenceIds,
+      'usuarioPreferencia': userGenderPreferences,
       'sexualidade': userSexuality?.sexualityName,
       'bio': bio,
       'cidade': city,
-      'signo': zodiacSign,
+      'signo': userAbout?.zodiacSign,
       'semestre': courseSemester?.name,
       'semesterId': courseSemester?.id,
-      'linguagemAmor': loveLanguage,
-      'interesses': interests,
-      'pets': pets,
-      'bebida': drink,
-      'fuma': smoker,
-      'atividadeFisica': physicalActivity,
-      'tipoRole': typeOfOuting,
+      'linguagemAmor': userAbout?.loveLanguage,
+      'interesses': userInterests,
+      'pets': userAbout?.pets,
+      'bebida': userAbout?.drink,
+      'fuma': userAbout?.smoker,
+      'atividadeFisica': userAbout?.physicalActivity,
+      'tipoRole': userAbout?.typeOfOuting,
       'images': images
           .map((x) => x?.path)
           .toList(), // Assumindo que você quer apenas os caminhos das imagens

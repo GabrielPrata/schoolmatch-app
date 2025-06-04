@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/services/app_data_service.dart';
 import 'package:school_match/util/alerts.dart';
@@ -17,6 +18,7 @@ class AppDataController extends GetxController {
   List<BlockModel> appMainBlocks = [];
   List<BlockModel> appSecondaryBlocks = [];
   List<SexualityModel> appSexualities = [];
+  List<InterestsModel> appInterests = [];
 
   getAppCourses(BuildContext? context) async {
     try {
@@ -90,6 +92,22 @@ class AppDataController extends GetxController {
     } catch (e) {
       Alerts.showErrorSnackBar(
         'Algo inesperado aconteceu ao obter as sexualidades! Tente novamente mais tarde ou contate o suporte.',
+        context!,
+      );
+    }
+  }
+
+   getAllInterests(BuildContext? context) async {
+    try {
+      final response = await AppDataService.getAllInterests();
+
+      final List<dynamic> jsonList = jsonDecode(response);
+
+      appInterests =
+          jsonList.map((item) => InterestsModel.fromJson(item)).toList();
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+        'Algo inesperado aconteceu ao obter os interesses! Tente novamente mais tarde ou contate o suporte.',
         context!,
       );
     }

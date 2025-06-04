@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
+import 'package:school_match/domain/models/user_about_model.dart';
 
 class UserProfileModel {
   String? firstName;
@@ -21,15 +23,12 @@ class UserProfileModel {
 
   String? bio;
   String? city;
-  String? zodiacSign;
   String? semester;
-  String? loveLanguage;
-  List<String?> interests;
-  String? pets;
-  String? drink;
-  String? smoker;
-  String? physicalActivity;
-  String? typeOfOuting;
+
+  List<InterestsModel?> userInterests;
+  
+  UserAboutModel? userAbout;
+
   String? music;
 
   // List<XFile?> images;
@@ -48,19 +47,12 @@ class UserProfileModel {
     List<BlockModel?>? secondaryBlocks,
     this.birthDate,
     this.admissionDate,
-    List<int?>? preferenceIds,
     this.sexuality,
     this.bio,
     this.city,
-    this.zodiacSign,
+    this.userAbout,
     this.semester,
-    this.loveLanguage,
-    List<String?>? interests,
-    this.pets,
-    this.drink,
-    this.smoker,
-    this.physicalActivity,
-    this.typeOfOuting,
+    List<InterestsModel?>? userInterests,
     // List<XFile?>? images,
     List<String?>? images,
     this.showSexuality,
@@ -68,7 +60,7 @@ class UserProfileModel {
     this.selectedMusic,
   })  : 
         secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
-        interests = interests ?? <String?>[],
+        userInterests = userInterests ?? <InterestsModel?>[],
         // images = images ?? <XFile?>[] {}
         images = images ?? <String?>[] {}
 
@@ -76,7 +68,7 @@ class UserProfileModel {
   String toString() {
     return '''
 UserProfileModel{
-  interests: ${interests.join(", ")},
+  interests: ${userInterests.join(", ")},
   firstName: $firstName,
   lastName: $lastName,
   course: ${course?.courseName},
@@ -87,14 +79,14 @@ UserProfileModel{
   sexuality: $sexuality,
   bio: $bio,
   city: $city,
-  zodiacSign: $zodiacSign,
+  zodiacSign: ${userAbout?.zodiacSign},
   semester: $semester,
-  loveLanguage: $loveLanguage,
-  pets: $pets,
-  drink: $drink,
-  smoker: $smoker,
-  physicalActivity: $physicalActivity,
-  typeOfOuting: $typeOfOuting,
+  loveLanguage: ${userAbout?.loveLanguage},
+  pets: ${userAbout?.pets},
+  drink: ${userAbout?.drink},
+  smoker: ${userAbout?.smoker},
+  physicalActivity: ${userAbout?.physicalActivity},
+  typeOfOuting: ${userAbout?.typeOfOuting},
   music: $music,
   showSexuality: $showSexuality,
   hasMusic: implementar depois,
@@ -114,15 +106,15 @@ UserProfileModel{
       'sexualidade': sexuality,
       'bio': bio,
       'cidade': city,
-      'signo': zodiacSign,
+      'signo': userAbout?.zodiacSign,
       'semestre': semester,
-      'linguagemAmor': loveLanguage,
-      'interesses': interests,
-      'pets': pets,
-      'bebida': drink,
-      'fuma': smoker,
-      'atividadeFisica': physicalActivity,
-      'tipoRole': typeOfOuting,
+      'linguagemAmor': userAbout?.loveLanguage,
+      'interesses': userInterests,
+      'pets': userAbout?.pets,
+      'bebida': userAbout?.drink,
+      'fuma': userAbout?.smoker,
+      'atividadeFisica': userAbout?.physicalActivity,
+      'tipoRole': userAbout?.typeOfOuting,
       // 'images': images
       //     .map((x) => x?.path)
       //     .toList(), // Assumindo que você quer apenas os caminhos das imagens
