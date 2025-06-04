@@ -9,7 +9,7 @@ class GenderModel {
     required this.selected,
   });
 
-  static createAppGenders() {
+  static List<GenderModel> createAppGenders() {
     List<GenderModel> appGenders = [];
     appGenders.add(GenderModel(genderId: 1, genderName: "Homem", selected: false));
     appGenders.add(GenderModel(genderId: 2, genderName: "Mulher", selected: false));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/ui/screens/forms/user_city.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
@@ -15,28 +16,28 @@ class UserLikeFind extends StatefulWidget {
 NewUserController userController = Get.put(NewUserController());
 
 class _UserLikeFindState extends State<UserLikeFind> {
+  List<GenderModel> genders = [];
+
   @override
   void initState() {
     userController.step += 1;
+    genders = GenderModel.createAppGenders();
+    genders.add(GenderModel(
+      genderId: 4,
+      genderName: "CAIU NA VILA O PEIXE FUZILA",
+      selected: false,
+    ));
     super.initState();
   }
-
-  //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
-  final List<Map<String, dynamic>> genders = [
-    {"id": 1, "name": "Homens", "selected": false},
-    {"id": 2, "name": "Mulheres", "selected": false},
-    {"id": 3, "name": "Não Binários", "selected": false},
-    {"id": 4, "name": "CAIU NA VILA O PEIXE FUZILA", "selected": false},
-  ];
 
   salvarDados() {
     List<int> preferencesIds = [];
     List<String> preferencesNames = [];
 
-    for (var item in genders) {
-      if (item["selected"] == true) {
-        preferencesIds.add(item["id"]);
-        preferencesNames.add(item["name"]);
+    for (var gender in genders) {
+      if (gender.selected == true) {
+        preferencesIds.add(gender.genderId);
+        preferencesNames.add(gender.genderName);
       }
     }
     try {
@@ -53,22 +54,31 @@ class _UserLikeFindState extends State<UserLikeFind> {
     }
   }
 
-  void checkSpecialSelection() {
-    // Conta quantas das primeiras três opções estão selecionadas
-    int count = genders.take(3).where((gender) => gender['selected']).length;
+  void checkSpecialSelection(GenderModel tappedGender) {
+    int count = genders.take(3).where((g) => g.selected).length;
 
-    // Se as três primeiras opções estão selecionadas
-    if (count == 3) {
-      // Desmarca as três primeiras
-      for (var i = 0; i < 3; i++) {
-        genders[i]['selected'] = false;
+    // Caso o usuário tenha clicado na 4ª opção
+    if (tappedGender == genders.last) {
+      if (tappedGender.selected) {
+        // Se a 4ª foi selecionada agora, desmarcar as 3 primeiras
+        for (var i = 0; i < 3; i++) {
+          genders[i].selected = false;
+        }
       }
-      // Marca a quarta opção
-      genders.last['selected'] = true;
+      return;
+    }
+
+    // Caso o usuário tenha clicado em uma das 3 primeiras
+    if (count == 3) {
+      // Se as 3 estão selecionadas, ativa a 4ª e desativa as 3
+      for (var i = 0; i < 3; i++) {
+        genders[i].selected = false;
+      }
+      genders.last.selected = true;
     } else {
-      // Se alguma opção é selecionada enquanto a quarta está ativa
-      if (genders.last['selected'] && count > 0) {
-        genders.last['selected'] = false; // Desmarca a quarta opção
+      // Se a 4ª está ativa e uma das 3 foi selecionada, desmarcar a 4ª
+      if (genders.last.selected && count > 0) {
+        genders.last.selected = false;
       }
     }
   }
@@ -109,7 +119,7 @@ class _UserLikeFindState extends State<UserLikeFind> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
-                    backgroundColor: gender['selected']
+                    backgroundColor: gender.selected
                         ? Theme.of(context).colorScheme.onPrimary
                         : Theme.of(context).primaryColor,
                     side: BorderSide(
@@ -122,18 +132,18 @@ class _UserLikeFindState extends State<UserLikeFind> {
                   ),
                   onPressed: () {
                     setState(() {
-                      gender['selected'] = !gender['selected'];
-                      checkSpecialSelection();
+                      gender.selected = !gender.selected;
+                      checkSpecialSelection(gender);
                     });
                   },
                   child: SizedBox(
                     width: double.infinity,
                     child: Center(
                       child: Text(
-                        gender['name'],
+                        gender.genderName,
                         style:
                             Theme.of(context).textTheme.labelMedium?.copyWith(
-                                  color: gender['selected']
+                                  color: gender.selected
                                       ? Theme.of(context).primaryColor
                                       : Theme.of(context).colorScheme.onPrimary,
                                 ),
