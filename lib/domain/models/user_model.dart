@@ -126,41 +126,48 @@ UserModel{
     return {
       'nome': firstName,
       'sobrenome': lastName,
+      "sexualidade": {
+        "sexualityId": userSexuality?.sexualityId,
+        "sexualityName": userSexuality?.sexualityName,
+        "showInProfile": userSexuality?.showInProfile
+      },
+      "semestre": {"id": courseSemester?.id, "name": courseSemester?.name},
+      "userAbout": {
+        "zodiacSign": userAbout?.zodiacSign,
+        "loveLanguage": userAbout?.loveLanguage,
+        "pets": userAbout?.pets,
+        "drink": userAbout?.drink,
+        "smoker": userAbout?.smoker,
+        "physicalActivity": userAbout?.physicalActivity,
+        "typeOfOuting": userAbout?.typeOfOuting
+      },
       'emailUsuario': email,
       'senhaUsuario': md5.convert(utf8.encode(password!)).toString(),
-      'cursoId': userCourse?.courseId,
-      'curso': userCourse?.courseName,
-      'blocoPrincipalId': userBlock?.blockId,
-      'blocoPrincipal': userBlock?.blockName,
-      'BlocosUsuario': userBlock,
-      'blocosSecundarios': secondaryBlocks,
+      'curso': {
+        'courseId': userCourse?.courseId,
+        'courseName': userCourse?.courseName
+      },
+      "genero": {
+        "genderId": userGender?.genderId,
+        "genderName": userGender?.genderName
+      },
+      "interesses": userInterests.map((e) => e?.toJson()).toList(),
       'dataNascimento':
           DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
       'usuarioCreatedAt':
           DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),
-      'generoId': userGender?.genderId,
-      'genero': userGender?.genderName,
-      'usuarioPreferencia': userGenderPreferences,
-      'sexualidade': userSexuality?.sexualityName,
+      "usuarioPreferencia":
+          userGenderPreferences.map((e) => e?.toJson()).toList(),
+      "blocoPrincipal": {
+        "blockId": userBlock?.blockId,
+        "blockName": userBlock?.blockName
+      },
+      "blocosUsuario": secondaryBlocks.map((e) => e?.toJson()).toList(),
       'bio': bio,
       'cidade': city,
-      'signo': userAbout?.zodiacSign,
-      'semestre': courseSemester?.name,
-      'semesterId': courseSemester?.id,
-      'linguagemAmor': userAbout?.loveLanguage,
-      'interesses': userInterests,
-      'pets': userAbout?.pets,
-      'bebida': userAbout?.drink,
-      'fuma': userAbout?.smoker,
-      'atividadeFisica': userAbout?.physicalActivity,
-      'tipoRole': userAbout?.typeOfOuting,
-      'images': images
-          .map((x) => x?.path)
-          .toList(), // Assumindo que você quer apenas os caminhos das imagens
-      'exibirSexualidade': userSexuality?.showInProfile,
+      'images': images.map((x) => x?.path).toList(),
       'hasMusic': hasMusic.value,
       'spotifyMusicData': selectedMusic?.toJson(),
-      //Alterar após implementar a autenticação
       'usuarioVerificado': true,
     };
   }

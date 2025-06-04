@@ -13,4 +13,11 @@ class BlockModel {
       blockName: json['nomeBloco'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'blockId': blockId,
+      'blockName': blockName,
+    };
+  }
 }

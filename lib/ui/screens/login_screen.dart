@@ -5,6 +5,7 @@ import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:school_match/ui/screens/forms/user_course.dart';
 import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/screens/menu_screen.dart';
+import 'package:school_match/ui/screens/notification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => UserSexuality(),
+          builder: (_) => NotificationScreen(),
           // builder: (_) =>UserSpotifyMusic(),
         ),
       );

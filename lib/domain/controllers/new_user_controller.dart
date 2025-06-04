@@ -11,10 +11,12 @@ import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/models/gender_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
+import 'package:school_match/domain/models/user_about_model.dart';
 import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/services/auth_service.dart';
 import 'package:school_match/ui/screens/forms/user_finish_signup.dart';
 import 'package:school_match/ui/screens/forms/user_password.dart';
+import 'package:school_match/ui/widgets/homeScreenWidgets/user_about.dart';
 import 'package:school_match/util/alerts.dart';
 import 'package:school_match/util/custom_exception.dart';
 import 'package:school_match/util/validations.dart';
@@ -132,7 +134,6 @@ class NewUserController extends GetxController {
     else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserPassword(String userPassword, String confirmPassword) {
@@ -142,7 +143,6 @@ class NewUserController extends GetxController {
     else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserName(String userName) {
@@ -154,7 +154,6 @@ class NewUserController extends GetxController {
     else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserLastName(String userLastName) {
@@ -166,22 +165,18 @@ class NewUserController extends GetxController {
     else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserCourse(CourseModel userCourseModel) {
     userModel.userCourse = userCourseModel;
-    print(userModel.toString());
   }
 
   setUserSemester(CourseDurationModel userSemesterModel) {
     userModel.courseSemester = userSemesterModel;
-    print(userModel.toString());
   }
 
   setUserMainBlock(BlockModel userBlockModel) {
     userModel.userBlock = userBlockModel;
-    print(userModel.toString());
   }
 
   setUserSecondaryBlocks(List<BlockModel?> secondaryBlocksModelsList) {
@@ -192,7 +187,6 @@ class NewUserController extends GetxController {
       userModel.secondaryBlocks.addAll(secondaryBlocksModelsList);
     } else
       throw new CustomException(errors);
-    print(userModel.toString());
   }
 
   setUserImages(List<XFile> images) {
@@ -209,7 +203,6 @@ class NewUserController extends GetxController {
     } else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserBio(String userBio) {
@@ -220,7 +213,6 @@ class NewUserController extends GetxController {
     else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserBirthdate(DateTime birthdate) {
@@ -230,7 +222,6 @@ class NewUserController extends GetxController {
     else
       throw new CustomException(errors);
 
-    print(userModel.toString());
   }
 
   setUserGender(GenderModel userGenderModel) {
@@ -240,7 +231,6 @@ class NewUserController extends GetxController {
     }
     userModel.userGender = userGenderModel;
 
-    print(userModel.toString());
   }
 
   setUserSexuality(SexualityModel userSexualityModel) {
@@ -250,7 +240,6 @@ class NewUserController extends GetxController {
     }
     userModel.userSexuality = userSexualityModel;
 
-    print(userModel.toString());
   }
 
   setUserPreferences(List<GenderModel> userPreferences) {
@@ -261,7 +250,6 @@ class NewUserController extends GetxController {
     userModel.userGenderPreferences.clear();
     userModel.userGenderPreferences.addAll(userPreferences);
 
-    print(userModel.toString());
   }
 
   setUserCity(String userCity) async {
@@ -286,48 +274,39 @@ class NewUserController extends GetxController {
     }
     userModel.city = userCity;
 
-    print(userModel.toString());
   }
 
-  setUserDrink(String? userDrink) {
-    userModel.userAbout?.drink = userDrink!;
-    print(userModel.toString());
+  setUserAbout(UserAboutModel userAbout) {
+    userModel.userAbout = userAbout;
   }
 
   setUserSmoke(String? userSmoke) {
     userModel.userAbout?.smoker = userSmoke!;
-    print(userModel.toString());
   }
 
   setUserSign(String? userSign) {
     userModel.userAbout?.zodiacSign = userSign!;
-    print(userModel.toString());
   }
 
   setUserParty(String? userParty) {
     userModel.userAbout?.typeOfOuting = userParty!;
-    print(userModel.toString());
   }
 
   setUserPets(String? userPets) {
     userModel.userAbout?.pets = userPets!;
-    print(userModel.toString());
   }
 
   setUserLoveLanguage(String? userLoveLanguage) {
     userModel.userAbout?.loveLanguage = userLoveLanguage!;
-    print(userModel.toString());
   }
 
   setUserPhysical(String? userPhysical) {
     userModel.userAbout?.physicalActivity = userPhysical!;
-    print(userModel.toString());
   }
 
   setUserInterests(List<InterestsModel?> interests) {
     userModel.userInterests.clear();
     userModel.userInterests.addAll(interests);
-    print(userModel.toString());
   }
 
   setUserMusic(MusicAdapter track) {

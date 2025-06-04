@@ -21,24 +21,22 @@ class _UserLikeFindState extends State<UserLikeFind> {
   @override
   void initState() {
     userController.step += 1;
-    genders = GenderModel.createAppGenders();
-    genders.add(GenderModel(
-      genderId: 4,
-      genderName: "CAIU NA VILA O PEIXE FUZILA",
-      selected: false,
-    ));
+    genders = GenderModel.createAppGendersPreferences();
     super.initState();
   }
-
-  //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
-  final List<GenderModel> genders = GenderModel.createAppGendersPreferences();
 
   salvarDados() {
     List<GenderModel> userPreferences = [];
 
-    for (GenderModel item in genders) {
-      if (item.selected == true) {
-        userPreferences.add(item);
+    if (genders[3].selected) {
+      // Adiciona as três primeiras
+      userPreferences.addAll(genders.sublist(0, 3));
+    } else {
+      // Caso contrário, adiciona apenas as selecionadas normalmente
+      for (GenderModel item in genders) {
+        if (item.selected == true) {
+          userPreferences.add(item);
+        }
       }
     }
     try {

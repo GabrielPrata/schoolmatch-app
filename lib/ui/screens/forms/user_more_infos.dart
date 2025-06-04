@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/models/user_about_model.dart';
 import 'package:school_match/ui/screens/forms/user_interests.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
@@ -31,13 +32,15 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
   }
 
   salvarDados() {
-    userController.setUserDrink(bebidaController.text);
-    userController.setUserSmoke(fumanteController.text);
-    userController.setUserPhysical(ativFisicaController.text);
-    userController.setUserSign(signoController.text);
-    userController.setUserParty(tipoRoleController.text);
-    userController.setUserPets(petsController.text);
-    userController.setUserLoveLanguage(linguagemController.text);
+    userController.setUserAbout(UserAboutModel(
+      drink: bebidaController.text,
+      loveLanguage: linguagemController.text,
+      pets: petsController.text,
+      physicalActivity: ativFisicaController.text,
+      smoker: fumanteController.text,
+      typeOfOuting: tipoRoleController.text,
+      zodiacSign: signoController.text
+    ));
 
     Navigator.push(
       context,
@@ -48,7 +51,6 @@ class _UserMoreInfosState extends State<UserMoreInfos> {
   }
 
   Widget build(BuildContext context) {
-
     //TODO: ISOLAR ISSO AQUI EM UM JSON SEPARADO
     final List<Map<String, dynamic>> bebidasData = [
       {"id": 1, "name": "Não bebo", "selected": false},

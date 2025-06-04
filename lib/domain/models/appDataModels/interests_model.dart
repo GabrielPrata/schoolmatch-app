@@ -13,4 +13,11 @@ class InterestsModel {
       interestName: json['nome'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'interestId': interestId,
+      'interestName': interestName,
+    };
+  }
 }

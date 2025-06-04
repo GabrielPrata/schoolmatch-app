@@ -22,7 +22,7 @@ class MusicAdapter {
   Map<String, dynamic> toJson() {
     return {
       'musicName': musicName,
-      'artistName': artistName, // Mantendo como uma lista de strings
+      'artistName': artistName, 
       'albumName': albumName,
       'imageUrl': imageUrl,
       'previewUrl': previewUrl,

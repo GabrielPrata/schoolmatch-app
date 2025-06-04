@@ -27,4 +27,12 @@ class GenderModel {
 
     return appGenders;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'genderId': genderId,
+      'genderName': genderName,
+      'selected': selected,
+    };
+  }
 }
