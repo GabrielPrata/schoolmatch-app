@@ -168,7 +168,7 @@ UserModel{
       'images': images.map((x) => x?.path).toList(),
       'hasMusic': hasMusic.value,
       'spotifyMusicData': selectedMusic?.toJson(),
-      'usuarioVerificado': true,
+      'usuarioVerificado': false,
     };
   }
 }

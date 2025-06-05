@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
-import 'package:school_match/ui/screens/forms/user_course.dart';
-import 'package:school_match/ui/screens/forms/user_sexuality.dart';
 import 'package:school_match/ui/screens/menu_screen.dart';
 import 'package:school_match/ui/screens/notification_screen.dart';
 
@@ -40,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(
           // builder: (_) => SelectThemeScreen(),
           // builder: (_) => HomeScreen(),
+          // builder: (_) => MenuScreen(),
           builder: (_) => MenuScreen(),
         ),
       );

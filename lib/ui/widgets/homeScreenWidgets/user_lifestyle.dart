@@ -62,7 +62,7 @@ class _UserLifestyleState extends State<UserLifestyle> {
                       Row(
                         children: [
                           Icon(Icons.pets, size: 24),
-                          Text(" " + widget.candidate.userAbout!.pets.toString(),
+                          Text(" ${widget.candidate.userAbout?.pets}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -90,7 +90,7 @@ class _UserLifestyleState extends State<UserLifestyle> {
                       Row(
                         children: [
                           Icon(Icons.local_bar, size: 24),
-                          Text(" " + widget.candidate.userAbout!.drink.toString(),
+                          Text(" ${widget.candidate.userAbout?.drink}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -118,7 +118,7 @@ class _UserLifestyleState extends State<UserLifestyle> {
                       Row(
                         children: [
                           Icon(Icons.smoking_rooms_rounded, size: 24),
-                          Text(" " + widget.candidate.userAbout!.smoker.toString(),
+                          Text(" ${widget.candidate.userAbout?.smoker}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -146,7 +146,7 @@ class _UserLifestyleState extends State<UserLifestyle> {
                       Row(
                         children: [
                           Icon(Icons.fitness_center, size: 24),
-                          Text(" " + widget.candidate.userAbout!.physicalActivity.toString(),
+                          Text(" ${widget.candidate.userAbout?.physicalActivity}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -174,7 +174,7 @@ class _UserLifestyleState extends State<UserLifestyle> {
                       Row(
                         children: [
                           Icon(Icons.celebration, size: 24),
-                          Text(" " + widget.candidate.userAbout!.typeOfOuting.toString(),
+                          Text(" ${widget.candidate.userAbout?.typeOfOuting}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium

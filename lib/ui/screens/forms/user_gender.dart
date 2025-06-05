@@ -71,7 +71,7 @@ class _UserGenderState extends State<UserGender> {
             ),
             SizedBox(
                 child: Text(
-              "Você se idêntifica como?",
+              "Como você se idêntifica?",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),

@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CardSwiperController controller = CardSwiperController();
   HomePageController homePageController = Get.put(HomePageController());
-  late final List<Widget> cards;
+  List<Widget> cards = [];
 
   @override
   void initState() {

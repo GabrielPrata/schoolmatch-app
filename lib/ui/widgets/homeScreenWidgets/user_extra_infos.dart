@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
+
 class UserExtraInfos extends StatefulWidget {
   final UserProfileModel candidate;
 
@@ -12,6 +13,11 @@ class UserExtraInfos extends StatefulWidget {
 class _UserExtraInfosState extends State<UserExtraInfos> {
   @override
   Widget build(BuildContext context) {
+    // É uma boa prática extrair valores que podem ser nulos para facilitar a leitura
+    final userAbout = widget.candidate.userAbout;
+    final zodiacSign = userAbout?.zodiacSign?.toString() ?? "Não informado"; // <--- MODIFICADO
+    final loveLanguage = userAbout?.loveLanguage?.toString() ?? "Não informado"; // <--- MODIFICADO
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
@@ -61,11 +67,13 @@ class _UserExtraInfosState extends State<UserExtraInfos> {
                       Row(
                         children: [
                           Icon(Icons.cake, size: 24),
-                          Text(" " + widget.candidate.userAbout!.zodiacSign.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontSize: 18)),
+                          Text(
+                            " " + zodiacSign, // <--- MODIFICADO
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontSize: 18),
+                          ),
                         ],
                       ),
                     ],
@@ -89,11 +97,14 @@ class _UserExtraInfosState extends State<UserExtraInfos> {
                       Row(
                         children: [
                           Icon(Icons.square_foot, size: 24),
-                          Text(" " + widget.candidate.semester.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontSize: 18)),
+                          Text(
+                            // Adicionando tratamento para semester também, por precaução
+                            " ${widget.candidate.semester?.toString() ?? "Não informado"}", // <--- BOA PRÁTICA
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontSize: 18),
+                          ),
                         ],
                       ),
                     ],
@@ -117,11 +128,13 @@ class _UserExtraInfosState extends State<UserExtraInfos> {
                       Row(
                         children: [
                           Icon(Icons.volunteer_activism, size: 24),
-                          Text(" " + widget.candidate.userAbout!.loveLanguage.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontSize: 18)),
+                          Text(
+                            " $loveLanguage", // <--- MODIFICADO
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontSize: 18),
+                          ),
                         ],
                       ),
                     ],

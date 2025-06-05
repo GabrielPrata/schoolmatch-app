@@ -160,7 +160,7 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Icon(Icons.school, color: Colors.white),
                         SizedBox(width: 10),
-                        Text(widget.candidate.course.toString(),
+                        Text(widget.candidate.course!.courseName.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
