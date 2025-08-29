@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/controllers/spotify_controller.dart';
 import 'package:school_match/ui/screens/forms/user_lastname.dart';
+import 'package:school_match/ui/screens/login_screen.dart';
 // import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
 // import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
@@ -23,8 +24,6 @@ NewUserController userController = Get.put(NewUserController());
 final GetStorage box = GetStorage();
 
 class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
-  String userSearch = "Matue";
-
   @override
   void initState() {
     userController.step += 1;
@@ -35,8 +34,9 @@ class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
     // userController.setUserName(inputController.text);
     Navigator.push(
       context,
+      //Adicionar a tela de cadastro concluído
       MaterialPageRoute(
-        builder: (_) => UserLastName(),
+        builder: (_) => LoginScreen(),
       ),
     );
   }
