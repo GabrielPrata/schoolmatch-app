@@ -73,7 +73,7 @@ UserProfileModel{
   lastName: $lastName,
   course: ${course?.courseName},
   mainBlock: ${mainBlock?.blockName},
-  secondaryBlocks: CORRIGIR DEPOIS,
+  secondaryBlocks: ${secondaryBlocks.toString()} ,
   birthDate: ${birthDate?.toIso8601String()},
   admissionDate: ${admissionDate?.toIso8601String()},
   sexuality: $sexuality,

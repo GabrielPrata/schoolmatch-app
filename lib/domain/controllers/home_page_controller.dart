@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
+import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
+import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
+import 'package:school_match/domain/models/user_about_model.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
@@ -34,9 +37,16 @@ class HomePageController extends GetxController {
     profiles.add(UserProfileModel(
       firstName: "Gabriel",
       lastName: "Prata",
+      userInterests: [InterestsModel(interestId: 1, interestName: "Chupar pilha"),
+      InterestsModel(interestId: 2, interestName: "Comer terra"),
+      InterestsModel(interestId: 3, interestName: "League of Legends"),
+      ],
+      userAbout: UserAboutModel(zodiacSign: "Libra", drink: "Fim de semana", loveLanguage: "Toque Fisico", pets: "MIAAAAAAU", physicalActivity: "Frequentemente", smoker: "O que? kkk", typeOfOuting: "Topo qualquer coisa"),
       course: CourseModel(courseId: 16, courseName: "Fisioterapia"),
-      // mainBlock: "Bloco C",
-      // secondaryBlocks: ["Espetinho", "IZI", "Boteko do Pai"],
+      mainBlock: BlockModel(blockId: 1, blockName: "Bloco C"),
+      secondaryBlocks: [BlockModel(blockId: 97, blockName: "Espetinho"), 
+      BlockModel(blockId: 98, blockName: "Boteko"), 
+      BlockModel(blockId: 99, blockName: "Bloco K") ],
       birthDate: DateTime(2001, 10, 18),
       admissionDate: DateTime(2022, 1, 1),
       sexuality: "Bixinha",

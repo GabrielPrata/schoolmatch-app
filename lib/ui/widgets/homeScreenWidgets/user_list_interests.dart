@@ -57,7 +57,7 @@ class _UserListInterestsState extends State<UserListInterests> {
                         children: widget.candidate.userInterests.map((item) {
                           return FilterChip(
                             label: Text(
-                              item.toString(),
+                              item!.interestName.toString(),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             onSelected: (bool selected) {

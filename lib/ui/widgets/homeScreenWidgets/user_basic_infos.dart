@@ -51,10 +51,10 @@ class _UserBasicInfosState extends State<UserBasicInfos> {
                 Row(
                   children: [
                     Icon(
-                      Icons.cake,
+                      Icons.school,
                       size: 24,
                     ),
-                    Text(" " + widget.candidate.course.toString(),
+                    Text(" " + widget.candidate.course!.courseName,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
@@ -67,7 +67,7 @@ class _UserBasicInfosState extends State<UserBasicInfos> {
                 Row(
                   children: [
                     Icon(
-                      Icons.school,
+                      Icons.cake,
                       size: 24,
                     ),
                     Text(
