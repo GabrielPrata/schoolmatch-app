@@ -23,11 +23,17 @@ class _HomeScreenState extends State<HomeScreen> {
     homePageController.createMockedDataForTest().then((_) {
       setState(() {
         cards = homePageController.profiles
-            .map((candidate) => UserCard(candidate: candidate))
-            .toList();
+    .map((candidate) => UserCard(
+          //Adicionar um id unico
+          key: ValueKey("${candidate.firstName}${candidate.lastName}"), 
+          candidate: candidate,
+        ))
+    .toList();
       });
     });
   }
+
+
 
   @override
   void dispose() {
