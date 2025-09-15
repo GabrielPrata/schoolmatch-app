@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/home_page_controller.dart';
+import 'package:school_match/domain/models/homePageModels/user_like_model.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/userCard.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -173,6 +174,9 @@ class _HomeScreenState extends State<HomeScreen> {
       int previousIndex, int? currentIndex, CardSwiperDirection direction) {
     debugPrint(
         'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
+
+        //Ver uma forma de capturar os IDS
+        homePageController.sendUserLike(UserLikeModel(senderId: 1, recieverId: 2), context);
     return true;
   }
 

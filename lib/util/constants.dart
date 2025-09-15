@@ -29,6 +29,10 @@ class Constants {
   static String interests = "$appData/interests";
   static String getAllInterests = "$interests/GetAllInterests";
 
+  static String matchsUrl = "https://10.0.2.2:7000/";
+  static String matchs = "$matchsUrl/matchs";
+  static String verifyNewMatch = "$verifyNewMatch/VerifyMatch";
+
 
 
   static String spotifyUrl = "https://api.spotify.com/v1/";
