@@ -8,7 +8,7 @@ class Constants {
   static String basicAuthPass = "BatatinhaQuandoNasce123!";
 
   static String appDataUsersUrl = "https://10.0.2.2:7290";
-  static String userData = "$appDataUsersUrl/users/data";
+  static String userData = "$appDataUsersUrl/users/Data";
   static String siteVerifyEmail = "$userData/schoolmach-web/src/verifyEmail.php?";
   static String verifyEmail = "$userData/VerifyEmail";
 
