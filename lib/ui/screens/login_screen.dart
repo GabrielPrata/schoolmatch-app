@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:school_match/ui/screens/menu_screen.dart';
 import 'package:school_match/ui/screens/notification_screen.dart';
+import 'package:school_match/util/alerts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 TextEditingController userController = TextEditingController();
 TextEditingController passController = TextEditingController();
-// AuthController authController = Get.put(AuthController());
+AuthController authController = Get.put(AuthController());
 String? errorText;
 bool passIsEnabled = false;
 
@@ -28,20 +29,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    validaLogin() {
-      // authController.validateUserLogin(userController.text, passController.text, context);
-      // if (authController.errorText.value){
-      //   Alerts.showErrorSnackBar("Os dados de login não podem estar vazios!", context);
-      // }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          // builder: (_) => SelectThemeScreen(),
-          // builder: (_) => HomeScreen(),
-          // builder: (_) => MenuScreen(),
-          builder: (_) => MenuScreen(),
-        ),
-      );
+    validaLogin() async {
+      try {
+        await authController.validateUserLogin(
+          userController.text,
+          passController.text,
+          context,
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => MenuScreen()),
+        );
+      } catch (e) {
+        Alerts.showErrorSnackBar(
+          e.toString().replaceAll("Exception: ", ""),
+          context,
+        );
+      }
     }
 
     realizaCadastro() {

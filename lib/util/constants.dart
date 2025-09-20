@@ -9,6 +9,7 @@ class Constants {
 
   static String appDataUsersUrl = "https://10.0.2.2:7290";
   static String userData = "$appDataUsersUrl/users/Data";
+  static String userLogin = "$appDataUsersUrl/users/Login";
   static String siteVerifyEmail = "$userData/schoolmach-web/src/verifyEmail.php?";
   static String verifyEmail = "$userData/VerifyEmail";
 
