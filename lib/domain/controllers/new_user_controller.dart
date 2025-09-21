@@ -15,8 +15,8 @@ import 'package:school_match/domain/models/user_about_model.dart';
 import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/services/auth_service.dart';
 import 'package:school_match/ui/screens/forms/user_finish_signup.dart';
+import 'package:school_match/ui/screens/forms/user_confirm_email.dart';
 import 'package:school_match/ui/screens/forms/user_password.dart';
-import 'package:school_match/ui/widgets/homeScreenWidgets/user_about.dart';
 import 'package:school_match/util/alerts.dart';
 import 'package:school_match/util/custom_exception.dart';
 import 'package:school_match/util/validations.dart';
@@ -33,17 +33,17 @@ class NewUserController extends GetxController {
 
   checkIfEmailIsVerified(BuildContext? context) async {
     try {
-      // var response = await AuthService.checkIfEmailIsVerified(userModel.email);
-      // if (response.statusCode < 200 || response.statusCode >= 300) {
-      //   var responseData = jsonDecode(response.body);
-      //   if (response.statusCode == 403) {
-      //     Alerts.showErrorSnackBar(responseData['message'], context!);
-      //   } else if (response.statusCode >= 400) {
-      //     Alerts.showErrorSnackBar(
-      //         "Erro número ${response.statusCode}", context!);
-      //   }
-      //   return;
-      // }
+      var response = await AuthService.checkIfEmailIsVerified(userModel.email);
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        var responseData = jsonDecode(response.body);
+        if (response.statusCode == 403) {
+          Alerts.showErrorSnackBar(responseData['message'], context!);
+        } else if (response.statusCode >= 400) {
+          Alerts.showErrorSnackBar(
+              "Erro número ${response.statusCode}", context!);
+        }
+        return;
+      }
       Alerts.showSuccessSnackBar("E-mail validado com sucesso!", context!);
       Navigator.push(
         context,
@@ -78,7 +78,7 @@ class NewUserController extends GetxController {
         context!,
         MaterialPageRoute(
           // builder: (_) => UserConfirmEmail(),
-          builder: (_) => UserPassword(),
+          builder: (_) => UserConfirmEmail(),
         ),
       );
     } catch (e) {

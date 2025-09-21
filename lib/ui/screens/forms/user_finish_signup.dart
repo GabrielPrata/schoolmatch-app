@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
-import 'package:school_match/ui/screens/forms/user_password.dart';
+import 'package:school_match/ui/screens/menu_screen.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
 class UserFinishSignup extends StatefulWidget {
@@ -24,7 +24,7 @@ class _UserFinishSignupState extends State<UserFinishSignup> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => UserPassword(),
+        builder: (_) => MenuScreen(),
       ),
     );
   }
@@ -54,22 +54,22 @@ class _UserFinishSignupState extends State<UserFinishSignup> {
               height: 60,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
+              height: MediaQuery.of(context).size.height * 0.07,
             ),
             SizedBox(
                 child: Text(
-              "CADASTRO FINALIZADO! VOU TERMINAR ESSA TELA DEPOIS",
+              "Cadastro concluído. Aproveite nosso app!",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.43,
+              height: MediaQuery.of(context).size.height * 0.5,
             ),
             ElevatedButton(
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () => verificaEmail(),
               child: Text(
-                "BOTAO BONITO E LEGAL",
+                "FINALIZAR",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ),

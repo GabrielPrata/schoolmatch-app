@@ -40,7 +40,7 @@ class AuthService {
     // Encode the UserModel to JSON
     // Make the POST request
     final http.Response response = await http.get(
-      Uri.parse("${Constants.siteVerifyEmail}?userEmail=$userEmail"),
+      Uri.parse("${Constants.verifyEmail}?userEmail=$userEmail"),
       headers: {
         'Content-Type': 'application/json',
       },
