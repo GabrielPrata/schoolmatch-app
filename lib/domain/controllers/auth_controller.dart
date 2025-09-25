@@ -37,10 +37,10 @@ class AuthController extends GetxController {
 
        final data = jsonDecode(response.body);
 
-        // pega o token do JSON
-        final token = data["userToken"];
+        await box.write('appToken', data["userToken"]);
+        await box.write('userLikeFind', data["userToken"]);
+        await box.write('userId', data["idUsuario"]);
 
-        await box.write('appToken', token);
         
       // sucesso → parse e guarde o token
     } finally {

@@ -21,20 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     // Initialize the cards list after fetching data
-    homePageController.createMockedDataForTest().then((_) {
-      setState(() {
-        cards = homePageController.profiles
-    .map((candidate) => UserCard(
-          //Adicionar um id unico
-          key: ValueKey("${candidate.firstName}${candidate.lastName}"), 
-          candidate: candidate,
-        ))
-    .toList();
-      });
+
+    setState(() {
+      cards = homePageController.profiles
+          .map((candidate) => UserCard(
+                //Adicionar um id unico
+                key: ValueKey("${candidate.firstName}${candidate.lastName}"),
+                candidate: candidate,
+              ))
+          .toList();
     });
   }
-
-
 
   @override
   void dispose() {
@@ -175,8 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
     debugPrint(
         'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top');
 
-        //Ver uma forma de capturar os IDS
-        homePageController.sendUserLike(UserLikeModel(senderId: 1, recieverId: 2), context);
+    //Ver uma forma de capturar os IDS
+    homePageController.sendUserLike(
+        UserLikeModel(senderId: 1, recieverId: 2), context);
     return true;
   }
 

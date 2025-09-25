@@ -17,4 +17,17 @@ class HomePageService {
     );
     return response.body;
   }
+
+  static Future<http.Response> getUsersDefault() async {
+    try {
+      final response = await http.post(
+        Uri.parse(Constants.userLogin),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({"email": , "password":}),
+      );
+      return response;
+    } catch (e) {
+      throw Exception("Erro de conexão com o servidor: $e");
+    }
+  }
 }
