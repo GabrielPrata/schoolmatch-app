@@ -48,7 +48,7 @@ class UserModel {
   UserAboutModel? userAbout;
   // String? music;
 
-  List<XFile?> images;
+  List<String> userBase64Images;
 
   RxBool hasMusic = false.obs;
   MusicAdapter? selectedMusic;
@@ -71,13 +71,13 @@ class UserModel {
     this.courseSemester,
     List<InterestsModel?>? userInterests,
     this.userAbout,
-    List<XFile?>? images,
+    List<String>? userBase64Images,
     required this.hasMusic,
     this.selectedMusic,
   })  : secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
         userGenderPreferences = userGenderPreferences ?? <GenderModel?>[],
         userInterests = userInterests ?? <InterestsModel?>[],
-        images = images ?? <XFile?>[] {}
+        userBase64Images = userBase64Images ?? <String>[] {}
 
   set typeOfOuting(String? typeOfOuting) {}
 
@@ -114,7 +114,7 @@ UserModel{
   physicalActivity: ${userAbout?.physicalActivity},
   typeOfOuting: ${userAbout?.typeOfOuting},
   music: -,
-  images: ${images.map((x) => x?.path).join(", ")},
+  userBase64Images: ${userBase64Images.map((x) => x).join(", ")},
   showSexuality: ${userSexuality?.showInProfile},
   hasMusic: $hasMusic,
   selectedMusic: ${selectedMusic?.toString() ?? 'None'},
@@ -164,7 +164,7 @@ UserModel{
       "blocosUsuario": secondaryBlocks.map((e) => e?.toJson()).toList(),
       'bio': bio,
       'cidade': city,
-      'images': images.map((x) => x?.path).toList(),
+      'userBase64Images': userBase64Images.map((x) => x).toList(),
       'hasMusic': hasMusic.value,
       'spotifyMusicData': selectedMusic?.toJson(),
       'usuarioVerificado': false,

@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:school_match/ui/screens/menu_screen.dart';
 import 'package:school_match/ui/screens/notification_screen.dart';
+import 'package:school_match/ui/screens/select_theme_screen.dart';
 import 'package:school_match/util/alerts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => NotificationScreen(),
+          builder: (_) => SelectThemeScreen(),
           // builder: (_) =>UserSpotifyMusic(),
         ),
       );

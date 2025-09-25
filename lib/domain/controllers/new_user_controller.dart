@@ -111,11 +111,11 @@ class NewUserController extends GetxController {
         return;
       }
       Navigator.push(
-      context!,
-      MaterialPageRoute(
-        builder: (_) => UserFinishSignup(),
-      ),
-    );
+        context!,
+        MaterialPageRoute(
+          builder: (_) => UserFinishSignup(),
+        ),
+      );
     } catch (e) {
       Alerts.showErrorSnackBar(
           'Algo inesperado aconteceu! Tente novamente mais tarde ou contate o suporte.',
@@ -133,7 +133,6 @@ class NewUserController extends GetxController {
       userModel.email = userEmail;
     else
       throw new CustomException(errors);
-
   }
 
   setUserPassword(String userPassword, String confirmPassword) {
@@ -142,7 +141,6 @@ class NewUserController extends GetxController {
       userModel.password = userPassword;
     else
       throw new CustomException(errors);
-
   }
 
   setUserName(String userName) {
@@ -153,7 +151,6 @@ class NewUserController extends GetxController {
       userModel.firstName = userName;
     else
       throw new CustomException(errors);
-
   }
 
   setUserLastName(String userLastName) {
@@ -164,7 +161,6 @@ class NewUserController extends GetxController {
       userModel.lastName = userLastName;
     else
       throw new CustomException(errors);
-
   }
 
   setUserCourse(CourseModel userCourseModel) {
@@ -189,20 +185,29 @@ class NewUserController extends GetxController {
       throw new CustomException(errors);
   }
 
-  setUserImages(List<XFile> images) {
-    //Uso uma imagem padrão para quando o usuário não enviou nenhuma imagem, ou seja o quadrado branco com um + na verdade é uma imagem
-    //Isso faz com que o array sempre esteja cheio, portanto é nencessário remover as imagens padrão da lista para saber quantas imagens
-    //o usuário de fato enviou
+  setUserImages(List<XFile> images) async {
+    // Remove imagens padrão
     var filteredImages = List<XFile>.from(
-        images.where((image) => image.name != 'emptyPhoto.png'));
+      images.where((image) => image.name != 'emptyPhoto.png'),
+    );
 
     var errors = Validations.validateImages(filteredImages);
     if (errors == null) {
-      userModel.images.clear();
-      userModel.images.addAll(images);
-    } else
-      throw new CustomException(errors);
+      userModel.userBase64Images.clear();
 
+      for (var image in filteredImages) {
+        // Lê os bytes da imagem
+        Uint8List bytes = await image.readAsBytes();
+
+        // Converte para base64
+        String base64Image = base64Encode(bytes);
+
+        // Salva no seu model (ou onde precisar)
+        userModel.userBase64Images.add(base64Image);
+      }
+    } else {
+      throw CustomException(errors);
+    }
   }
 
   setUserBio(String userBio) {
@@ -212,7 +217,6 @@ class NewUserController extends GetxController {
       userModel.bio = userBio;
     else
       throw new CustomException(errors);
-
   }
 
   setUserBirthdate(DateTime birthdate) {
@@ -221,7 +225,6 @@ class NewUserController extends GetxController {
       userModel.birthDate = birthdate;
     else
       throw new CustomException(errors);
-
   }
 
   setUserGender(GenderModel userGenderModel) {
@@ -230,7 +233,6 @@ class NewUserController extends GetxController {
           "Por favor, nos informe como você se identifica.");
     }
     userModel.userGender = userGenderModel;
-
   }
 
   setUserSexuality(SexualityModel userSexualityModel) {
@@ -239,7 +241,6 @@ class NewUserController extends GetxController {
           "Por favor, nos informe a sua orientação sexual.");
     }
     userModel.userSexuality = userSexualityModel;
-
   }
 
   setUserPreferences(List<GenderModel> userPreferences) {
@@ -249,7 +250,6 @@ class NewUserController extends GetxController {
     }
     userModel.userGenderPreferences.clear();
     userModel.userGenderPreferences.addAll(userPreferences);
-
   }
 
   setUserCity(String userCity) async {
@@ -273,7 +273,6 @@ class NewUserController extends GetxController {
           "Não encontramos '$userCity' em nosso sistema! Tente novamente ou escolha outra cidade!");
     }
     userModel.city = userCity;
-
   }
 
   setUserAbout(UserAboutModel userAbout) {
