@@ -16,4 +16,16 @@ class UserAboutModel {
     this.physicalActivity,
     this.typeOfOuting,
   });
+
+  factory UserAboutModel.fromJson(Map<String, dynamic> json) {
+    return UserAboutModel(
+      zodiacSign: json['zodiacSign'],
+      loveLanguage: json['loveLanguage'],
+      pets: json['pets'],
+      drink: json['drink'],
+      smoker: json['smoker'],
+      physicalActivity: json['physicalActivity'],
+      typeOfOuting: json['typeOfOuting'],
+    );
+  }
 }

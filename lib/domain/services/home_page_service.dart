@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:school_match/domain/models/homePageModels/user_like_model.dart';
 import 'package:school_match/util/constants.dart';
 
+final box = GetStorage();
+
 class HomePageService {
+
   static Future<String> sendUserLike(UserLikeModel data) async {
     // Encode the UserModel to JSON
     final String body = jsonEncode(data.toJson());
@@ -21,9 +25,9 @@ class HomePageService {
   static Future<http.Response> getUsersDefault() async {
     try {
       final response = await http.post(
-        Uri.parse(Constants.userLogin),
+        Uri.parse(Constants.defaultSearch),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"email": , "password":}),
+        body: jsonEncode({"userLikeFind": box.read('userLikeFind'), "userId": box.read("userId")}),
       );
       return response;
     } catch (e) {

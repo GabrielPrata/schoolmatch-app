@@ -9,8 +9,8 @@ class BlockModel {
 
   factory BlockModel.fromJson(Map<String, dynamic> json) {
     return BlockModel(
-      blockId: json['idBloco'],
-      blockName: json['nomeBloco'],
+      blockId: json['blockId'],
+      blockName: json['blockName'],
     );
   }
 

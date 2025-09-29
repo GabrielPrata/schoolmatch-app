@@ -21,22 +21,27 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     // Initialize the cards list after fetching data
-
-    setState(() {
-      cards = homePageController.profiles
-          .map((candidate) => UserCard(
-                //Adicionar um id unico
-                key: ValueKey("${candidate.firstName}${candidate.lastName}"),
-                candidate: candidate,
-              ))
-          .toList();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadCards());
+    
   }
 
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadCards() async {
+    await homePageController.getUsersDefault();
+    if (!mounted) return;
+    setState(() {
+      cards = homePageController.profiles
+          .map((c) => UserCard(
+                key: ValueKey("${c.firstName}${c.lastName}"),
+                candidate: c,
+              ))
+          .toList();
+    });
   }
 
   @override

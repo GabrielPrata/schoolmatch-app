@@ -26,7 +26,7 @@ class UserProfileModel {
   String? semester;
 
   List<InterestsModel?> userInterests;
-  
+
   UserAboutModel? userAbout;
 
   String? music;
@@ -40,6 +40,7 @@ class UserProfileModel {
   MusicAdapter? selectedMusic;
 
   UserProfileModel({
+    this.music,
     this.firstName,
     this.lastName,
     this.course,
@@ -58,8 +59,7 @@ class UserProfileModel {
     this.showSexuality,
     required this.hasMusic,
     this.selectedMusic,
-  })  : 
-        secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
+  })  : secondaryBlocks = secondaryBlocks ?? <BlockModel?>[],
         userInterests = userInterests ?? <InterestsModel?>[],
         // images = images ?? <XFile?>[] {}
         images = images ?? <String?>[] {}
@@ -101,8 +101,10 @@ UserProfileModel{
       'curso': course?.courseName,
       'blocoPrincipal': mainBlock?.blockName,
       'blocosSecundarios': secondaryBlocks,
-      'dataNascimento':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
-      'usuarioCreatedAt':  DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),
+      'dataNascimento':
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(birthDate!),
+      'usuarioCreatedAt':
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now()),
       'sexualidade': sexuality,
       'bio': bio,
       'cidade': city,
@@ -126,4 +128,47 @@ UserProfileModel{
     };
   }
 
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
+    return UserProfileModel(
+      firstName: json['nome'],
+      lastName: json['sobrenome'],
+      course:
+          json['curso'] != null ? CourseModel.fromJson(json['curso']) : null,
+      mainBlock: json['blocoPrincipal'] != null
+          ? BlockModel.fromJson(json['blocoPrincipal'])
+          : null,
+      secondaryBlocks: (json['blocosSecundarios'] as List<dynamic>?)
+              ?.map((b) => b != null ? BlockModel.fromJson(b) : null)
+              .toList() ??
+          [],
+      birthDate: json['dataNascimento'] != null
+          ? DateTime.tryParse(json['dataNascimento'])
+          : null,
+      admissionDate: json['usuarioCreatedAt'] != null
+          ? DateTime.tryParse(json['usuarioCreatedAt'])
+          : null,
+      sexuality: json['sexualidade']["sexualityName"],
+      bio: json['bio'],
+      city: json['cidade'],
+      userAbout: json['userAbout'] != null
+          ? UserAboutModel.fromJson(json['userAbout'])
+          : null,
+      semester: json['semestre']["name"],
+      userInterests: (json['interesses'] as List<dynamic>?)
+              ?.map((i) => i != null ? InterestsModel.fromJson(i) : null)
+              .toList() ??
+          [],
+      music: json['music'],
+      images: (json['userBase64Images'] as List<dynamic>?)
+              ?.map((img) => img?.toString())
+              .toList() ??
+          [],
+      showSexuality: json['sexualidade']["showInProfile"],
+      hasMusic: (json['spotifyMusicData'] != null).obs,
+
+      selectedMusic: json['spotifyMusicData'] != null
+          ? MusicAdapter.fromJson(json['spotifyMusicData'])
+          : null,
+    );
+  }
 }

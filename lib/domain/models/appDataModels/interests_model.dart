@@ -9,8 +9,8 @@ class InterestsModel {
 
   factory InterestsModel.fromJson(Map<String, dynamic> json) {
     return InterestsModel(
-      interestId: json['id'],
-      interestName: json['nome'],
+      interestId: json['interestId'],
+      interestName: json['interestName'],
     );
   }
 

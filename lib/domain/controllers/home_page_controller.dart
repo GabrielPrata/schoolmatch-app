@@ -30,7 +30,7 @@ class HomePageController extends GetxController {
   sendUserLike(UserLikeModel data, BuildContext context) async {
     try {
       var response = await HomePageService.sendUserLike(data);
-     
+
       print("Match Realizado!");
       print(response);
       // Navigator.push(
@@ -59,6 +59,30 @@ class HomePageController extends GetxController {
   }
 
   getUsersDefault() async {
+    try {
+      final response = await HomePageService.getUsersDefault();
 
+      if (response.statusCode != 200) {
+        final body = jsonDecode(response.body);
+        final message =
+            body['message'] ?? "Erro ao buscar os dados ${response.statusCode}";
+        throw Exception(message); // <-- exceção de negócio
+      }
+
+      final decoded = jsonDecode(response.body);
+      if (decoded is! List) {
+        throw Exception('Formato de resposta inesperado: esperado uma lista.');
+      }
+
+      // Limpa e carrega
+      profiles
+        ..clear()
+        ..addAll(
+          decoded.map((e) => UserProfileModel.fromJson(e as Map<String, dynamic>)),
+        );
+
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

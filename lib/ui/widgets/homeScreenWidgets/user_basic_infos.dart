@@ -98,7 +98,8 @@ class _UserBasicInfosState extends State<UserBasicInfos> {
                   height: 5,
                 ),
                 widget.candidate.showSexuality!
-                    ? Row(
+                    ? 
+                    Row(
                         children: [
                           Icon(
                             Icons.favorite,

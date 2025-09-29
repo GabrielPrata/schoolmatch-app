@@ -38,8 +38,11 @@ class AuthController extends GetxController {
        final data = jsonDecode(response.body);
 
         await box.write('appToken', data["userToken"]);
-        await box.write('userLikeFind', data["userToken"]);
         await box.write('userId', data["idUsuario"]);
+
+        //Ajustar dps para receber um array com os generos
+        await box.write('userLikeFind', data['usuarioPreferencia'][0]['genderId']);
+
 
         
       // sucesso → parse e guarde o token

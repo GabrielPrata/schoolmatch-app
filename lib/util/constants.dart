@@ -32,9 +32,11 @@ class Constants {
 
   static String matchsUrl = "https://10.0.2.2:7000/";
   static String matchs = "$matchsUrl/matchs";
-  static String verifyNewMatch = "$verifyNewMatch/VerifyMatch";
+  static String verifyNewMatch = "$matchs/VerifyMatch";
 
-
+  static String searchUrl = "https://10.0.2.2:7138";
+  static String search = "$searchUrl/search";
+  static String defaultSearch = "$search/DefaultSearch";
 
   static String spotifyUrl = "https://api.spotify.com/v1/";
   static String spotifyClientId = "a3a5bece3819449d9cd7dd86266f82f3";
