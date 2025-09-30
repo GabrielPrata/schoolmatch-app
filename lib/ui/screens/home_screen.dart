@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/home_page_controller.dart';
 import 'package:school_match/domain/models/homePageModels/user_like_model.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/userCard.dart';
+import 'package:school_match/util/alerts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // Initialize the cards list after fetching data
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadCards());
-    
   }
 
   @override
@@ -32,16 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadCards() async {
-    await homePageController.getUsersDefault();
-    if (!mounted) return;
-    setState(() {
-      cards = homePageController.profiles
-          .map((c) => UserCard(
-                key: ValueKey("${c.firstName}${c.lastName}"),
-                candidate: c,
-              ))
-          .toList();
-    });
+    try {
+      await homePageController.getUsersDefault();
+      if (!mounted) return;
+      setState(() {
+        cards = homePageController.profiles
+            .map((c) => UserCard(
+                  key: ValueKey("${c.firstName}${c.lastName}"),
+                  candidate: c,
+                ))
+            .toList();
+      });
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+        e.toString().replaceAll("Exception: ", ""),
+        context,
+      );
+    }
   }
 
   @override

@@ -78,9 +78,9 @@ class HomePageController extends GetxController {
       profiles
         ..clear()
         ..addAll(
-          decoded.map((e) => UserProfileModel.fromJson(e as Map<String, dynamic>)),
+          decoded
+              .map((e) => UserProfileModel.fromJson(e as Map<String, dynamic>)),
         );
-
     } finally {
       isLoading.value = false;
     }
