@@ -26,6 +26,7 @@ class HomePageService {
     final List<dynamic> userLikeFind = jsonDecode(userLikeFindStr);
     final List<int> genderIds =
         userLikeFind.map((item) => item['genderId'] as int).toList();
+        
     String body =
         jsonEncode({"userLikeFind": genderIds, "userId": box.read("userId")});
     try {

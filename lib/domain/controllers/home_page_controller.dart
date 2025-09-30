@@ -82,7 +82,6 @@ class HomePageController extends GetxController {
               .map((e) => UserProfileModel.fromJson(e as Map<String, dynamic>)),
         );
     } finally {
-      isLoading.value = false;
     }
   }
 }

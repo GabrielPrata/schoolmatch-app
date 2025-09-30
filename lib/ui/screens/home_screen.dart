@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/home_page_controller.dart';
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadCards() async {
+    homePageController.isLoading.trigger(true);
     try {
       await homePageController.getUsersDefault();
       if (!mounted) return;
@@ -48,135 +50,171 @@ class _HomeScreenState extends State<HomeScreen> {
         e.toString().replaceAll("Exception: ", ""),
         context,
       );
+    } finally {
+      homePageController.isLoading.trigger(false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Theme.of(context).colorScheme.primary,
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 5,
+    return Scaffold(body: Obx(() {
+      return homePageController.isLoading.value
+          ? Container(
+              color: Theme.of(context).colorScheme.primary,
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // centraliza horizontalmente
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 6,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
+                      ),
+                      Text(
+                        "Buscando Usuários...",
+                        style: Theme.of(context).textTheme.labelLarge
+                      )
+                    ],
+                  ),
+                ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.88,
-                // height: 50,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            )
+          : Container(
+              color: Theme.of(context).colorScheme.primary,
+              child: SafeArea(
+                child: Column(
                   children: [
+                    SizedBox(
+                      height: 5,
+                    ),
                     Container(
-                      width: 120,
-                      child: Theme.of(context).brightness == Brightness.dark
-                          ? Image.asset("assets/LogoSchoolMatchBranca.png")
-                          : Image.asset("assets/LogoSchoolMatch.png"),
+                      width: MediaQuery.of(context).size.width * 0.88,
+                      // height: 50,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 120,
+                            child:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Image.asset(
+                                        "assets/LogoSchoolMatchBranca.png")
+                                    : Image.asset("assets/LogoSchoolMatch.png"),
+                          ),
+                          Spacer(), // Empurra o conteúdo restante para a direita
+                          IconButton(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            icon: Icon(Icons.tune),
+                            onPressed: () {
+                              // Adicione a ação desejada aqui
+                              print("Tune icon pressed");
+                            },
+                            tooltip:
+                                'Configurações', // Tooltip opcional para melhor acessibilidade
+                          ),
+                          IconButton(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            icon: Icon(Icons.notifications),
+                            onPressed: () {
+                              // Adicione a ação desejada aqui
+                              print("Notifications icon pressed");
+                            },
+                            tooltip:
+                                'Notificações', // Tooltip opcional para melhor acessibilidade
+                          ),
+                        ],
+                      ),
                     ),
-                    Spacer(), // Empurra o conteúdo restante para a direita
-                    IconButton(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      icon: Icon(Icons.tune),
-                      onPressed: () {
-                        // Adicione a ação desejada aqui
-                        print("Tune icon pressed");
-                      },
-                      tooltip:
-                          'Configurações', // Tooltip opcional para melhor acessibilidade
-                    ),
-                    IconButton(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      icon: Icon(Icons.notifications),
-                      onPressed: () {
-                        // Adicione a ação desejada aqui
-                        print("Notifications icon pressed");
-                      },
-                      tooltip:
-                          'Notificações', // Tooltip opcional para melhor acessibilidade
-                    ),
+                    if (cards != null && cards.isNotEmpty)
+                      Flexible(
+                        child: CardSwiper(
+                          controller: controller,
+                          cardsCount: cards.length,
+                          onSwipe: _onSwipe,
+                          onUndo: _onUndo,
+                          numberOfCardsDisplayed: 3,
+                          allowedSwipeDirection:
+                              const AllowedSwipeDirection.only(
+                                  left: true, right: true),
+                          backCardOffset: const Offset(0, -45),
+                          padding: const EdgeInsets.all(24.0),
+                          cardBuilder: (context,
+                                  index,
+                                  horizontalThresholdPercentage,
+                                  verticalThresholdPercentage) =>
+                              cards[index],
+                        ),
+                      ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //   FloatingActionButton(
+                    //       backgroundColor: Colors.red.shade600,
+                    //       onPressed: () => controller.swipe(CardSwiperDirection.left),
+                    //       child: const Icon(Icons.close)),
+                    //   SizedBox(
+                    //     width: 30,
+                    //   ),
+                    //   Container(
+                    //     height: 45,
+                    //     width: 45,
+                    //     child: FloatingActionButton(
+                    //         backgroundColor: Colors.amber.shade600,
+                    //         onPressed: controller.undo,
+                    //         child: const Icon(Icons.rotate_left)),
+                    //   ),
+                    //   SizedBox(
+                    //     width: 30,
+                    //   ),
+                    //   FloatingActionButton(
+                    //       backgroundColor: Colors.green.shade600,
+                    //       onPressed: () =>
+                    //           controller.swipe(CardSwiperDirection.right),
+                    //       child: const Icon(Icons.check)),
+                    // ]),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(16.0),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //     children: [
+                    //       FloatingActionButton(
+                    //           backgroundColor: Colors.amber.shade600,
+                    //           onPressed: controller.undo,
+                    //           child: const Icon(Icons.rotate_left)),
+                    //       FloatingActionButton(
+                    //           backgroundColor: Colors.red.shade600,
+                    //           onPressed: () =>
+                    //               controller.swipe(CardSwiperDirection.left),
+                    //           child: const Icon(Icons.close)),
+                    //       FloatingActionButton(
+                    //           backgroundColor: Colors.green.shade600,
+                    //           onPressed: () =>
+                    //               controller.swipe(CardSwiperDirection.right),
+                    //           child: const Icon(Icons.check)),
+                    //       // FloatingActionButton(
+                    //       //     onPressed: () =>
+                    //       //         controller.swipe(CardSwiperDirection.top),
+                    //       //     child: const Icon(Icons.keyboard_arrow_up)),
+                    //       // FloatingActionButton(
+                    //       //     onPressed: () =>
+                    //       //         controller.swipe(CardSwiperDirection.bottom),
+                    //       //     child: const Icon(Icons.keyboard_arrow_down)),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
-              if (cards != null && cards.isNotEmpty)
-                Flexible(
-                  child: CardSwiper(
-                    controller: controller,
-                    cardsCount: cards.length,
-                    onSwipe: _onSwipe,
-                    onUndo: _onUndo,
-                    numberOfCardsDisplayed: 3,
-                    allowedSwipeDirection: const AllowedSwipeDirection.only(
-                        left: true, right: true),
-                    backCardOffset: const Offset(0, -45),
-                    padding: const EdgeInsets.all(24.0),
-                    cardBuilder: (context, index, horizontalThresholdPercentage,
-                            verticalThresholdPercentage) =>
-                        cards[index],
-                  ),
-                ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //   FloatingActionButton(
-              //       backgroundColor: Colors.red.shade600,
-              //       onPressed: () => controller.swipe(CardSwiperDirection.left),
-              //       child: const Icon(Icons.close)),
-              //   SizedBox(
-              //     width: 30,
-              //   ),
-              //   Container(
-              //     height: 45,
-              //     width: 45,
-              //     child: FloatingActionButton(
-              //         backgroundColor: Colors.amber.shade600,
-              //         onPressed: controller.undo,
-              //         child: const Icon(Icons.rotate_left)),
-              //   ),
-              //   SizedBox(
-              //     width: 30,
-              //   ),
-              //   FloatingActionButton(
-              //       backgroundColor: Colors.green.shade600,
-              //       onPressed: () =>
-              //           controller.swipe(CardSwiperDirection.right),
-              //       child: const Icon(Icons.check)),
-              // ]),
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: [
-              //       FloatingActionButton(
-              //           backgroundColor: Colors.amber.shade600,
-              //           onPressed: controller.undo,
-              //           child: const Icon(Icons.rotate_left)),
-              //       FloatingActionButton(
-              //           backgroundColor: Colors.red.shade600,
-              //           onPressed: () =>
-              //               controller.swipe(CardSwiperDirection.left),
-              //           child: const Icon(Icons.close)),
-              //       FloatingActionButton(
-              //           backgroundColor: Colors.green.shade600,
-              //           onPressed: () =>
-              //               controller.swipe(CardSwiperDirection.right),
-              //           child: const Icon(Icons.check)),
-              //       // FloatingActionButton(
-              //       //     onPressed: () =>
-              //       //         controller.swipe(CardSwiperDirection.top),
-              //       //     child: const Icon(Icons.keyboard_arrow_up)),
-              //       // FloatingActionButton(
-              //       //     onPressed: () =>
-              //       //         controller.swipe(CardSwiperDirection.bottom),
-              //       //     child: const Icon(Icons.keyboard_arrow_down)),
-              //     ],
-              //   ),
-              // ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+    }));
   }
 
   bool _onSwipe(
