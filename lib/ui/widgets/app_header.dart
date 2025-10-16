@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:school_match/ui/widgets/appHeader/tune_settings_modal.dart';
 
 class AppHeader extends StatefulWidget {
   const AppHeader({
@@ -34,7 +35,18 @@ class _AppHeaderState extends State<AppHeader> {
           IconButton(
             color: Theme.of(context).colorScheme.onPrimary,
             icon: const Icon(Icons.tune),
-            onPressed: () => debugPrint("Tune icon pressed"),
+            onPressed: () {
+              showModalBottomSheet(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                isScrollControlled: true,
+                context: context,
+                enableDrag: true,
+                showDragHandle: true,
+                builder: (BuildContext context) {
+                  return const TuneSettingsModal();
+                },
+              );
+            },
             tooltip: 'Configurações',
           ),
           IconButton(
