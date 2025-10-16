@@ -147,10 +147,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
                                 final displayName =
                                     name.isEmpty ? 'Usuário' : name;
 
-                                return UserMatchCard(
-                                  imageBase64: imageB64,
-                                  userName: displayName,
-                                );
+                                return UserMatchCard(user: p);
                               },
                             ),
                           ),

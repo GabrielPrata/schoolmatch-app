@@ -7,10 +7,13 @@ import 'package:school_match/ui/widgets/homeScreenWidgets/user_lifestyle.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_list_images.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_list_interests.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_music.dart';
+
 class ShowUserDetailsBottomsheet extends StatefulWidget {
   final UserProfileModel candidate;
+  final bool isFromMatch;
 
-  const ShowUserDetailsBottomsheet({Key? key, required this.candidate})
+  const ShowUserDetailsBottomsheet(
+      {Key? key, required this.candidate, this.isFromMatch = false})
       : super(key: key);
 
   @override
@@ -49,6 +52,14 @@ class _ShowUserDetailsBottomsheetState
               height: 5,
             ),
             UserListImages(candidate: widget.candidate),
+            SizedBox(
+              height: 20,
+            ),
+            if (widget.isFromMatch)
+              ElevatedButton(
+                onPressed: () {},
+                child: Text('Botão'),
+              ),
             SizedBox(
               height: 20,
             ),
