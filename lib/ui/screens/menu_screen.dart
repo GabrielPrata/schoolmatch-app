@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:school_match/ui/screens/forms/user_bio.dart';
 import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/screens/home_screen.dart';
+import 'package:school_match/ui/screens/matches_screen.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    UserBio(),
+    MatchesScreen(),
     UserSpotifyMusic(),
     SelectThemeScreen(),
   ];
@@ -45,6 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
         buttonBackgroundColor: Theme.of(context).colorScheme.onPrimary,
         key: _bottomNavigationKey,
         items: <Widget>[
+          //Buscar, matchs/chats, perfil, config do app
           Icon(Icons.favorite, size: 30, color: _page != 0 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,),
           Icon(Icons.chat_bubble, size: 30, color: _page != 1 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
           Icon(Icons.calendar_today, size: 30, color: _page != 2 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),

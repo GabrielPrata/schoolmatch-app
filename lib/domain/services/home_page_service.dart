@@ -7,18 +7,23 @@ import 'package:school_match/util/constants.dart';
 final box = GetStorage();
 
 class HomePageService {
-  static Future<String> sendUserLike(UserLikeModel data) async {
+  static Future<http.Response> sendUserLike(UserLikeModel data) async {
     // Encode the UserModel to JSON
     final String body = jsonEncode(data.toJson());
     // Make the POST request
-    final http.Response response = await http.post(
-      Uri.parse(Constants.verifyNewMatch),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: body,
-    );
-    return response.body;
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(Constants.verifyNewMatch),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer " + box.read("appToken"),
+        },
+        body: body,
+      );
+      return response;
+    } catch (e) {
+      throw Exception("Erro de conexão com o servidor: $e");
+    }
   }
 
   static Future<http.Response> getUsersDefault() async {
@@ -26,12 +31,16 @@ class HomePageService {
     final List<dynamic> userLikeFind = jsonDecode(userLikeFindStr);
     final List<int> genderIds =
         userLikeFind.map((item) => item['genderId'] as int).toList();
-        
+
     String body =
         jsonEncode({"userLikeFind": genderIds, "userId": box.read("userId")});
     try {
       final response = await http.post(Uri.parse(Constants.defaultSearch),
-          headers: {'Content-Type': 'application/json'}, body: body);
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + box.read("appToken"),
+          },
+          body: body);
       return response;
     } catch (e) {
       throw Exception("Erro de conexão com o servidor: $e");

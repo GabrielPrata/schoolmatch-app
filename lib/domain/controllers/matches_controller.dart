@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 
 import 'package:school_match/domain/services/home_page_service.dart';
+import 'package:school_match/domain/services/match_service.dart';
 import 'package:school_match/util/alerts.dart';
 import 'package:school_match/util/functions.dart';
 // import 'package:rc_mineracao/domain/services/auth_service.dart';
@@ -16,7 +17,7 @@ import 'package:school_match/util/functions.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 // import '../../util/constants.dart';
 
-class HomePageController extends GetxController {
+class MatchesController extends GetxController {
   var errorText = false.obs;
   var isLoading = false.obs;
 
@@ -49,15 +50,15 @@ class HomePageController extends GetxController {
     imageStrings = List<String>.from(jsonResult['imagens']);
   }
 
-  getUsersDefault() async {
+  getUserMatches() async {
     try {
-      final response = await HomePageService.getUsersDefault();
+      final response = await MatchService.getUserMatches();
 
       if (response.statusCode != 200) {
         final msg = Functions.safeErrorMessage(response);
 
         throw Exception(
-            "Erro ao obter usuários: $msg"); // <-- exceção de negócio
+            "Erro ao obter usuários: $msg");
       }
 
       final decoded = jsonDecode(response.body);

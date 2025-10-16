@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:school_match/domain/models/user_about_model.dart';
 
 class UserProfileModel {
+  int userId;
   String? firstName;
   String? lastName;
 
@@ -40,6 +41,7 @@ class UserProfileModel {
   MusicAdapter? selectedMusic;
 
   UserProfileModel({
+    required this.userId,
     this.music,
     this.firstName,
     this.lastName,
@@ -68,6 +70,7 @@ class UserProfileModel {
   String toString() {
     return '''
 UserProfileModel{
+  userId: ${userId.toString()},
   interests: ${userInterests.join(", ")},
   firstName: $firstName,
   lastName: $lastName,
@@ -130,6 +133,7 @@ UserProfileModel{
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
+      userId: json['idUsuario'],
       firstName: json['nome'],
       lastName: json['sobrenome'],
       course:

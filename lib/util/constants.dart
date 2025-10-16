@@ -30,9 +30,10 @@ class Constants {
   static String interests = "$appData/interests";
   static String getAllInterests = "$interests/GetAllInterests";
 
-  static String matchsUrl = "https://10.0.2.2:7000/";
+  static String matchsUrl = "https://10.0.2.2:7000";
   static String matchs = "$matchsUrl/matchs";
-  static String verifyNewMatch = "$matchs/VerifyMatch";
+  static String verifyNewMatch = "$matchs/SendUserLike";
+  static String getUserMatches = "$matchs/GetUserMatches";
 
   static String searchUrl = "https://10.0.2.2:7138";
   static String search = "$searchUrl/search";
