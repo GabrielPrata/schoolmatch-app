@@ -39,7 +39,7 @@ class HomePageController extends GetxController {
         e.toString().replaceAll('Exception: ', ''),
         context,
       );
-    } 
+    }
   }
 
   loadBase64Images() async {
@@ -73,5 +73,32 @@ class HomePageController extends GetxController {
               .map((e) => UserProfileModel.fromJson(e as Map<String, dynamic>)),
         );
     } finally {}
+  }
+
+  Future<void> searchByCourseAndBlock(int courseId, int blockId) async {
+    isLoading.trigger(true);
+    try {
+      final response =
+          await HomePageService.searchByCourseAndBlock(courseId, blockId);
+
+      if (response.statusCode != 200) {
+        final msg = Functions.safeErrorMessage(response);
+        throw Exception("Erro ao buscar usuários: $msg");
+      }
+
+      final decoded = jsonDecode(response.body);
+      if (decoded is! List) {
+        throw Exception('Formato de resposta inesperado: esperado uma lista.');
+      }
+
+      profiles
+        ..clear()
+        ..addAll(
+          decoded
+              .map((e) => UserProfileModel.fromJson(e as Map<String, dynamic>)),
+        );
+    } finally {
+      isLoading.trigger(false);
+    }
   }
 }

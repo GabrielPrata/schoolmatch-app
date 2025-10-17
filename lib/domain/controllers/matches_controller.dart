@@ -40,7 +40,7 @@ class MatchesController extends GetxController {
         e.toString().replaceAll('Exception: ', ''),
         context,
       );
-    } 
+    }
   }
 
   loadBase64Images() async {
@@ -57,8 +57,7 @@ class MatchesController extends GetxController {
       if (response.statusCode != 200) {
         final msg = Functions.safeErrorMessage(response);
 
-        throw Exception(
-            "Erro ao obter usuários: $msg");
+        throw Exception("Erro ao obter usuários: $msg");
       }
 
       final decoded = jsonDecode(response.body);

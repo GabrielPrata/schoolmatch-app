@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/app_data_controller.dart';
+import 'package:school_match/domain/controllers/home_page_controller.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
+import 'package:school_match/util/alerts.dart';
 
 class TuneSettingsModal extends StatefulWidget {
   const TuneSettingsModal({super.key});
@@ -14,6 +16,7 @@ class TuneSettingsModal extends StatefulWidget {
 
 class _TuneSettingsModalState extends State<TuneSettingsModal> {
   final AppDataController appDataController = Get.put(AppDataController());
+  final HomePageController homePageController = Get.put(HomePageController());
   CourseModel? selectedCourse;
   BlockModel? selectedBlock;
 
@@ -34,11 +37,12 @@ class _TuneSettingsModalState extends State<TuneSettingsModal> {
   }
 
   Future<void> _loadBlocks() async {
-    if (appDataController.appMainBlocks.isEmpty) {
-      await appDataController.getMainBlocks(context);
-      if (mounted) {
-        setState(() {});
-      }
+    appDataController.appSecondaryBlocks.clear();
+    if (appDataController.appSecondaryBlocks.isEmpty) {
+      await appDataController.getSecondaryBlocks(context);
+    }
+    if (mounted) {
+      setState(() {});
     }
   }
 
@@ -55,10 +59,24 @@ class _TuneSettingsModalState extends State<TuneSettingsModal> {
     });
   }
 
+  void _onSearchPressed() {
+    if (selectedCourse == null && selectedBlock == null) {
+      Alerts.showErrorSnackBar(
+          "Adicione pelo menos um filtro de busca!", context);
+    } else {
+
+      homePageController.searchByCourseAndBlock(
+        selectedCourse?.courseId ?? 0,
+        selectedBlock?.blockId ?? 0,
+      );
+      Navigator.of(context).pop(); // Close the modal
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 700,
+      height: 400,
       padding: const EdgeInsets.all(4.0),
       child: Center(
         child: Column(
@@ -69,7 +87,10 @@ class _TuneSettingsModalState extends State<TuneSettingsModal> {
             ),
             const SizedBox(height: 20),
             if (appDataController.appCourses.isEmpty)
-              const CircularProgressIndicator()
+              const CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 5,
+              )
             else
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -83,13 +104,16 @@ class _TuneSettingsModalState extends State<TuneSettingsModal> {
                 ),
               ),
             const SizedBox(height: 20),
-            if (appDataController.appMainBlocks.isEmpty)
-              const CircularProgressIndicator()
+            if (appDataController.appSecondaryBlocks.isEmpty)
+              const CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 5,
+              )
             else
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: DropdownMenuData<BlockModel>(
-                  items: appDataController.appMainBlocks,
+                  items: appDataController.appSecondaryBlocks,
                   defaultText: "Selecione o bloco",
                   getId: (block) => block.blockId,
                   getLabel: (block) => block.blockName,
@@ -102,10 +126,7 @@ class _TuneSettingsModalState extends State<TuneSettingsModal> {
               padding: const EdgeInsets.all(15),
               child: ElevatedButton(
                 style: Theme.of(context).elevatedButtonTheme.style,
-                onPressed: () => (),
-                // () => Alerts.showInfonackBar(
-                //     "Funcionalidade ainda não desenvolvida!",
-                //     context),
+                onPressed: _onSearchPressed,
                 child: Text(
                   "Buscar",
                   style: Theme.of(context).textTheme.labelMedium,

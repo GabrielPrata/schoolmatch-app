@@ -46,4 +46,32 @@ class HomePageService {
       throw Exception("Erro de conexão com o servidor: $e");
     }
   }
+
+  static Future<http.Response> searchByCourseAndBlock(
+      int courseId, int blockId) async {
+    final String userLikeFindStr = box.read('userLikeFind');
+    final List<dynamic> userLikeFind = jsonDecode(userLikeFindStr);
+    final List<int> genderIds =
+        userLikeFind.map((item) => item['genderId'] as int).toList();
+    try {
+      final response = await http.post(
+        Uri.parse(Constants.searchByCourseAndBlock),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer " + box.read("appToken"),
+        },
+        body: jsonEncode({
+          'courseId': courseId,
+          'blockId': blockId,
+          'preferences': {
+            "userLikeFind": genderIds,
+            "userId": box.read("userId")
+          }
+        }),
+      );
+      return response;
+    } catch (e) {
+      throw Exception("Erro de conexão com o servidor: $e");
+    }
+  }
 }
