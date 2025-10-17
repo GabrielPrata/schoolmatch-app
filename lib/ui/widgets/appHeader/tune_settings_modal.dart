@@ -4,6 +4,7 @@ import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/controllers/home_page_controller.dart';
 import 'package:school_match/domain/models/appDataModels/course_model.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
+import 'package:school_match/ui/screens/search_results_screen.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 import 'package:school_match/util/alerts.dart';
 
@@ -59,17 +60,25 @@ class _TuneSettingsModalState extends State<TuneSettingsModal> {
     });
   }
 
-  void _onSearchPressed() {
+  void _onSearchPressed() async {
     if (selectedCourse == null && selectedBlock == null) {
       Alerts.showErrorSnackBar(
           "Adicione pelo menos um filtro de busca!", context);
     } else {
-
-      homePageController.searchByCourseAndBlock(
-        selectedCourse?.courseId ?? 0,
-        selectedBlock?.blockId ?? 0,
-      );
-      Navigator.of(context).pop(); // Close the modal
+      try {
+        await homePageController.searchByCourseAndBlock(
+          selectedCourse?.courseId ?? 0,
+          selectedBlock?.blockId ?? 0,
+        );
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        Get.to(() =>
+            SearchResultsScreen(searchResults: homePageController.profiles));
+      } catch (e) {
+        Navigator.of(context).pop();
+        Alerts.showErrorSnackBar(
+            e.toString().replaceAll("Exception: ", ""), context);
+      }
     }
   }
 
