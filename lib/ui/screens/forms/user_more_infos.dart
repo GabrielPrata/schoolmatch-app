@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/models/user_about_model.dart';
 import 'package:school_match/ui/screens/forms/user_interests.dart';
-// import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/ui/widgets/forms/userMoreInfos/user_more_infos_topics.dart';
 

@@ -7,8 +7,6 @@ import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/models/appDataModels/course_duration_model.dart';
 import 'package:school_match/ui/screens/forms/user_blocks.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
-// import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
 

@@ -6,6 +6,7 @@ import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
 import 'package:school_match/ui/screens/home_screen.dart';
 import 'package:school_match/ui/screens/matches_screen.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
+import 'package:school_match/ui/screens/user_profile_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -35,7 +36,7 @@ class _MenuScreenState extends State<MenuScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     MatchesScreen(),
-    UserSpotifyMusic(),
+    UserProfileScreen(),
     UserBlocks(),
   ];
   @override
@@ -50,8 +51,8 @@ class _MenuScreenState extends State<MenuScreen> {
           //Buscar, matchs/chats, perfil, config do app
           Icon(Icons.favorite, size: 30, color: _page != 0 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,),
           Icon(Icons.chat_bubble, size: 30, color: _page != 1 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
-          Icon(Icons.calendar_today, size: 30, color: _page != 2 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
           Icon(Icons.person, size: 30, color: _page != 3 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
+          Icon(Icons.settings, size: 30, color: _page != 2 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
         ],
         onTap: (index) {
           setState(() {

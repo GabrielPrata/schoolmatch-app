@@ -2,8 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
-import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-import 'package:rc_mineracao/ui/style/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

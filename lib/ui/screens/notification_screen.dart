@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:school_match/ui/screens/accept_screen.dart';
-// import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/ui/screens/forms/user_email_screen.dart';
 
 class NotificationScreen extends StatefulWidget {

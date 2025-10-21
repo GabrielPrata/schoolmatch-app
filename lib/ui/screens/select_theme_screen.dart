@@ -5,8 +5,6 @@ import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/models/enums/themes.dart';
 import 'package:school_match/ui/screens/accept_screen.dart';
 import 'package:school_match/ui/screens/notification_screen.dart';
-// import 'package:rc_mineracao/domain/controllers/auth_controller.dart';
-// import 'package:rc_mineracao/util/alerts.dart';
 import 'package:school_match/util/theme_provider.dart';
 
 class SelectThemeScreen extends StatefulWidget {
