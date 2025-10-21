@@ -49,67 +49,9 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
 
-    //trativa de erros
-    //   if (response.statusCode == 401) {
-    //     Alerts.showErrorSnackBar("Erro de autenticação com a API. Contate o suporte!", context);
-    //     isLoading.trigger(false);
-    //     return;
-    //   }
 
-    //   if(response.statusCode != 200) {
-    //     Alerts.showErrorSnackBar("Erro ao conectar com a API. Código de erro: " + response.statusCode.toString(), context);
-    //     isLoading.trigger(false);
-    //     return;
-    //   }
 
-    //   var responseBody = jsonDecode(response.body);
 
-    //   if(responseBody['CODIGO'] == 0 || responseBody['CODIGO'] == '0'){
-    //     Alerts.showErrorSnackBar("Usuário incorreto!", context);
-    //     isLoading.trigger(false);
-    //     return;
-    //   }
-
-    //   if(responseBody['CODIGO'] == 2 || responseBody['CODIGO'] == '2'){
-    //     Alerts.showErrorSnackBar("Senha incorreta!", context);
-    //     isLoading.trigger(false);
-    //     return;
-    //   }
-    //   final prefs = await SharedPreferences.getInstance();
-    //   await prefs.setString(Constants.username, responseBody['NOME']);
-    //   await prefs.setString(Constants.version, responseBody['VERSAO']);
-    //   await prefs.setString(Constants.token, responseBody['TOKEN']);
-    //   await prefs.setString(Constants.codUserObras, responseBody['CODUSUARIOOBRAS']);
-    //   await prefs.setString(Constants.codUserMineracao, responseBody['CODUSUARIOMINERACAO']);
-    //   await prefs.setString(Constants.codUserTotvs, responseBody['CODUSUARIOTOTVS']);
-    //   await prefs.setString(Constants.solicitacao, responseBody['SOLICITACAO']);
-    //   await prefs.setString(Constants.aprovacao, responseBody['APROVACAO']);
-    //   await prefs.setString(Constants.financeiro, responseBody['FINANCEIRO']);
-    //   await prefs.setString(Constants.relatorio, responseBody['RELATORIO']);
-    //   await prefs.setString(Constants.aprovacaoNf, responseBody['APROVACAONF']);
-
-    //   Alerts.showSuccessSnackBar("Autenticado com sucesso!", context);
-    //   isLoading.trigger(false);
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (_) => SelectSubsidiary(),
-    //       ),
-    //     );
-    // }
-
-    // getPreferences() async {
-    //   final prefs = await SharedPreferences.getInstance();
-    //   String? userPrefs = prefs.getString(Constants.username);
-    //   // String? token = prefs.getString(Constants.token);
-
-    //   if(userPrefs == null) {
-    //     Get.off(const LoginPage());
-    //   } else {
-    //     Get.off(const HomePage());
-    //   }
-
-    // }
 
     // logout(BuildContext context) async {
     //   try {

@@ -1,12 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:school_match/ui/screens/forms/user_bio.dart';
-import 'package:school_match/ui/screens/forms/user_blocks.dart';
-import 'package:school_match/ui/screens/forms/user_spotify_music.dart';
+import 'package:get/get.dart';
 import 'package:school_match/ui/screens/home_screen.dart';
 import 'package:school_match/ui/screens/matches_screen.dart';
 import 'package:school_match/ui/screens/select_theme_screen.dart';
 import 'package:school_match/ui/screens/user_profile_screen.dart';
+import 'package:school_match/domain/controllers/user_profile_controller.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -25,6 +24,7 @@ class _MenuScreenState extends State<MenuScreen> {
   void initState() {
     super.initState();
     pageController = PageController(initialPage: _page);
+    Get.put(UserProfileController());
   }
 
   setSelectedPage(page) {
@@ -37,7 +37,7 @@ class _MenuScreenState extends State<MenuScreen> {
     HomeScreen(),
     MatchesScreen(),
     UserProfileScreen(),
-    UserBlocks(),
+    SelectThemeScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -51,8 +51,8 @@ class _MenuScreenState extends State<MenuScreen> {
           //Buscar, matchs/chats, perfil, config do app
           Icon(Icons.favorite, size: 30, color: _page != 0 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary,),
           Icon(Icons.chat_bubble, size: 30, color: _page != 1 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
-          Icon(Icons.person, size: 30, color: _page != 3 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
-          Icon(Icons.settings, size: 30, color: _page != 2 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
+          Icon(Icons.person, size: 30, color: _page != 2 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
+          Icon(Icons.settings, size: 30, color: _page != 3 ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
         ],
         onTap: (index) {
           setState(() {

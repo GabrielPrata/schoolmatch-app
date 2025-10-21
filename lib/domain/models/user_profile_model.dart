@@ -141,7 +141,7 @@ UserProfileModel{
       mainBlock: json['blocoPrincipal'] != null
           ? BlockModel.fromJson(json['blocoPrincipal'])
           : null,
-      secondaryBlocks: (json['blocosSecundarios'] as List<dynamic>?)
+      secondaryBlocks: (json['blocosUsuario'] as List<dynamic>?)
               ?.map((b) => b != null ? BlockModel.fromJson(b) : null)
               .toList() ??
           [],
