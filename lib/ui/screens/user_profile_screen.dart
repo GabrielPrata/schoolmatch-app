@@ -41,7 +41,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         child: Obx(
           () {
             if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
+              return Container(
+                color: Theme.of(context).colorScheme.primary,
+                child: const SafeArea(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 6, color: Colors.white),
+                        ),
+                        SizedBox(height: 16),
+                        Text("Crregando seus dados..."),
+                      ],
+                    ),
+                  ),
+                ),
+              );
             }
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -50,12 +69,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 children: [
                   const AppHeader(),
                   const SizedBox(height: 20),
-                  Text(
-                    "${controller.userProfile.value.firstName} ${controller.userProfile.value.lastName}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                  Center(
+                    child: Text(
+                      "${controller.userProfile.value.firstName} ${controller.userProfile.value.lastName}",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   UserListImages(candidate: controller.userProfile.value),

@@ -6,8 +6,6 @@ import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:school_match/domain/services/account_service.dart';
 import 'package:school_match/util/functions.dart';
 
-
-
 final box = GetStorage();
 
 class UserProfileController extends GetxController {

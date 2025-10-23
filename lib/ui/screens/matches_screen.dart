@@ -70,7 +70,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
                           strokeWidth: 6, color: Colors.white),
                     ),
                     SizedBox(height: 16),
-                    Text("Buscando seus Matchs..."),
+                    Text("Buscando seus Matches..."),
                   ],
                 ),
               ),

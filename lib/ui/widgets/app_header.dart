@@ -49,12 +49,12 @@ class _AppHeaderState extends State<AppHeader> {
             },
             tooltip: 'Configurações',
           ),
-          IconButton(
-            color: Theme.of(context).colorScheme.onPrimary,
-            icon: const Icon(Icons.notifications),
-            onPressed: () => debugPrint("Notifications icon pressed"),
-            tooltip: 'Notificações',
-          ),
+          // IconButton(
+          //   color: Theme.of(context).colorScheme.onPrimary,
+          //   icon: const Icon(Icons.notifications),
+          //   onPressed: () => debugPrint("Notifications icon pressed"),
+          //   tooltip: 'Notificações',
+          // ),
         ],
       ),
     );
