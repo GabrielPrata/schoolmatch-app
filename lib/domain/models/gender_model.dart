@@ -9,6 +9,14 @@ class GenderModel {
     required this.selected,
   });
 
+  factory GenderModel.fromJson(Map<String, dynamic> json) {
+    return GenderModel(
+      genderId: json['genderId'],
+      genderName: json['genderName'],
+      selected: json['selected'] ?? false,
+    );
+  }
+
   static List<GenderModel> createAppGenders() {
     List<GenderModel> appGenders = [];
     appGenders.add(GenderModel(genderId: 1, genderName: "Homem", selected: false));

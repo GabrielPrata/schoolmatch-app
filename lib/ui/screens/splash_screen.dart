@@ -1,3 +1,4 @@
+import 'package:school_match/domain/controllers/auth_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 5500), () async {
-      await authController.getPreferences();
+      // await authController.getPreferences(); // TODO: Implement this method
 
     });
 
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-       color: AppColors.lightBlue,
+       color: Color(0xFF110231),
       ),
       height: MediaQuery.of(context).size.height,
       child: Column(

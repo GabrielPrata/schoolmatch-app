@@ -170,4 +170,37 @@ UserModel{
       'usuarioVerificado': false,
     };
   }
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      firstName: json['nome'],
+      lastName: json['sobrenome'],
+      email: json['emailUsuario'],
+      password: json['senhaUsuario'],
+      userCourse: CourseModel.fromJson(json['curso']),
+      userBlock: json['blocoPrincipal'] != null ? BlockModel.fromJson(json['blocoPrincipal']) : null,
+      secondaryBlocks: (json['blocosUsuario'] as List<dynamic>)
+          .map((e) => BlockModel.fromJson(e))
+          .toList(),
+      birthDate: DateTime.parse(json['dataNascimento']),
+      admissionDate: json['usuarioCreatedAt'] != null ? DateTime.parse(json['usuarioCreatedAt']) : null,
+      userGender: GenderModel.fromJson(json['genero']),
+      userGenderPreferences: (json['usuarioPreferencia'] as List<dynamic>)
+          .map((e) => GenderModel.fromJson(e))
+          .toList(),
+      userSexuality: SexualityModel.fromJson(json['sexualidade']),
+      bio: json['bio'],
+      city: json['cidade'],
+      courseSemester: CourseDurationModel.fromJson(json['semestre']),
+      userInterests: (json['interesses'] as List<dynamic>)
+          .map((e) => InterestsModel.fromJson(e))
+          .toList(),
+      userAbout: UserAboutModel.fromJson(json['userAbout']),
+      userBase64Images: List<String>.from(json['userBase64Images']),
+      hasMusic: json['spotifyMusicData'] != null ? true.obs : false.obs,
+      selectedMusic: json['spotifyMusicData'] != null
+          ? MusicAdapter.fromJson(json['spotifyMusicData'])
+          : null,
+    );
+  }
 }

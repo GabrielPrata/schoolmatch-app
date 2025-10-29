@@ -15,9 +15,10 @@ class SexualityModel {
 
   factory SexualityModel.fromJson(Map<String, dynamic> json) {
     return SexualityModel(
-      sexualityId: json['id'],
-      sexualityName: json['nome'],
-      sexualityDescription: json['descricao'],
+      sexualityId: json['sexualityId'],
+      sexualityName: json['sexualityName'],
+      sexualityDescription: json['sexualityDescription'] ?? '',
+      showInProfile: json['showInProfile'] ?? false,
     );
   }
 }

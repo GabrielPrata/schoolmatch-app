@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:school_match/domain/services/account_service.dart';
 import 'package:school_match/util/functions.dart';
@@ -11,7 +12,7 @@ final box = GetStorage();
 class UserProfileController extends GetxController {
   final AccountService _accountService = AccountService();
 
-  var userProfile = UserProfileModel(userId: box.read('userId'), hasMusic: false.obs,).obs;
+  var userProfile = UserModel(hasMusic: false.obs,).obs;
 
   var isLoading = true.obs;
 
@@ -31,7 +32,7 @@ class UserProfileController extends GetxController {
       }
 
       final data = jsonDecode(response.body);
-      userProfile.value = UserProfileModel.fromJson(data);
+      userProfile.value = UserModel.fromJson(data);
     } catch (e) {
       print("Erro em fetchUserData: $e");
       rethrow;

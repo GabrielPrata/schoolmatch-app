@@ -3,9 +3,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/controllers/user_profile_controller.dart';
+import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:school_match/domain/services/account_service.dart';
 import 'package:school_match/ui/screens/forms/user_bio.dart';
+import 'package:school_match/ui/screens/edit_user_profile_screen.dart';
+import 'package:get/get.dart';
 import 'package:school_match/ui/widgets/app_header.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_about.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/user_basic_infos.dart';
@@ -33,6 +37,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     controller.fetchUserData();
   }
 
+  final box = GetStorage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +61,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               strokeWidth: 6, color: Colors.white),
                         ),
                         SizedBox(height: 16),
-                        Text("Crregando seus dados..."),
+                        Text("Caregando seus dados..."),
                       ],
                     ),
                   ),
@@ -76,19 +82,40 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  UserListImages(candidate: controller.userProfile.value),
+                  UserListImages(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
                   const SizedBox(height: 20),
-                  UserAbout(candidate: controller.userProfile.value),
+                  UserAbout(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
                   const SizedBox(height: 20),
-                  UserBasicInfos(candidate: controller.userProfile.value),
+                  UserBasicInfos(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
                   const SizedBox(height: 20),
-                  UserExtraInfos(candidate: controller.userProfile.value),
+                  UserExtraInfos(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
                   const SizedBox(height: 20),
-                  UserListInterests(candidate: controller.userProfile.value),
+                  UserListInterests(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
                   const SizedBox(height: 20),
-                  UserLifestyle(candidate: controller.userProfile.value),
+                  UserLifestyle(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
                   const SizedBox(height: 20),
-                  UserMusic(candidate: controller.userProfile.value),
+                  UserMusic(
+                      candidate: UserProfileModel.fromUserModel(
+                          controller.userProfile.value, box.read('userId'))),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const EditUserProfileScreen());
+                    },
+                    child: const Text('Edit Profile'),
+                  ),
                 ],
               ),
             );

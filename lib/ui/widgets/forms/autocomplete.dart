@@ -55,6 +55,9 @@ class _CitiesAutocompleteState extends State<CitiesAutocomplete> {
             TextEditingController fieldTextEditingController,
             FocusNode fieldFocusNode,
             VoidCallback onFieldSubmitted) {
+          if (widget.controller.value != null) {
+            fieldTextEditingController.value = widget.controller.value;
+          }
           return SizedBox(
             child: TextField(
               controller: fieldTextEditingController,
@@ -96,9 +99,7 @@ class _CitiesAutocompleteState extends State<CitiesAutocomplete> {
               child: Container(
                 width: MediaQuery.of(context).size.width -
                     95, // This will match the padding of the main body
-                color: Theme.of(context)
-                    .colorScheme
-                    .surface,
+                color: Theme.of(context).colorScheme.surface,
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemCount: options.length,

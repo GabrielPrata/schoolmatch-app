@@ -13,4 +13,11 @@ class CourseModel {
       courseName: json['courseName'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'courseId': courseId,
+      'courseName': courseName,
+    };
+  }
 }

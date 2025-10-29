@@ -19,5 +19,19 @@ class AccountService {
     } catch (e) {
       throw Exception("Erro de conexão com o servidor: $e");
     }
+  }  static Future<http.Response> updateUserData(Map<String, dynamic> data) async {
+    try {
+      final response = await http.put(
+        Uri.parse(Constants.userData),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer " + box.read("appToken"),
+        },
+        body: jsonEncode(data),
+      );
+      return response;
+    } catch (e) {
+      throw Exception("Erro de conexão com o servidor: $e");
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/spotifyModels/music_adapter.dart';
 import 'package:intl/intl.dart';
 import 'package:school_match/domain/models/user_about_model.dart';
+import 'package:school_match/domain/models/user_model.dart';
 
 class UserProfileModel {
   int userId;
@@ -173,6 +174,29 @@ UserProfileModel{
       selectedMusic: json['spotifyMusicData'] != null
           ? MusicAdapter.fromJson(json['spotifyMusicData'])
           : null,
+    );
+  }
+
+  factory UserProfileModel.fromUserModel(UserModel user, int idUsuario) {
+    return UserProfileModel(
+      // userId: user.idUsuario,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      course: user.userCourse,
+      mainBlock: user.userBlock,
+      secondaryBlocks: user.secondaryBlocks,
+      birthDate: user.birthDate,
+      admissionDate: user.admissionDate,
+      sexuality: user.userSexuality?.sexualityName,
+      bio: user.bio,
+      city: user.city,
+      userAbout: user.userAbout,
+      semester: user.courseSemester?.name,
+      userInterests: user.userInterests,
+      images: user.userBase64Images,
+      showSexuality: user.userSexuality?.showInProfile,
+      hasMusic: user.hasMusic,
+      selectedMusic: user.selectedMusic, userId: idUsuario,
     );
   }
 }

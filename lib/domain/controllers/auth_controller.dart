@@ -39,6 +39,7 @@ class AuthController extends GetxController {
 
         await box.write('appToken', data["userToken"]);
         await box.write('userId', data["idUsuario"]);
+        await box.write('mongoId', data["mongoId"]);
         
         await box.write('userLikeFind', jsonEncode(data['usuarioPreferencia']).toString());
 
