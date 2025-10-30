@@ -8,10 +8,12 @@ import 'package:school_match/domain/models/user_model.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
 import 'package:school_match/domain/services/account_service.dart';
 import 'package:school_match/ui/widgets/forms/autocomplete.dart';
+import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
 import 'package:school_match/ui/widgets/forms/text_area_with_counter.dart';
 import 'package:school_match/ui/widgets/forms/userMoreInfos/user_more_infos_topics.dart';
 import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/models/appDataModels/interests_model.dart';
+import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/ui/widgets/forms/filter_chip.dart';
 
 import 'package:school_match/util/alerts.dart';
@@ -105,6 +107,8 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
 
   final AppDataController appDataController = Get.put(AppDataController());
 
+  BlockModel? mainBlock;
+
   late TextEditingController _nomeController;
   late TextEditingController _sobrenomeController;
   late TextEditingController _bioController;
@@ -121,7 +125,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   late TextEditingController _blocoPrincipalController;
 
   List<InterestsModel?> _userInterests = [];
-  
+  List<BlockModel?> _userSecondaryBlocks = [];
 
   @override
   void initState() {
@@ -131,17 +135,26 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
 
   late SexualityModel selectedSexuality;
 
+  void handleBlockSelection(BlockModel userBlockModel) {
+    setState(() {
+      mainBlock = userBlockModel;
+    });
+  }
+
   Future<void> _loadInitialData() async {
     await appDataController.getAllSexualities(context);
     await appDataController.getAllInterests(context);
     await appDataController.getAppCourses(context);
     await appDataController.getMainBlocks(context);
+    await appDataController.getSecondaryBlocks(context);
 
     UserModel userProfile = controller.userProfile.value;
 
+    mainBlock = controller.userProfile.value.userBlock;
+
     selectedSexuality = userProfile.userSexuality!;
     _userInterests = userProfile.userInterests;
-
+    _userSecondaryBlocks = userProfile.secondaryBlocks;
 
     for (var sexuality in appDataController.appSexualities) {
       if (sexuality.sexualityId == selectedSexuality.sexualityId) {
@@ -172,7 +185,6 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         TextEditingController(text: userProfile.userCourse?.courseName);
     _blocoPrincipalController =
         TextEditingController(text: userProfile.userBlock?.blockName);
-
 
     setState(() {});
   }
@@ -245,8 +257,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         "usuarioCreatedAt": userProfile.admissionDate?.toIso8601String(),
         "usuarioEditedAt": DateTime.now().toIso8601String(),
         "blocoPrincipal": mainBlock?.toJson(),
-        "blocosUsuario":
-            userProfile.secondaryBlocks.map((e) => e?.toJson()).toList(),
+        "blocosUsuario": _userSecondaryBlocks.map((e) => e?.toJson()).toList(),
         "userToken": "", // Token is not sent
       };
 
@@ -439,9 +450,62 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                   .toList(),
               controller: _tipoRoleController,
             ),
-            
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Icon(Icons.location_city),
+                Text(
+                  "  Bloco Principal",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              child: DropdownMenuData<BlockModel>(
+                items: appDataController.appMainBlocks,
+                defaultText: "Selecione um bloco",
+                getId: (block) => block.blockId,
+                getLabel: (block) => block.blockName,
+                selectedId: controller.userProfile.value.userBlock?.blockId,
+                onItemSelected: handleBlockSelection,
+              ),
+            ),
+            const SizedBox(height: 32),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.location_city),
+                    Text(
+                      "  Blocos Secundários",
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                CustomFilterChip(
+                  dataList: appDataController.appSecondaryBlocks,
+                  selectedItems: _userSecondaryBlocks,
+                  labelExtractor: (item) => item.blockName,
+                  idExtractor: (item) => item.blockId,
+                  maxSelections: 5,
+                  showOptions: false,
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
             //Opcoes de sexualidade
+            Row(
+              children: [
+                Icon(Icons.favorite),
+                Text(
+                  "  Sexualidade",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
+            ),
             Column(
               children: appDataController.appSexualities.map((sexuality) {
                 return Padding(
@@ -556,6 +620,15 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
               ),
             ),
             const SizedBox(height: 40),
+            Row(
+              children: [
+                Icon(Icons.sports_cricket),
+                Text(
+                  "  Interesses",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
+            ),
             SizedBox(
               child: CustomFilterChip(
                 dataList: appDataController.appInterests,

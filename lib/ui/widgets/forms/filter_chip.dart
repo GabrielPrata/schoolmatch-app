@@ -38,7 +38,7 @@ class _CustomFilterChipState<T> extends State<CustomFilterChip<T>> {
             runSpacing: 4.0,
             children: widget.dataList.map((item) {
               final String label = widget.labelExtractor(item);
-              final bool isSelected = widget.selectedItems.contains(item);
+              final bool isSelected = widget.selectedItems.any((i) => i != null && widget.idExtractor(i) == widget.idExtractor(item));
 
               return FilterChip(
                 label: Text(label, style: textTheme.labelMedium),
@@ -50,7 +50,7 @@ class _CustomFilterChipState<T> extends State<CustomFilterChip<T>> {
                         widget.selectedItems.add(item);
                       }
                     } else {
-                      widget.selectedItems.remove(item);
+                      widget.selectedItems.removeWhere((i) => i != null && widget.idExtractor(i) == widget.idExtractor(item));
                     }
                   });
                 },
