@@ -121,12 +121,14 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   late TextEditingController _blocoPrincipalController;
 
   List<InterestsModel?> _userInterests = [];
+  
 
   @override
   void initState() {
     super.initState();
     _loadInitialData();
   }
+
   late SexualityModel selectedSexuality;
 
   Future<void> _loadInitialData() async {
@@ -135,16 +137,24 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     await appDataController.getAppCourses(context);
     await appDataController.getMainBlocks(context);
 
-
     UserModel userProfile = controller.userProfile.value;
 
     selectedSexuality = userProfile.userSexuality!;
+    _userInterests = userProfile.userInterests;
+
+
+    for (var sexuality in appDataController.appSexualities) {
+      if (sexuality.sexualityId == selectedSexuality.sexualityId) {
+        sexuality.selected = true;
+      }
+    }
 
     _nomeController = TextEditingController(text: userProfile.firstName);
     _sobrenomeController = TextEditingController(text: userProfile.lastName);
     _bioController = TextEditingController(text: userProfile.bio);
     _cidadeController = TextEditingController(text: userProfile.city);
-    _semestreController = TextEditingController(text: userProfile.courseSemester?.name);
+    _semestreController =
+        TextEditingController(text: userProfile.courseSemester?.name);
     _zodiacoController =
         TextEditingController(text: userProfile.userAbout?.zodiacSign);
     _linguagemAmorController =
@@ -163,11 +173,11 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     _blocoPrincipalController =
         TextEditingController(text: userProfile.userBlock?.blockName);
 
-    _userInterests = List<InterestsModel?>.from(userProfile.userInterests);
 
     setState(() {});
   }
-final box = GetStorage();
+
+  final box = GetStorage();
 
   @override
   void dispose() {
@@ -255,8 +265,6 @@ final box = GetStorage();
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -274,262 +282,300 @@ final box = GetStorage();
           },
         ),
       ),
-      body: Obx(() => SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  style: Theme.of(context).textTheme.labelMedium,
-                  cursorColor: Theme.of(context).colorScheme.surface,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    labelText: "Nome",
-                    labelStyle: Theme.of(context).textTheme.bodySmall,
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.onSurface,
-                  ),
-                  controller: _nomeController,
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  style: Theme.of(context).textTheme.labelMedium,
-                  cursorColor: Theme.of(context).colorScheme.surface,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    labelText: "Sobrenome",
-                    labelStyle: Theme.of(context).textTheme.bodySmall,
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.onSurface,
-                  ),
-                  controller: _sobrenomeController,
-                ),
-                const SizedBox(height: 16),
-                TextAreaWithCounter(
-                  controller: _bioController,
-                  maxChars: 500,
-                ),
-                const SizedBox(height: 16),
-                CitiesAutocomplete(controller: _cidadeController),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Semestre",
-                  icon: Icons.school,
-                  data: List.generate(
-                      10,
-                      (index) => {
-                            "id": index + 1,
-                            "name": "${index + 1}º Semestre",
-                            "selected": controller.userProfile.value.courseSemester ==
-                                "${index + 1}º Semestre"
-                          }),
-                  controller: _semestreController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Signo",
-                  icon: Icons.dark_mode,
-                  data: signosData,
-                  controller: _zodiacoController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Linguagem do Amor",
-                  icon: Icons.volunteer_activism,
-                  data: linguagemData,
-                  controller: _linguagemAmorController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Pets",
-                  icon: Icons.pets,
-                  data: petsData,
-                  controller: _petsController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Você bebe?",
-                  icon: Icons.local_bar,
-                  data: bebidasData,
-                  controller: _bebidaController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Você fuma?",
-                  icon: Icons.smoking_rooms,
-                  data: fumanteData,
-                  controller: _fumanteController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Atividade Física",
-                  icon: Icons.fitness_center,
-                  data: ativFisicaData,
-                  controller: _atividadeFisicaController,
-                ),
-                const SizedBox(height: 16),
-                UserMoreInfosTopics(
-                  title: "Tipo de Rolê",
-                  icon: Icons.celebration,
-                  data: tipoRoleData,
-                  controller: _tipoRoleController,
-                ),
-                const SizedBox(height: 16),
-                Column(
-                  children: appDataController.appSexualities.map((sexuality) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0), // Ajuste do espaçamento
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 15.0), // Tamanho do botão
-                          backgroundColor: sexuality.selected
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary // Cor quando selecionado
-                              : Theme.of(context)
-                                  .primaryColor, // Cor quando não selecionado
-                          side: BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary, // Borda
-                            width: 1.5,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            appDataController.appSexualities.forEach(
-                                (g) => g.selected = false); // Desmarcar todos
-                            sexuality.selected = true; // Marcar selecionado
-                          });
-                        },
-                        child: SizedBox(
-                          width: double.infinity, // Largura do botão
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    MediaQuery.of(context).size.width * 0.05),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  sexuality.sexualityName,
-                                  textAlign: TextAlign.left,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall
-                                      ?.copyWith(
-                                        color: sexuality.selected
-                                            ? Theme.of(context)
-                                                .primaryColor // Cor do texto quando selecionado
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
-                                      ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.005,
-                                ),
-                                Text(
-                                  textAlign: TextAlign.left,
-                                  sexuality.sexualityDescription,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall
-                                      ?.copyWith(
-                                        color: sexuality.selected
-                                            ? Theme.of(context)
-                                                .primaryColor // Cor do texto quando selecionado
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .onPrimary,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Transform.scale(
-                        scale: 1.25,
-                        child: Checkbox(
-                          value: selectedSexuality.showInProfile,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              selectedSexuality.showInProfile = value!;
-                            });
-                          },
-                          checkColor: Colors.white, // cor do tick
-                          fillColor: WidgetStateProperty.resolveWith((states) {
-                            if (states.contains(WidgetState.selected)) {
-                              return Theme.of(context)
-                                  .colorScheme
-                                  .secondary; // cor quando selecionado
-                            }
-                            return null; // cor padrão
-                          }),
-                        ),
-                      ),
-                      Text(
-                        "Exibir no meu perfil",
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              style: Theme.of(context).textTheme.labelMedium,
+              cursorColor: Theme.of(context).colorScheme.surface,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                enabledBorder: UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
-                const SizedBox(height: 32),
-                ElevatedButton(
-                  style: Theme.of(context).filledButtonTheme.style,
-                  onPressed: _saveProfile,
-                  child: Text('Salvar Alterações',
-                      style: Theme.of(context).textTheme.labelMedium),
+                focusedBorder: UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                 ),
-              ],
+                labelText: "Nome",
+                labelStyle: Theme.of(context).textTheme.bodySmall,
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.onSurface,
+              ),
+              controller: _nomeController,
             ),
-          )),
+            const SizedBox(height: 16),
+            TextField(
+              style: Theme.of(context).textTheme.labelMedium,
+              cursorColor: Theme.of(context).colorScheme.surface,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                enabledBorder: UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                labelText: "Sobrenome",
+                labelStyle: Theme.of(context).textTheme.bodySmall,
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.onSurface,
+              ),
+              controller: _sobrenomeController,
+            ),
+            const SizedBox(height: 16),
+            TextAreaWithCounter(
+              controller: _bioController,
+              maxChars: 500,
+            ),
+            const SizedBox(height: 16),
+            CitiesAutocomplete(controller: _cidadeController),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Semestre",
+              icon: Icons.school,
+              data: List.generate(
+                  10,
+                  (index) => {
+                        "id": index + 1,
+                        "name": "${index + 1}º Semestre",
+                        "selected":
+                            _semestreController.text == "${index + 1}º Semestre"
+                      }),
+              controller: _semestreController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Signo",
+              icon: Icons.dark_mode,
+              data: signosData
+                  .map((e) =>
+                      {...e, 'selected': e['name'] == _zodiacoController.text})
+                  .toList(),
+              controller: _zodiacoController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Linguagem do Amor",
+              icon: Icons.volunteer_activism,
+              data: linguagemData
+                  .map((e) => {
+                        ...e,
+                        'selected': e['name'] == _linguagemAmorController.text
+                      })
+                  .toList(),
+              controller: _linguagemAmorController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Pets",
+              icon: Icons.pets,
+              data: petsData
+                  .map((e) =>
+                      {...e, 'selected': e['name'] == _petsController.text})
+                  .toList(),
+              controller: _petsController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Você bebe?",
+              icon: Icons.local_bar,
+              data: bebidasData
+                  .map((e) =>
+                      {...e, 'selected': e['name'] == _bebidaController.text})
+                  .toList(),
+              controller: _bebidaController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Você fuma?",
+              icon: Icons.smoking_rooms,
+              data: fumanteData
+                  .map((e) =>
+                      {...e, 'selected': e['name'] == _fumanteController.text})
+                  .toList(),
+              controller: _fumanteController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Atividade Física",
+              icon: Icons.fitness_center,
+              data: ativFisicaData
+                  .map((e) => {
+                        ...e,
+                        'selected': e['name'] == _atividadeFisicaController.text
+                      })
+                  .toList(),
+              controller: _atividadeFisicaController,
+            ),
+            const SizedBox(height: 16),
+            UserMoreInfosTopics(
+              title: "Tipo de Rolê",
+              icon: Icons.celebration,
+              data: tipoRoleData
+                  .map((e) =>
+                      {...e, 'selected': e['name'] == _tipoRoleController.text})
+                  .toList(),
+              controller: _tipoRoleController,
+            ),
+            
+            const SizedBox(height: 16),
+            //Opcoes de sexualidade
+            Column(
+              children: appDataController.appSexualities.map((sexuality) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0), // Ajuste do espaçamento
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0), // Tamanho do botão
+                      backgroundColor: sexuality.selected
+                          ? Theme.of(context)
+                              .colorScheme
+                              .onPrimary // Cor quando selecionado
+                          : Theme.of(context)
+                              .primaryColor, // Cor quando não selecionado
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.onPrimary, // Borda
+                        width: 1.5,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        for (var s in appDataController.appSexualities) {
+                          s.selected = false;
+                        }
+                        sexuality.selected = true;
+                        selectedSexuality = sexuality;
+                      });
+                    },
+                    child: SizedBox(
+                      width: double.infinity, // Largura do botão
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.05),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              sexuality.sexualityName,
+                              textAlign: TextAlign.left,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    color: sexuality.selected
+                                        ? Theme.of(context)
+                                            .primaryColor // Cor do texto quando selecionado
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                  ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.005,
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              sexuality.sexualityDescription,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(
+                                    color: sexuality.selected
+                                        ? Theme.of(context)
+                                            .primaryColor // Cor do texto quando selecionado
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            SizedBox(
+              child: Row(
+                children: [
+                  Transform.scale(
+                    scale: 1.25,
+                    child: Checkbox(
+                      value: selectedSexuality.showInProfile,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          selectedSexuality.showInProfile = value!;
+                        });
+                      },
+                      checkColor: Colors.white, // cor do tick
+                      fillColor: WidgetStateProperty.resolveWith((states) {
+                        if (states.contains(WidgetState.selected)) {
+                          return Theme.of(context)
+                              .colorScheme
+                              .secondary; // cor quando selecionado
+                        }
+                        return null; // cor padrão
+                      }),
+                    ),
+                  ),
+                  Text(
+                    "Exibir no meu perfil",
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 40),
+            SizedBox(
+              child: CustomFilterChip(
+                dataList: appDataController.appInterests,
+                selectedItems: _userInterests,
+                labelExtractor: (item) => item.interestName,
+                idExtractor: (item) => item.interestId,
+                maxSelections: 5,
+                showOptions: false,
+              ),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              style: Theme.of(context).filledButtonTheme.style,
+              onPressed: _saveProfile,
+              child: Text('Salvar Alterações',
+                  style: Theme.of(context).textTheme.labelMedium),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
