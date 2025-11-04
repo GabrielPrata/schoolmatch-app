@@ -76,7 +76,7 @@ class _UserSpotifyMusicState extends State<UserSpotifyMusic> {
                       effects: const [MoveEffect(), ScaleEffect()],
                       child: Container(
                         width: 60,
-                        height: 60,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(50),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/ui/screens/home_screen.dart';
 import 'package:school_match/ui/screens/menu_screen.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 
@@ -24,7 +25,7 @@ class _UserFinishSignupState extends State<UserFinishSignup> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => MenuScreen(),
+        builder: (_) => HomeScreen(),
       ),
     );
   }

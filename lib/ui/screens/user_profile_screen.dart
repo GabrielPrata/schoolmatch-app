@@ -114,7 +114,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     onPressed: () {
                       Get.to(() => const EditUserProfileScreen());
                     },
-                    child: const Text('Edit Profile'),
+                    child: Text('Editar Perfil',  style: Theme.of(context).textTheme.labelMedium,)
                   ),
                 ],
               ),

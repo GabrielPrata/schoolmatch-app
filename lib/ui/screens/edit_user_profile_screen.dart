@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/controllers/user_profile_controller.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
@@ -15,6 +16,7 @@ import 'package:school_match/domain/controllers/app_data_controller.dart';
 import 'package:school_match/domain/models/appDataModels/interests_model.dart';
 import 'package:school_match/domain/models/appDataModels/block_model.dart';
 import 'package:school_match/ui/widgets/forms/filter_chip.dart';
+import 'package:school_match/ui/widgets/forms/images_picker.dart';
 
 import 'package:school_match/util/alerts.dart';
 
@@ -138,6 +140,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   void handleBlockSelection(BlockModel userBlockModel) {
     setState(() {
       mainBlock = userBlockModel;
+      _blocoPrincipalController.text = userBlockModel.blockName;
     });
   }
 
@@ -265,7 +268,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
 
       if (response.statusCode == 200) {
         await controller.fetchUserData();
-        Alerts.showSuccessSnackBar("Profile updated successfully!", context);
+        Alerts.showSuccessSnackBar("Perfil atualizado com sucesso!", context);
         Navigator.pop(context);
       } else {
         Alerts.showErrorSnackBar(
@@ -273,6 +276,38 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
       }
     } catch (e) {
       Alerts.showErrorSnackBar("An error occurred: $e", context);
+    }
+  }
+
+  final ImagePicker imagePicker = ImagePicker();
+  List<XFile> _imageFiles = [];
+
+  void selectImages() async {
+    //Essa linha e esse componente é o responsável por abrir o bottomSheet para abrir se o usuário quer usar a câmera ou a galeria
+    //só velho usa a câmera (que não é nosso público alvo, diga-se de passagem). Mas caso alguém questione, meio caminho já está andado para a implementação
+    // BottomSheetImageUploadBy.show(context);
+
+    try {
+      final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
+      if (selectedImages != null && selectedImages.isNotEmpty) {
+        // Substitui as imagens padrão pelas novas selecionadas
+        for (var i = 0; i < selectedImages.length; i++) {
+          if (_imageFiles.any((image) => image.name == 'emptyPhoto.png')) {
+            // Substitui a primeira imagem padrão encontrada
+            final index = _imageFiles
+                .indexWhere((image) => image.name == 'emptyPhoto.png');
+            if (index != -1) {
+              _imageFiles[index] = selectedImages[i];
+            }
+          }
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      Alerts.showErrorSnackBar(
+          "Algo deu errado ao selecionar sua imagem. Tente novamente mais tarde!",
+          context);
+      print("Erro ao selecionar a imagem: $e");
     }
   }
 
@@ -355,7 +390,21 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
               ),
               controller: _sobrenomeController,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 32),
+            SizedBox(
+              child: Text(
+                "Suas fotos:",
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            ImagesPicker(
+              newImageFunction: selectImages, // Aqui está passando a função
+              imageFiles: _imageFiles,
+              allowReorderingUserImagesOnly: true, // Modificação importante
+            ),
+            const SizedBox(height: 32),
             TextAreaWithCounter(
               controller: _bioController,
               maxChars: 500,
