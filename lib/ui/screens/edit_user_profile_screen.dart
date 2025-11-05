@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
+import 'package:school_match/domain/controllers/spotify_controller.dart';
 import 'package:school_match/domain/controllers/user_profile_controller.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
 import 'package:school_match/domain/models/user_model.dart';
@@ -16,6 +17,7 @@ import 'package:school_match/domain/services/account_service.dart';
 import 'package:school_match/ui/widgets/collapsible_section.dart';
 import 'package:school_match/ui/widgets/forms/autocomplete.dart';
 import 'package:school_match/ui/widgets/forms/dropdown_menu.dart';
+import 'package:school_match/ui/widgets/forms/spotifyWidgets/show_music.dart';
 import 'package:school_match/ui/widgets/forms/text_area_with_counter.dart';
 import 'package:school_match/ui/widgets/forms/userMoreInfos/user_more_infos_topics.dart';
 import 'package:school_match/domain/controllers/app_data_controller.dart';
@@ -113,6 +115,7 @@ class EditUserProfileScreen extends StatefulWidget {
 
 class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   final UserProfileController controller = Get.find();
+  final NewUserController newUserController = Get.put(NewUserController());
 
   final AppDataController appDataController = Get.put(AppDataController());
 
@@ -143,6 +146,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   }
 
   late SexualityModel selectedSexuality;
+  SpotifyController spotifyController = Get.put(SpotifyController());
 
   void handleBlockSelection(BlockModel userBlockModel) {
     setState(() {
@@ -239,6 +243,16 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   Future<void> _saveProfile() async {
     try {
       final userProfile = controller.userProfile.value;
+
+      print("hasMusic: ${newUserController.userModel.hasMusic.isTrue}");
+      if (newUserController.userModel.selectedMusic != null) {
+        print(
+            "selectedMusic: ${newUserController.userModel.selectedMusic!.musicName}");
+      }
+
+      if (newUserController.userModel.hasMusic.isTrue) {
+        userProfile.selectedMusic = newUserController.userModel.selectedMusic;
+      }
 
       final course = appDataController.appCourses.firstWhereOrNull(
           (element) => element.courseName == _cursoController.text);
@@ -759,6 +773,11 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                 maxSelections: 5,
                 showOptions: false,
               ),
+            ),
+            CollapsibleSection(
+              icon: Icons.music_note,
+              title: 'Música',
+              child: ShowMusic(),
             ),
             const SizedBox(height: 32),
             ElevatedButton(
