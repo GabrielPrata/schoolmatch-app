@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_match/ui/screens/home_screen.dart';
 import 'package:school_match/ui/screens/matches_screen.dart';
-import 'package:school_match/ui/screens/select_theme_screen.dart';
+import 'package:school_match/ui/screens/app_config_screen.dart';
+
 import 'package:school_match/ui/screens/user_profile_screen.dart';
 import 'package:school_match/domain/controllers/user_profile_controller.dart';
 
@@ -37,7 +38,7 @@ class _MenuScreenState extends State<MenuScreen> {
     HomeScreen(),
     MatchesScreen(),
     UserProfileScreen(),
-    SelectThemeScreen(),
+    const AppConfigScreen(),
   ];
   @override
   Widget build(BuildContext context) {

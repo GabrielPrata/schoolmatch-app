@@ -21,6 +21,13 @@ class _SelectThemeScreenState extends State<SelectThemeScreen> {
   Themes _selectedTheme = Themes.classicTheme;
 
   @override
+  void initState() {
+    super.initState();
+    _selectedTheme = Provider.of<ThemeProvider>(context, listen: false).getCurrentTheme();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Scaffold(
