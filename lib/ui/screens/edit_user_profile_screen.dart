@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/domain/controllers/user_profile_controller.dart';
 import 'package:school_match/domain/models/appDataModels/sexuality_model.dart';
@@ -20,6 +25,7 @@ import 'package:school_match/ui/widgets/forms/filter_chip.dart';
 import 'package:school_match/ui/widgets/forms/images_picker.dart';
 
 import 'package:school_match/util/alerts.dart';
+import 'package:school_match/util/validations.dart';
 
 final List<Map<String, dynamic>> bebidasData = [
   {"id": 1, "name": "Não bebo", "selected": false},
@@ -145,6 +151,9 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     });
   }
 
+  final ImagePicker imagePicker = ImagePicker();
+  List<XFile> _imageFiles = [];
+
   Future<void> _loadInitialData() async {
     await appDataController.getAllSexualities(context);
     await appDataController.getAllInterests(context);
@@ -156,6 +165,17 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
 
     mainBlock = controller.userProfile.value.userBlock;
 
+    for (var base64Str in userProfile.userBase64Images) {
+      Uint8List bytes = base64Decode(base64Str);
+
+      // Criar arquivo temporário
+      final tempDir = await getTemporaryDirectory();
+      final file =
+          File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png');
+      await file.writeAsBytes(bytes);
+
+      _imageFiles.add(XFile(file.path));
+    }
     selectedSexuality = userProfile.userSexuality!;
     _userInterests = userProfile.userInterests;
     _userSecondaryBlocks = userProfile.secondaryBlocks;
@@ -214,6 +234,8 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     super.dispose();
   }
 
+  late List<String> userBase64Images = [];
+
   Future<void> _saveProfile() async {
     try {
       final userProfile = controller.userProfile.value;
@@ -223,14 +245,32 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
       final mainBlock = appDataController.appMainBlocks.firstWhereOrNull(
           (element) => element.blockName == _blocoPrincipalController.text);
 
+      var filteredImages = List<XFile>.from(
+        _imageFiles.where((image) => image.name != 'emptyPhoto.png'),
+      );
+
+      userBase64Images.clear();
+
+      for (var image in filteredImages) {
+        // Lê os bytes da imagem
+        Uint8List bytes = await image.readAsBytes();
+
+        // Converte para base64
+        String base64Image = base64Encode(bytes);
+
+        // Salva no seu model (ou onde precisar)
+        userBase64Images.add(base64Image);
+      }
+
       final updatedUser = {
         "mongoId": '${box.read('mongoId')}',
         "idUsuario": '${box.read('userId')}',
         "nome": _nomeController.text,
         "sobrenome": _sobrenomeController.text,
         "sexualidade": {
-          "sexualityName": userProfile.userSexuality?.sexualityName,
-          "showInProfile": userProfile.userSexuality?.showInProfile
+          "sexualityName": selectedSexuality.sexualityName,
+          "sexualityId": selectedSexuality.sexualityId,
+          "showInProfile": selectedSexuality.showInProfile
         },
         "bio": _bioController.text,
         "dataNascimento": userProfile.birthDate?.toIso8601String(),
@@ -247,16 +287,12 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         },
         "interesses": _userInterests.map((e) => e?.toJson()).toList(),
         "spotifyMusicData": userProfile.selectedMusic?.toJson(),
-        "userBase64Images": userProfile.userBase64Images,
-        //AJUSTAR
-        "emailUsuario": userProfile.lastName,
+        "userBase64Images": userBase64Images,
+        "emailUsuario": userProfile.email,
         "senhaUsuario": "", // Password is not sent
         "usuarioVerificado": true,
         "curso": course?.toJson(),
-        "genero": {
-          //AJUSTAR
-          "genderName": userProfile.lastName
-        },
+        "genero": {"genderName": userProfile.userGender?.genderName},
         "usuarioPreferencia": [], // Not implemented yet
         "usuarioCreatedAt": userProfile.admissionDate?.toIso8601String(),
         "usuarioEditedAt": DateTime.now().toIso8601String(),
@@ -280,14 +316,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     }
   }
 
-  final ImagePicker imagePicker = ImagePicker();
-  List<XFile> _imageFiles = [];
-
   void selectImages() async {
-    //Essa linha e esse componente é o responsável por abrir o bottomSheet para abrir se o usuário quer usar a câmera ou a galeria
-    //só velho usa a câmera (que não é nosso público alvo, diga-se de passagem). Mas caso alguém questione, meio caminho já está andado para a implementação
-    // BottomSheetImageUploadBy.show(context);
-
     try {
       final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
       if (selectedImages != null && selectedImages.isNotEmpty) {
@@ -412,8 +441,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   ImagesPicker(
                     newImageFunction:
                         selectImages, // Aqui está passando a função
@@ -483,8 +511,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                 data: linguagemData
                     .map((e) => {
                           ...e,
-                          'selected':
-                              e['name'] == _linguagemAmorController.text
+                          'selected': e['name'] == _linguagemAmorController.text
                         })
                     .toList(),
                 controller: _linguagemAmorController,
@@ -512,10 +539,8 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                 title: "Você bebe?",
                 icon: Icons.local_bar,
                 data: bebidasData
-                    .map((e) => {
-                          ...e,
-                          'selected': e['name'] == _bebidaController.text
-                        })
+                    .map((e) =>
+                        {...e, 'selected': e['name'] == _bebidaController.text})
                     .toList(),
                 controller: _bebidaController,
               ),
@@ -579,8 +604,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                   defaultText: "Selecione um bloco",
                   getId: (block) => block.blockId,
                   getLabel: (block) => block.blockName,
-                  selectedId:
-                      controller.userProfile.value.userBlock?.blockId,
+                  selectedId: controller.userProfile.value.userBlock?.blockId,
                   onItemSelected: handleBlockSelection,
                 ),
               ),
@@ -605,8 +629,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
               child: Column(
                 children: [
                   Column(
-                    children:
-                        appDataController.appSexualities.map((sexuality) {
+                    children: appDataController.appSexualities.map((sexuality) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0), // Ajuste do espaçamento
@@ -632,8 +655,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              for (var s
-                                  in appDataController.appSexualities) {
+                              for (var s in appDataController.appSexualities) {
                                 s.selected = false;
                               }
                               sexuality.selected = true;
@@ -644,13 +666,10 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                             width: double.infinity, // Largura do botão
                             child: Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                      0.05),
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.05),
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     sexuality.sexualityName,
@@ -668,9 +687,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                                         ),
                                   ),
                                   SizedBox(
-                                    height: MediaQuery.of(context)
-                                            .size
-                                            .height *
+                                    height: MediaQuery.of(context).size.height *
                                         0.005,
                                   ),
                                   Text(
