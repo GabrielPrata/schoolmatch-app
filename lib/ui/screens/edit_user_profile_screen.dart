@@ -243,13 +243,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   Future<void> _saveProfile() async {
     try {
       final userProfile = controller.userProfile.value;
-
-      print("hasMusic: ${newUserController.userModel.hasMusic.isTrue}");
-      if (newUserController.userModel.selectedMusic != null) {
-        print(
-            "selectedMusic: ${newUserController.userModel.selectedMusic!.musicName}");
-      }
-
+      
       if (newUserController.userModel.hasMusic.isTrue) {
         userProfile.selectedMusic = newUserController.userModel.selectedMusic;
       }
