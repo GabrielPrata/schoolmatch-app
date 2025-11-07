@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (_) => MenuScreen()),
         );
       } catch (e) {
+        print(e.toString().replaceAll("Exception: ", ""));
         Alerts.showErrorSnackBar(
           e.toString().replaceAll("Exception: ", ""),
           context,
