@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:school_match/domain/controllers/new_user_controller.dart';
 import 'package:school_match/ui/screens/forms/user_course.dart';
-import 'package:school_match/ui/screens/forms/user_whatsapp.dart';
 import 'package:school_match/ui/widgets/forms/progress_bar.dart';
 import 'package:school_match/util/alerts.dart';
 
-class UserLastName extends StatefulWidget {
-  const UserLastName({super.key});
+
+class UserWhatsApp extends StatefulWidget {
+  const UserWhatsApp({super.key});
 
   @override
-  State<UserLastName> createState() => _UserLastNameState();
+  State<UserWhatsApp> createState() => _UserWhatsAppState();
 }
 
 NewUserController userController = Get.put(NewUserController());
 TextEditingController inputController = TextEditingController();
 
-class _UserLastNameState extends State<UserLastName> {
+class _UserWhatsAppState extends State<UserWhatsApp> {
   @override
   void initState() {
     userController.step += 1;
@@ -25,11 +26,11 @@ class _UserLastNameState extends State<UserLastName> {
 
   salvarDados() {
     try {
-      userController.setUserLastName(inputController.text);
+      userController.setUserWhatsApp(inputController.text);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => UserWhatsApp(),
+          builder: (_) => UserCourse(),
         ),
       );
     } catch (e) {
@@ -66,7 +67,7 @@ class _UserLastNameState extends State<UserLastName> {
             ),
             SizedBox(
                 child: Text(
-              "Seu sobrenome?",
+              "Seu WhatsApp?",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             )),
@@ -75,11 +76,16 @@ class _UserLastNameState extends State<UserLastName> {
             ),
             SizedBox(
               child: TextField(
-                textCapitalization: TextCapitalization.sentences,
+                textCapitalization: TextCapitalization.none,
                 controller: inputController,
                 style: Theme.of(context).textTheme.labelMedium,
                 cursorColor: Theme.of(context).colorScheme.surface,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  MaskTextInputFormatter(
+                      mask: '(##) #####-####',
+                      filter: {"#": RegExp(r'[0-9]')})
+                ],
                 decoration: InputDecoration(
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 18, horizontal: 20),
@@ -97,7 +103,7 @@ class _UserLastNameState extends State<UserLastName> {
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
-                  labelText: "Sobrenome",
+                  labelText: "Número de Telefone",
                   labelStyle: Theme.of(context).textTheme.bodySmall,
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.onSurface,

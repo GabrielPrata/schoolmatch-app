@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/services/auth_service.dart';
+import 'package:school_match/ui/screens/login_screen.dart';
 
 class AuthController extends GetxController {
   var errorText = false.obs;
@@ -11,8 +12,17 @@ class AuthController extends GetxController {
   final box = GetStorage();
 
 
-  static logout() async {
-    print("Saiu do sistema");
+  static logout(BuildContext context) async {
+    final box = GetStorage();
+    await box.erase();
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+      (route) => false,
+    );
   }
 
   Future<void> validateUserLogin(

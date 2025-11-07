@@ -67,7 +67,7 @@ class Alerts {
               fontWeight: FontWeight.w600, fontSize: 23)),
       actions: [
         TextButton(
-            onPressed: () async => await AuthController.logout(),
+            onPressed: () => AuthController.logout(context),
             child: Text("Sair",
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600, fontSize: 19))),

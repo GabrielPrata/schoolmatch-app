@@ -11,6 +11,7 @@ class UserProfileModel {
   int userId;
   String? firstName;
   String? lastName;
+  String? userWhatsApp;
 
   CourseModel? course;
 
@@ -46,6 +47,7 @@ class UserProfileModel {
     this.music,
     this.firstName,
     this.lastName,
+    this.userWhatsApp,
     this.course,
     this.mainBlock,
     List<BlockModel?>? secondaryBlocks,
@@ -100,6 +102,7 @@ UserProfileModel{
 
   Map<String, dynamic> toJson() {
     return {
+      'telefone': userWhatsApp,
       'nome': firstName,
       'sobrenome': lastName,
       'curso': course?.courseName,
@@ -134,6 +137,7 @@ UserProfileModel{
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
+      userWhatsApp: json['telefone'],
       userId: json['idUsuario'],
       firstName: json['nome'],
       lastName: json['sobrenome'],
@@ -180,6 +184,7 @@ UserProfileModel{
   factory UserProfileModel.fromUserModel(UserModel user, int idUsuario) {
     return UserProfileModel(
       // userId: user.idUsuario,
+      userWhatsApp: user.userWhatsApp,
       firstName: user.firstName,
       lastName: user.lastName,
       course: user.userCourse,

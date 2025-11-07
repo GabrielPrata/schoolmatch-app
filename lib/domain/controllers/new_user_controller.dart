@@ -127,6 +127,10 @@ class NewUserController extends GetxController {
 
   // Métodos para coleta de dados dos formulários.
   // As validações devem ser feitas aqui.
+  setUserWhatsApp(String userWhatsApp) {
+      userModel.userWhatsApp = userWhatsApp;
+  }
+
   setUserEmail(String userEmail) {
     var errors = Validations.verifyEmail(userEmail);
     if (errors == null)

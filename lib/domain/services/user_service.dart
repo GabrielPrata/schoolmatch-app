@@ -8,4 +8,10 @@ class UserService {
     final response = await http.get(url);
     return response;
   }
+
+  static Future<http.Response> deleteUserData(String userId) async {
+    final url = Uri.parse('${Constants.LGPD}/$userId');
+    final response = await http.delete(url);
+    return response;
+  }
 }

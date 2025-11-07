@@ -21,6 +21,7 @@ class UserModel {
   String? lastName;
   String? email;
   String? password;
+  String? userWhatsApp;
 
   CourseModel? userCourse;
 
@@ -71,6 +72,7 @@ class UserModel {
     this.courseSemester,
     List<InterestsModel?>? userInterests,
     this.userAbout,
+    this.userWhatsApp,
     List<String>? userBase64Images,
     required this.hasMusic,
     this.selectedMusic,
@@ -123,6 +125,7 @@ UserModel{
 
   Map<String, dynamic> toJson() {
     return {
+      'telefone': userWhatsApp,
       'nome': firstName,
       'sobrenome': lastName,
       "sexualidade": {
@@ -174,6 +177,7 @@ UserModel{
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       firstName: json['nome'],
+      userWhatsApp: json['telefone'],
       lastName: json['sobrenome'],
       email: json['emailUsuario'],
       password: json['senhaUsuario'],
