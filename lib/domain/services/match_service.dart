@@ -20,4 +20,21 @@ class MatchService {
       throw Exception("Erro de conexão com o servidor: $e");
     }
   }
+
+  static Future<http.Response> deleteMatch(
+      int loggedInUserId, int otherUserId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse(
+            '${Constants.deleteMatch}/$loggedInUserId/$otherUserId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer " + box.read("appToken"),
+        },
+      );
+      return response;
+    } catch (e) {
+      throw Exception("Erro de conexão com o servidor: $e");
+    }
+  }
 }

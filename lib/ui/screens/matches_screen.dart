@@ -147,7 +147,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
                                 final displayName =
                                     name.isEmpty ? 'Usuário' : name;
 
-                                return UserMatchCard(user: p);
+                                return UserMatchCard(
+                                  user: p,
+                                  onMatchDeleted: _loadCards,
+                                );
                               },
                             ),
                           ),

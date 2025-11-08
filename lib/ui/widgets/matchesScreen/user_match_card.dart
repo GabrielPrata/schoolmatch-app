@@ -1,15 +1,20 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:school_match/domain/models/user_profile_model.dart';
+import 'package:school_match/domain/services/match_service.dart';
 import 'package:school_match/ui/widgets/homeScreenWidgets/show_user_details_bottomsheet.dart';
+import 'package:school_match/util/alerts.dart';
 
 class UserMatchCard extends StatefulWidget {
   final UserProfileModel user;
+  final VoidCallback onMatchDeleted;
 
   const UserMatchCard({
     super.key,
     required this.user,
+    required this.onMatchDeleted,
   });
 
   @override
@@ -19,6 +24,7 @@ class UserMatchCard extends StatefulWidget {
 class _UserMatchCardState extends State<UserMatchCard> {
   Uint8List? _bytes;
   bool _isZoomedOut = false;
+  final box = GetStorage();
 
   @override
   void initState() {
@@ -34,6 +40,47 @@ class _UserMatchCardState extends State<UserMatchCard> {
     } catch (_) {
       return null;
     }
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text('Desfazer Match'),
+          content: const Text('Tem certeza que deseja desfazer este match?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar', style: Theme.of(context).textTheme.labelMedium,),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Confirmar', style: Theme.of(context).textTheme.labelMedium),
+              onPressed: () async {
+                final loggedInUserId = box.read('userId');
+                final otherUserId = widget.user.userId;
+                if (loggedInUserId != null && otherUserId != null) {
+                  final response = await MatchService.deleteMatch(
+                      loggedInUserId, otherUserId);
+                  if (response.statusCode == 200) {
+                    Alerts.showSuccessSnackBar(
+                        'Match desfeito com sucesso!', context);
+                    widget.onMatchDeleted();
+                  } else {
+                    Alerts.showErrorSnackBar(
+                        'Erro ao desfazer o match.', context);
+                  }
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -113,6 +160,16 @@ class _UserMatchCardState extends State<UserMatchCard> {
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
+              ),
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.white),
+                onPressed: () {
+                  _showDeleteConfirmationDialog(context);
+                },
               ),
             ),
           ],
