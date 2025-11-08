@@ -135,6 +135,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   late TextEditingController _tipoRoleController;
   late TextEditingController _cursoController;
   late TextEditingController _blocoPrincipalController;
+  late TextEditingController _telefoneController;
 
   List<InterestsModel?> _userInterests = [];
   List<BlockModel?> _userSecondaryBlocks = [];
@@ -213,6 +214,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         TextEditingController(text: userProfile.userCourse?.courseName);
     _blocoPrincipalController =
         TextEditingController(text: userProfile.userBlock?.blockName);
+    _telefoneController = TextEditingController(text: userProfile.userWhatsApp);
 
     setState(() {});
   }
@@ -235,6 +237,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     _tipoRoleController.dispose();
     _cursoController.dispose();
     _blocoPrincipalController.dispose();
+    _telefoneController.dispose();
     super.dispose();
   }
 
@@ -243,7 +246,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   Future<void> _saveProfile() async {
     try {
       final userProfile = controller.userProfile.value;
-      
+
       if (newUserController.userModel.hasMusic.isTrue) {
         userProfile.selectedMusic = newUserController.userModel.selectedMusic;
       }
@@ -275,6 +278,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         "idUsuario": '${box.read('userId')}',
         "nome": _nomeController.text,
         "sobrenome": _sobrenomeController.text,
+        "telefone": _telefoneController.text,
         "sexualidade": {
           "sexualityName": selectedSexuality.sexualityName,
           "sexualityId": selectedSexuality.sexualityId,
@@ -432,6 +436,43 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                       fillColor: Theme.of(context).colorScheme.onSurface,
                     ),
                     controller: _sobrenomeController,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            CollapsibleSection(
+              icon: Icons.phone,
+              title: 'WhatsApp',
+              child: Column(
+                children: [
+                  TextField(
+                    style: Theme.of(context).textTheme.labelMedium,
+                    cursorColor: Theme.of(context).colorScheme.surface,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18, horizontal: 20),
+                      enabledBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                      labelText: "Telefone",
+                      labelStyle: Theme.of(context).textTheme.bodySmall,
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    controller: _telefoneController,
                   ),
                 ],
               ),
