@@ -7,14 +7,14 @@ class Constants {
   static String basicAuthUser = "SchoolMatchAppData";
   static String basicAuthPass = "BatatinhaQuandoNasce123!";
 
-  static String appDataUsersUrl = "http://127.0.0.1:5099";
+  static String appDataUsersUrl = "https://10.0.2.2:7290";
   static String userData = "$appDataUsersUrl/users/Data";
   static String LGPD = "$appDataUsersUrl/users/Data/LGPD";
   static String userLogin = "$appDataUsersUrl/users/Login";
   static String siteVerifyEmail = "$userData/schoolmach-web/src/verifyEmail.php?";
   static String verifyEmail = "$userData/VerifyEmail";
 
-  static String appDataApiUrl = "http://127.0.0.1:5287";
+  static String appDataApiUrl = "https://10.0.2.2:7142";
   static String appData = "$appDataApiUrl/appdata";
 
   static String courses = "$appData/courses";
@@ -31,12 +31,12 @@ class Constants {
   static String interests = "$appData/interests";
   static String getAllInterests = "$interests/GetAllInterests";
 
-  static String matchsUrl = "http://127.0.0.1:5168";
+  static String matchsUrl = "https://10.0.2.2:7000";
   static String matchs = "$matchsUrl/matchs";
   static String verifyNewMatch = "$matchs/SendUserLike";
   static String getUserMatches = "$matchs/GetUserMatches";
 
-  static String searchUrl = "http://127.0.0.1:5115";
+  static String searchUrl = "https://10.0.2.2:7138";
   static String search = "$searchUrl/search";
   static String defaultSearch = "$search/DefaultSearch";
   static String searchByCourseAndBlock = "$search/SearchByCourseAndBlock";

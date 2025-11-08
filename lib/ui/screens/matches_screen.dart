@@ -48,7 +48,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
   @override
   void initState() {
     super.initState();
-    _loadCards(); // carrega perfis ao abrir a tela
+    _loadCards(); 
   }
 
   @override
